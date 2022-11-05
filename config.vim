@@ -98,7 +98,19 @@ lua << EOF
   vim.lsp.handlers["textDocument/publishDiagnostics"] = 
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {update_in_insert = true})
 
-  require("aerial").setup()
   require("toggleterm").setup()
+
+  require("bufferline").setup()
+  require("toggleterm").setup()
+
+  require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+    -- Jump forwards/backwards with '{' and '}'
+    on_attach = function(bufnr)
+      vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+      vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+    end
+  })
+  -- You probably also want to set a keymap to toggle aerial
 
 EOF

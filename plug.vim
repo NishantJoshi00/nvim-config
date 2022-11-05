@@ -32,10 +32,10 @@ if has("nvim")
   Plug 'tiagovla/tokyodark.nvim'
   Plug 'startup-nvim/startup.nvim'
   Plug 'ggandor/lightspeed.nvim'
-  Plug 'sindrets/diffview.nvim'
+  " Plug 'sindrets/diffview.nvim'
   Plug 'akinsho/bufferline.nvim'
   Plug 'stevearc/aerial.nvim'
-  Plug 'akinsho/toggleterm.nvim'
+  Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 endif
 
 call plug#end()
