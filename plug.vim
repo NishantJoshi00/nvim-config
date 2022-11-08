@@ -36,6 +36,7 @@ if has("nvim")
   Plug 'akinsho/bufferline.nvim'
   Plug 'stevearc/aerial.nvim'
   Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+  Plug 'ellisonleao/glow.nvim'
 endif
 
 call plug#end()

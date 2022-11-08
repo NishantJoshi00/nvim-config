@@ -112,5 +112,11 @@ lua << EOF
     end
   })
   -- You probably also want to set a keymap to toggle aerial
+EOF
 
+
+lua << EOF
+  require('glow').setup({
+    -- your override config
+  })
 EOF

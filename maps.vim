@@ -40,4 +40,4 @@ EOF
 
 inoremap <silent><c-t> <cmd>ToggleTerm<cr>
 tnoremap <silent><c-t> <cmd>ToggleTerm<cr>
-nnoremap <slient><c-t> <cmd>ToggleTerm<cr>
+nnoremap <slient><c-t> <cmd>:ToggleTerm<cr>
