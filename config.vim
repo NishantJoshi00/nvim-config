@@ -116,6 +116,7 @@ lua << EOF
   -- You probably also want to set a keymap to toggle aerial
 EOF
 
+call wilder#setup({'modes': [':', '/', '?']})
 
 lua << EOF
   require('glow').setup({
@@ -128,3 +129,4 @@ lua << EOF
     title = "vim-plug"
   })
 EOF
+
