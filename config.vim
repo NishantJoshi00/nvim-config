@@ -8,6 +8,8 @@ lua << EOF
   }
   require("mason").setup()
   require("mason-lspconfig").setup() 
+  vim.notify = require("notify")
+
 EOF
 
 
@@ -117,6 +119,12 @@ EOF
 
 lua << EOF
   require('glow').setup({
+    width = 120,
     -- your override config
+  })
+
+
+  vim.notify("config loaded.", "success", {
+    title = "vim-plug"
   })
 EOF
