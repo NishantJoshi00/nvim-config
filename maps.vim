@@ -12,8 +12,8 @@ wk.register({
 
 
 -- NERDTree mappings
-  ["<leader>n"] = {":NERDTreeFocus<cr>"},
-  ["<leader>e"] = {":NERDTreeToggle<cr>"},
+  ["<leader>n"] = {"<cmd>NERDTreeFocus<cr>", "Focus Nerd Tree"},
+  ["<leader>e"] = {"<cmd>NERDTreeToggle<cr>", "Toggle Nerd Tree"},
 
 -- toggleterm
   ["<leader>t"] = {
@@ -33,6 +33,11 @@ wk.register({
 -- Personal
   ["<leader>m"] = {"@", "Start Macro"},
 
+  -- Lsp
+  ["<leader>I"] = {"<cmd>lua vim.lsp.buf.hover()<cr>", "View function signature"},
+  ["<leader>K"] = {"<cmd>lua vim.lsp.buf.implementation()<cr>", "View implementations"},
+  ["<leader>D"] = {"<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition"}
+
 
 })
 
@@ -42,3 +47,9 @@ inoremap <silent><c-t> <cmd>ToggleTerm<cr>
 tnoremap <silent><c-t> <cmd>ToggleTerm<cr>
 nnoremap <c-t> <cmd>ToggleTerm<cr>
 inoremap <c-/> <esc><n>gcc<cr>i<cr>
+
+nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+nnoremap gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
+nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
+nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
+nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>

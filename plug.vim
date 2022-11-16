@@ -30,12 +30,22 @@ if has("nvim")
   Plug 'startup-nvim/startup.nvim' " dashboard
   Plug 'ggandor/lightspeed.nvim' " faster search through text
   " Plug 'sindrets/diffview.nvim'
+<<<<<<< Updated upstream
   Plug 'akinsho/bufferline.nvim' " Bufferline on the top for files
   Plug 'stevearc/aerial.nvim' " A code outline window for skimming and quick navigation
   Plug 'akinsho/toggleterm.nvim', {'tag' : '*'} " To toggle terminal in vim session
   Plug 'ellisonleao/glow.nvim' " Rendering for markdown
   Plug 'gelguy/wilder.nvim' " better experience in commandline
   Plug 'rcarriga/nvim-notify' " Notification popup in vim using simple functions
+=======
+  Plug 'akinsho/bufferline.nvim'
+  Plug 'stevearc/aerial.nvim'
+  Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+  Plug 'ellisonleao/glow.nvim'
+  Plug 'gelguy/wilder.nvim'
+  Plug 'rcarriga/nvim-notify'
+  Plug 'rmagatti/goto-preview'
+>>>>>>> Stashed changes
 endif
 
 call plug#end()
