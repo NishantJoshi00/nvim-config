@@ -89,7 +89,20 @@ lua << EOF
   -- Next, you can provide a dedicated handler for specific servers.
   -- For example, a handler override for the `rust_analyzer`:
   ["rust_analyzer"] = function ()
-    require("rust-tools").setup {}
+    require("rust-tools").setup {
+      server = {
+        settings = {
+          ["rust-analyzer"] = {
+            inlayHints = {
+              lifetimeElisionHints = {
+                useParameterNames = true,
+                enable = "always"
+              }
+            } 
+          }
+        }
+      }
+    }
   end
   }
 

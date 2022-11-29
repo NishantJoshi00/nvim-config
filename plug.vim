@@ -1,7 +1,7 @@
 call plug#begin()
 
 Plug 'tpope/vim-fugitive' " A Git wrapper
-" Plug 'cohama/lexima.vim' " Auto-close parenthesis
+Plug 'cohama/lexima.vim' " Auto-close parenthesis
 Plug 'preservim/vim-markdown' " markdown support for vim
 
 if has("nvim")
