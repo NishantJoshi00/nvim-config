@@ -25,8 +25,16 @@ return {
 
         -- dedicated handlers
         ["rust_analyzer"] = function()
-          require("rust-tools").setup {
+          local rt = require("rust-tools")
+          rt.setup {
             server = {
+              on_attach = function(_, bufnr)
+                vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+                vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+
+                vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>RustCodeAction<cr>', {})
+                vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>RustCodeAction<cr>', {})
+              end,
               settings = {
                 ["rust_analyzer"] = {
                   inlayHints = {
@@ -46,7 +54,11 @@ return {
   { "nvim-lua/plenary.nvim" },
   { "nvim-telescope/telescope.nvim" },
   { "nvim-lualine/lualine.nvim" },
-  { "preservim/nerdtree" },
+  { "nvim-tree/nvim-tree.lua", config = function()
+    require("nvim-tree").setup()
+  end
+  },
+  { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
   { "folke/which-key.nvim", config = function() require("which-key").setup {
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -134,6 +146,33 @@ return {
   },
 
   { "simrat39/rust-tools.nvim" },
+  { "tpope/vim-commentary", config = function()
+    vim.api.nvim_set_keymap('n', '<c-/>', 'gcc', {})
+    vim.api.nvim_set_keymap('v', '<c-/>', 'gcc', {})
+  end,
+  },
+  -- { "nvim-treesitter/nvim-treesitter", config = function()
+  --   -- Treesitter Plugin Setup
+  --   require('nvim-treesitter.configs').setup {
+  --     ensure_installed = { "lua", "rust", "toml" },
+  --     auto_install = true,
+  --     highlight = {
+  --       enable = true,
+  --       additional_vim_regex_highlighting = false,
+  --     },
+  --     ident = { enable = true },
+  --     rainbow = {
+  --       enable = true,
+  --       extended_mode = true,
+  --       max_file_lines = nil,
+  --     }
+  --   }
+  -- end,
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig"
+  --   }
+  -- },
+
 
   { "startup-nvim/startup.nvim", config = function() require("startup").setup({ theme = "dashboard" }) end, },
   { "ggandor/lightspeed.nvim" },
@@ -165,4 +204,14 @@ return {
     }
   end
   },
+
+
+  { "lukas-reineke/indent-blankline.nvim", config = function()
+    require("indent_blankline").setup {
+      -- show_current_context = true,
+      -- show_current_context_start = true,
+    }
+  end,
+  },
+  -- { "airblade/vim-gitgutter" },
 }
