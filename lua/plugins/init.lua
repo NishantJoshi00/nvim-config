@@ -29,8 +29,9 @@ return {
           rt.setup {
             server = {
               on_attach = function(_, bufnr)
-                vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+                vim.keymap.set("n", "<c-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
                 vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+                vim.keymap.set("v", "<c-space>", rt.code_action_group.code_action_group, { buffer = bufnr })
 
                 vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>RustCodeAction<cr>', {})
                 vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>RustCodeAction<cr>', {})
@@ -55,7 +56,9 @@ return {
   { "nvim-telescope/telescope.nvim" },
   { "nvim-lualine/lualine.nvim" },
   { "nvim-tree/nvim-tree.lua", config = function()
-    require("nvim-tree").setup()
+    require("nvim-tree").setup({
+      open_on_setup = false,
+    })
   end
   },
   { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
@@ -174,7 +177,13 @@ return {
   -- },
 
 
-  { "startup-nvim/startup.nvim", config = function() require("startup").setup({ theme = "dashboard" }) end, },
+  {
+    'glepnir/dashboard-nvim',
+    event = 'VimEnter',
+    opts = {
+      -- config
+    },
+  },
   { "ggandor/lightspeed.nvim" },
   { "akinsho/bufferline.nvim", config = function() require("bufferline").setup() end, },
 

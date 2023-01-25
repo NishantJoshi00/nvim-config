@@ -21,14 +21,6 @@ wk.register({
     a = { "<cmd>ToggleTermToggleAll<cr>", "Toggle All Terminals" },
   },
 
-  -- aerial
-  ["<leader>a"] = {
-    name = "Aerial Binds",
-    t = { "<cmd>AerialToggle Left<cr>", "Aerial Toggle" },
-    T = { "<cmd>AerialToggleAll Left<cr>", "Aerial Toggle All" },
-    C = { "<cmd>AerialCloseAll", "Aerial CloseAll" },
-  },
-
   -- Personal
   ["<leader>m"] = { "@", "Start Macro" },
 
