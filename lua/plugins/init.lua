@@ -187,7 +187,7 @@ return {
   { "ggandor/lightspeed.nvim" },
   { "akinsho/bufferline.nvim", config = function() require("bufferline").setup() end, },
 
-  { "akinsho/toggleterm.nvim", config = function() require("toggleterm").setup() end, },
+  { "akinsho/toggleterm.nvim", config = function() require("toggleterm").setup({ shell = vim.o.shell }) end, },
   { "ellisonleao/glow.nvim", config = function() require("glow").setup({ width = 120, }) end, },
   { "gelguy/wilder.nvim", config = function() require("wilder").setup({ modes = { ":", "/", "?" } }) end, },
   { "rcarriga/nvim-notify", config = function()
