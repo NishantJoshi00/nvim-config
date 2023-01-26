@@ -1,5 +1,8 @@
 return {
-  { "tiagovla/tokyodark.nvim", config = function() vim.cmd [[colorscheme tokyodark]] end, },
+  { "tiagovla/tokyodark.nvim", config = function()
+    vim.cmd [[colorscheme tokyodark]]
+  end,
+  },
 
   { "tpope/vim-fugitive" },
   { "cohama/lexima.vim" },
@@ -154,27 +157,27 @@ return {
     vim.api.nvim_set_keymap('v', '<c-/>', 'gcc', {})
   end,
   },
-  -- { "nvim-treesitter/nvim-treesitter", config = function()
-  --   -- Treesitter Plugin Setup
-  --   require('nvim-treesitter.configs').setup {
-  --     ensure_installed = { "lua", "rust", "toml" },
-  --     auto_install = true,
-  --     highlight = {
-  --       enable = true,
-  --       additional_vim_regex_highlighting = false,
-  --     },
-  --     ident = { enable = true },
-  --     rainbow = {
-  --       enable = true,
-  --       extended_mode = true,
-  --       max_file_lines = nil,
-  --     }
-  --   }
-  -- end,
-  --   dependencies = {
-  --     "neovim/nvim-lspconfig"
-  --   }
-  -- },
+  { "nvim-treesitter/nvim-treesitter", config = function()
+    -- Treesitter Plugin Setup
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = { "lua", "rust", "toml" },
+      auto_install = true,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = true,
+      },
+      ident = { enable = true },
+      rainbow = {
+        enable = true,
+        extended_mode = true,
+        max_file_lines = nil,
+      }
+    }
+  end,
+    dependencies = {
+      "neovim/nvim-lspconfig"
+    }
+  },
 
 
   {
@@ -217,10 +220,13 @@ return {
 
   { "lukas-reineke/indent-blankline.nvim", config = function()
     require("indent_blankline").setup {
-      -- show_current_context = true,
-      -- show_current_context_start = true,
+      show_current_context = true,
+      show_current_context_start = true,
     }
   end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter"
+    }
   },
-  -- { "airblade/vim-gitgutter" },
+  { "airblade/vim-gitgutter" },
 }
