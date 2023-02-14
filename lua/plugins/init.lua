@@ -1,6 +1,6 @@
 return {
   { "tiagovla/tokyodark.nvim", config = function()
-    -- vim.cmd [[colorscheme tokyodark]]
+    vim.cmd [[colorscheme tokyodark]]
   end,
   },
 
@@ -255,7 +255,7 @@ return {
   },
   { "airblade/vim-gitgutter" },
   { "catppuccin/nvim", name = "catppuccin", config = function ()
-    vim.cmd [[colorscheme catppuccin]]
+    -- vim.cmd [[colorscheme catppuccin]]
     end 
   }
 }
