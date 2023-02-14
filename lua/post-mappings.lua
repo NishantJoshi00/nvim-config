@@ -27,7 +27,5 @@ wk.register({
   -- Lsp
   ["<leader>I"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "View function signature" },
   ["<leader>K"] = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "View implementations" },
-  ["<leader>D"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition" }
-
-
+  ["<leader>D"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition" },
 })

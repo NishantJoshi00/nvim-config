@@ -1,6 +1,6 @@
 return {
   { "tiagovla/tokyodark.nvim", config = function()
-    vim.cmd [[colorscheme tokyodark]]
+    -- vim.cmd [[colorscheme tokyodark]]
   end,
   },
 
@@ -36,8 +36,10 @@ return {
                 vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
                 vim.keymap.set("v", "<c-space>", rt.code_action_group.code_action_group, { buffer = bufnr })
 
-                vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>RustCodeAction<cr>', {})
-                vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>RustCodeAction<cr>', {})
+                -- vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>RustCodeAction<cr>', {})
+                -- vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>RustCodeAction<cr>', {})
+                vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
+                vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
               end,
               settings = {
                 ["rust_analyzer"] = {
@@ -45,8 +47,31 @@ return {
                     lifetimeElisionHints = {
                       useParameterNames = true,
                       enable = "always",
+                    },
+                    expressionAdjustmentHints = {
+                      enable = "reborrow",
+                    },
+                    closureReturnTypeHints = {
+                      enable = "with_block",
                     }
-                  }
+                  },
+                  diagnostics = {
+                    disabled = {
+                      "unresolved-macro-call"
+                    }
+                  },
+                  completion = {
+                    autoimport = {
+                      enable = true,
+                    }
+                  },
+                  procMacro = {
+                    enable = true,
+                    attributes = {
+                      enable = true
+                    }
+                  },
+
                 }
               }
             }
@@ -229,4 +254,8 @@ return {
     }
   },
   { "airblade/vim-gitgutter" },
+  { "catppuccin/nvim", name = "catppuccin", config = function ()
+    vim.cmd [[colorscheme catppuccin]]
+    end 
+  }
 }
