@@ -14,5 +14,4 @@ if vim.fn.has('win32') == 1 then
     vim.g.neovide_scale_factor = 0.65
     vim.g.neovide_fullscreen = true
   end
-  print("Windows Considered")
 end
