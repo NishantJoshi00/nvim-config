@@ -254,23 +254,22 @@ return {
     }
   },
   { "airblade/vim-gitgutter" },
-  { "catppuccin/nvim", name = "catppuccin", config = function ()
+  { "catppuccin/nvim", name = "catppuccin", config = function()
     -- vim.cmd [[colorscheme catppuccin]]
-    end 
+  end
   },
-  { 'mrjones2014/smart-splits.nvim', config = function()
-    -- require("smart-splits").setup()
+  { "beauwilliams/focus.nvim", config = function()
+    local focus = require("focus")
+    focus.setup()
 
+    vim.api.nvim_set_keymap('n', '<c-h>', ':FocusSplitLeft<CR>', { silent = true })
+    vim.api.nvim_set_keymap('n', '<c-j>', ':FocusSplitDown<CR>', { silent = true })
+    vim.api.nvim_set_keymap('n', '<c-k>', ':FocusSplitUp<CR>', { silent = true })
+    vim.api.nvim_set_keymap('n', '<c-l>', ':FocusSplitRight<CR>', { silent = true })
 
-    vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-    vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-    vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-    vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
-    -- moving between splits
-    vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
-    vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
-    vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
-    vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
-  end,
+    vim.api.nvim_set_keymap('n', '<leader>wp', ':FocusSplitNicely<CR>', { silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>wo', ':FocusMaxOrEqual<CR>', { silent = true })
+
+  end
   },
 }
