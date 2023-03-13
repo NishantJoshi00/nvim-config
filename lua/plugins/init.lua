@@ -21,6 +21,9 @@ return {
       require("mason-lspconfig").setup_handlers {
         -- defualt handler
         function(server_name)
+          vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
+          vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
+          vim.keymap.set("n", "<Leader>a", vim.lsp.buf.code_action, {})
           require("lspconfig")[server_name].setup {
             capabilities = capabilities
           }
@@ -36,8 +39,6 @@ return {
                 vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
                 vim.keymap.set("v", "<c-space>", rt.code_action_group.code_action_group, { buffer = bufnr })
 
-                -- vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>RustCodeAction<cr>', {})
-                -- vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>RustCodeAction<cr>', {})
                 vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
                 vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
               end,
