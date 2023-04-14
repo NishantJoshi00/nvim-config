@@ -29,4 +29,10 @@ wk.register({
   ["<leader>I"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "View function signature" },
   ["<leader>K"] = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "View implementations" },
   ["<leader>D"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition" },
+  ["<leader>p"] = { "<cmd>Glow<cr>", "Markdown Preview Open" },
+  ["<leader>P"] = { "<cmd>Glow!<cr>", "Markdown Preview Close" }
 })
+
+
+
+vim.api.nvim_set_keymap('n', '<c-.>', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], {})

@@ -11,8 +11,16 @@ vim.api.nvim_set_keymap('n', 'gP', [[<cmd>lua require('goto-preview').close_all_
 vim.api.nvim_set_keymap('n', 'gpr', [[<cmd>lua require('goto-preview').goto_preview_references()<cr>]], {})
 
 vim.api.nvim_set_keymap('n', '<c-s>', [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], {})
-vim.api.nvim_set_keymap('n', '<c-.>', [[]], {})
-
 
 
 vim.api.nvim_set_keymap('n', '<c-e>', '<cmd>NvimTreeToggle<cr>', { silent = true })
+
+
+-- local rename_lsp = function()
+--   vim.ui.input({ prompt = "rename with: " }, function(input)
+--     if not input then
+--     vim.lsp.buf.rename(input)
+--     end
+--   end
+--   )
+-- end

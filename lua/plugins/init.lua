@@ -28,6 +28,7 @@ return {
           vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
           vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
           vim.keymap.set("n", "<Leader>a", vim.lsp.buf.code_action, {})
+          vim.keymap.set("n", "<Leader>R", vim.lsp.buf.rename, {})
           require("lspconfig")[server_name].setup {
             capabilities = capabilities
           }
@@ -183,16 +184,37 @@ return {
   { "ggandor/lightspeed.nvim" },
   { "akinsho/bufferline.nvim", config = function() require("bufferline").setup() end, },
   { "akinsho/toggleterm.nvim", config = function() require("toggleterm").setup({ shell = vim.o.shell }) end, },
-  { "ellisonleao/glow.nvim",   config = function() require("glow").setup({ width = 120, }) end, },
-  { "gelguy/wilder.nvim",      config = function() require("wilder").setup({ modes = { ":", "/", "?" } }) end, },
+  {
+    "ellisonleao/glow.nvim",
+    config = function()
+      require("glow").setup({
+      })
+    end,
+    enabled = function()
+      return not require("functions").disabled_on({ "win32" })
+    end,
+  },
+  { "gelguy/wilder.nvim",    config = function() require("wilder").setup({ modes = { ":", "/", "?" } }) end, },
   {
     "rcarriga/nvim-notify",
     config = function()
+      require("notify").setup({
+        render = "minimal"
+      })
+
       vim.notify = require("notify")
 
+      -- local quoter = function()
+      --   vim.notify(vim.fn.system("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'"))
+      -- end
 
-
-      -- vim.notify(vim.fn.system("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'"))
+      vim.fn.jobstart("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
+        stdout_buffered = true,
+        on_stdout = function(a, b, c)
+          -- print(vim.inspect(b))
+          vim.notify(b[1])
+        end,
+      })
     end,
   },
   {
@@ -268,5 +290,18 @@ return {
     config = function()
       require("fidget").setup()
     end
-  }
+  },
+  {
+    -- Notion Integration for NeoVim
+    "chrsm/impulse.nvim",
+    enabled = false,
+    config = function()
+      require("impulse").setup()
+    end
+  },
+  {
+    "MunifTanjim/nui.nvim",
+    config = function()
+    end
+  },
 }

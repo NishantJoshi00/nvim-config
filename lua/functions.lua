@@ -257,7 +257,7 @@ local evil_lualine_config = function()
     end,
     color = function()
       return { fg = mode_color[vim.fn.mode()] }
-    end,                               -- Sets highlighting of component
+    end, -- Sets highlighting of component
     padding = { left = 1 },
   }
 
@@ -291,6 +291,11 @@ local rust_analyzer_config = function()
               enable = "with_block",
             }
           },
+          cargo = {
+            buildScripts = {
+              overrideCommand = nil
+            }
+          },
           diagnostics = {
             disabled = {
               "unresolved-macro-call"
@@ -314,9 +319,18 @@ local rust_analyzer_config = function()
   }
 end
 
+local disabled_on = function(systems)
+  for _, val in ipairs(systems) do
+    if vim.fn.has(val) == 1 then
+      return true
+    end
+  end
+  return false
+end
 
 
 return {
   lualine_config = evil_lualine_config,
-  rust_analyzer_config = rust_analyzer_config
+  rust_analyzer_config = rust_analyzer_config,
+  disabled_on = disabled_on
 }
