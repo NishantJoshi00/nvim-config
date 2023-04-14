@@ -177,9 +177,27 @@ return {
   {
     'glepnir/dashboard-nvim',
     event = 'VimEnter',
-    opts = {
-      -- config
+    dependencies = {
+      "MaximilianLloyd/ascii.nvim"
     },
+    config = function()
+      local ascii = require("ascii")
+
+      require("dashboard").setup({
+        theme = "hyper",
+        config = {
+          header = ascii.art.text.neovim.sharp,
+          shortcut = {
+            { desc = '[  Github]',         group = 'DashboardHeader',  action = 'lua vim.g.quote_me()', key = 'i' },
+            { desc = '[  NishantJoshi00]', group = 'DashboardShortCut' },
+          },
+          footer = {
+            '',
+            require("functions").dashboard_footer()
+          }
+        }
+      })
+    end,
   },
   { "ggandor/lightspeed.nvim" },
   { "akinsho/bufferline.nvim", config = function() require("bufferline").setup() end, },
@@ -208,13 +226,7 @@ return {
       --   vim.notify(vim.fn.system("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'"))
       -- end
 
-      vim.fn.jobstart("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
-        stdout_buffered = true,
-        on_stdout = function(a, b, c)
-          -- print(vim.inspect(b))
-          vim.notify(b[1])
-        end,
-      })
+      require("functions").quoter()
     end,
   },
   {
@@ -304,4 +316,10 @@ return {
     config = function()
     end
   },
+  {
+    "MaximilianLloyd/ascii.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim"
+    }
+  }
 }

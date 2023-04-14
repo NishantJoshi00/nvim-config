@@ -329,8 +329,34 @@ local disabled_on = function(systems)
 end
 
 
+local quoter = function()
+  vim.fn.jobstart("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
+    stdout_buffered = true,
+    on_stdout = function(a, b, c)
+      -- print(vim.inspect(b))
+      vim.notify(b[1])
+    end,
+  })
+end
+vim.g.quote_me = quoter
+
+
+local random_footer = function()
+  local footers = {
+    "🚀 Sharp tools make good work.",
+    "🥛 Boost is the secret of my energy.",
+    "⛰  Washing powder nirma",
+    "📜 Luck is the planning, that you don't see."
+  }
+  math.randomseed(os.time())
+  return footers[math.random(1, #footers)]
+end
+
+
 return {
   lualine_config = evil_lualine_config,
   rust_analyzer_config = rust_analyzer_config,
-  disabled_on = disabled_on
+  disabled_on = disabled_on,
+  quoter = quoter,
+  dashboard_footer = random_footer
 }
