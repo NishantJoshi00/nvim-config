@@ -44,7 +44,7 @@ return {
     "nvim-tree/nvim-tree.lua",
     config = function()
       require("nvim-tree").setup({
-        open_on_setup = false,
+        open_on_tab = false,
       })
     end
   },
@@ -259,5 +259,14 @@ return {
       "nvim-tree/nvim-web-devicons"
     },
     config = require("functions").lualine_config
+  },
+  {
+    "j-hui/fidget.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("fidget").setup()
+    end
   }
 }

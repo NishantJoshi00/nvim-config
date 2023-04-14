@@ -12,8 +12,8 @@ wk.register({
 
 
   -- NERDTree mappings
-  ["<leader>n"] = { "<cmd>NERDTreeFocus<cr>", "Focus Nerd Tree" },
-  ["<leader>e"] = { "<cmd>NERDTreeToggle<cr>", "Toggle Nerd Tree" },
+  ["<leader>n"] = { "<cmd>NvimTreeFocus<cr>", "Focus Nerd Tree" },
+  ["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Toggle Nerd Tree" },
 
   -- toggleterm
   ["<leader>t"] = {
