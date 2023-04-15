@@ -334,7 +334,7 @@ local quoter = function()
     stdout_buffered = true,
     on_stdout = function(a, b, c)
       -- print(vim.inspect(b))
-      vim.notify(b[1])
+      vim.notify(b[1], "info", { title = "QOTD", icon = nil })
     end,
   })
 end

@@ -201,8 +201,8 @@ return {
         config = {
           header = ascii.art.text.neovim.sharp,
           shortcut = {
-            { desc = '[  Github]',         group = 'DashboardHeader',  action = 'lua vim.g.quote_me()', key = 'i' },
-            { desc = '[  NishantJoshi00]', group = 'DashboardShortCut' },
+            { desc = '[  Github]',         group = 'DashboardShortCut' },
+            { desc = '[  NishantJoshi00]', group = 'DashboardShortCut',  action = 'lua vim.g.quote_me()', key = 'i' },
           },
           footer = {
             '',
@@ -230,7 +230,7 @@ return {
     "rcarriga/nvim-notify",
     config = function()
       require("notify").setup({
-        render = "minimal"
+        render = "compact"
       })
 
       vim.notify = require("notify")

@@ -27,7 +27,8 @@ wk.register({
   ["<leader>p"] = { "<cmd>Glow<cr>", "Markdown Preview Open" },
   ["<leader>P"] = { "<cmd>Glow!<cr>", "Markdown Preview Close" },
   ["<leader>bh"] = { "<cmd>bprev<cr>", "Previous Buffer" },
-  ["<leader>bl"] = { "<cmd>bnext<cr>", "Next Buffer" }
+  ["<leader>bl"] = { "<cmd>bnext<cr>", "Next Buffer" },
+  ["<leader>\\"] = {"<cmd>lua vim.g.quote_me()<cr>", "Quote Stuff"}
 })
 
 
