@@ -9,30 +9,29 @@ wk.register({
   ["<leader>fb"] = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "Buffers" },
   ["<leader>fh"] = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "Help Tags" },
   ["<leader>fa"] = { "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", "Help Tags" },
-
-
   -- NERDTree mappings
   ["<leader>n"] = { "<cmd>NvimTreeFocus<cr>", "Focus Nerd Tree" },
   ["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Toggle Nerd Tree" },
-
   -- toggleterm
   ["<leader>t"] = {
     name = "+terminal",
     m = { "<cmd>ToggleTerm<cr>", "Toggle Main Terminal" },
     a = { "<cmd>ToggleTermToggleAll<cr>", "Toggle All Terminals" },
   },
-
   -- Personal
   ["<leader>m"] = { "@", "Start Macro" },
-
   -- Lsp
   ["<leader>I"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "View function signature" },
   ["<leader>K"] = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "View implementations" },
   ["<leader>D"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition" },
   ["<leader>p"] = { "<cmd>Glow<cr>", "Markdown Preview Open" },
-  ["<leader>P"] = { "<cmd>Glow!<cr>", "Markdown Preview Close" }
+  ["<leader>P"] = { "<cmd>Glow!<cr>", "Markdown Preview Close" },
+  ["<leader>bh"] = { "<cmd>bprev<cr>", "Previous Buffer" },
+  ["<leader>bl"] = { "<cmd>bnext<cr>", "Next Buffer" }
 })
 
 
 
 vim.api.nvim_set_keymap('n', '<c-.>', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], {})
+
+vim.keymap.set("n", "<c-n>", require("functions").scratch_pad, {})

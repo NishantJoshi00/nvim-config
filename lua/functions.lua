@@ -353,10 +353,63 @@ local random_footer = function()
 end
 
 
+
+local nui_scratch = function()
+  if vim.g.scratch_open == 1 then
+    return
+  end
+
+  local Popup = require("nui.popup")
+  local event = require("nui.utils.autocmd").event
+
+  local popup = Popup({
+    enter = true,
+    focusable = true,
+    border = {
+      style = "rounded",
+      text = {
+        bottom = "scratch pad",
+        bottom_align = "center"
+      },
+      padding = { 1, 1 }
+    },
+    position = {
+      row = "50%",
+      col = "100%"
+    },
+    size = "40%",
+    -- size = {
+    --   width = "40%",
+    --   height = "70%",
+    -- },
+  })
+
+  -- mount/open the component
+  popup:mount()
+  vim.g.scratch_open = 1
+
+  local exit_action = function()
+    local popup_buffer = popup.bufnr
+    local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
+    local content = table.concat(lines, "\n")
+    vim.fn.setreg("+", content)
+
+    popup:unmount()
+    vim.g.scratch_open = 0
+  end
+
+  -- unmount component when cursor leaves buffer
+  popup:on(event.BufLeave, exit_action)
+
+  popup:map("n", "<esc>", exit_action)
+end
+
+
 return {
   lualine_config = evil_lualine_config,
   rust_analyzer_config = rust_analyzer_config,
   disabled_on = disabled_on,
   quoter = quoter,
-  dashboard_footer = random_footer
+  dashboard_footer = random_footer,
+  scratch_pad = nui_scratch
 }

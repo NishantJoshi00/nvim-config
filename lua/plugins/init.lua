@@ -2,8 +2,21 @@ return {
   {
     "tiagovla/tokyodark.nvim",
     config = function()
-      vim.cmd [[colorscheme tokyodark]]
+      if require("utils").is_day() then
+        vim.cmd [[colorscheme catppuccin]]
+      else
+        vim.cmd [[colorscheme tokyodark]]
+      end
     end,
+    dependencies = {
+      "catppuccin/nvim",
+      'rebelot/kanagawa.nvim'
+    }
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    config = require("custom.theme.catppuccin").config
   },
   { 'rebelot/kanagawa.nvim' },
   { "tpope/vim-fugitive" },
@@ -265,13 +278,6 @@ return {
     }
   },
   { "airblade/vim-gitgutter" },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    config = function()
-      -- vim.cmd [[colorscheme catppuccin]]
-    end
-  },
   {
     "beauwilliams/focus.nvim",
     config = function()
