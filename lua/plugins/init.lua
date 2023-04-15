@@ -357,6 +357,7 @@ return {
     end
   },
   {
+    enabled = false,
     "folke/twilight.nvim",
     config = function()
       require("twilight").setup {
