@@ -345,6 +345,7 @@ local random_footer = function()
   local footers = {
     "🚀 Sharp tools make good work.",
     "🥛 Boost is the secret of my energy.",
+    "🥛 I am a complan boy",
     "⛰  Washing powder nirma",
     "📜 Luck is the planning, that you don't see."
   }

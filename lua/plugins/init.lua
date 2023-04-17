@@ -2,6 +2,8 @@ return {
   {
     "tiagovla/tokyodark.nvim",
     config = function()
+      require("custom.theme.catppuccin").config()
+
       if require("utils").is_day() then
         vim.cmd [[colorscheme catppuccin]]
       else
@@ -12,11 +14,6 @@ return {
       "catppuccin/nvim",
       'rebelot/kanagawa.nvim'
     }
-  },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    config = require("custom.theme.catppuccin").config
   },
   { 'rebelot/kanagawa.nvim' },
   { "tpope/vim-fugitive" },
@@ -41,7 +38,8 @@ return {
           vim.api.nvim_set_keymap('n', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
           vim.api.nvim_set_keymap('v', '<c-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
           vim.keymap.set("n", "<Leader>a", vim.lsp.buf.code_action, {})
-          vim.keymap.set("n", "<Leader>R", vim.lsp.buf.rename, {})
+          vim.keymap.set("n", "<Leader><c-r>", vim.lsp.buf.rename, {})
+          vim.keymap.set("n", "<Leader>R", vim.lsp.buf.references, {})
           require("lspconfig")[server_name].setup {
             capabilities = capabilities
           }
@@ -178,11 +176,12 @@ return {
           enable = true,
           extended_mode = true,
           max_file_lines = nil,
-        }
+        },
       }
     end,
     dependencies = {
-      "neovim/nvim-lspconfig"
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/playground",
     }
   },
 
@@ -367,4 +366,11 @@ return {
       }
     end
   },
+  {
+    'saecki/crates.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+    end,
+  }
 }
