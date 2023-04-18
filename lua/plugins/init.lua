@@ -7,7 +7,7 @@ return {
       if require("utils").is_day() then
         vim.cmd [[colorscheme catppuccin]]
       else
-        vim.cmd [[colorscheme tokyodark]]
+        vim.cmd [[colorscheme catppuccin]]
       end
     end,
     dependencies = {
@@ -372,5 +372,13 @@ return {
     config = function()
       require('crates').setup()
     end,
-  }
+  },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
+    config = function()
+      require("persistence").setup()
+    end,
+  },
 }

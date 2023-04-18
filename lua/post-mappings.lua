@@ -24,11 +24,20 @@ wk.register({
   ["<leader>I"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "View function signature" },
   ["<leader>K"] = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "View implementations" },
   ["<leader>D"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition" },
+  -- Markdown specific
   ["<leader>p"] = { "<cmd>Glow<cr>", "Markdown Preview Open" },
   ["<leader>P"] = { "<cmd>Glow!<cr>", "Markdown Preview Close" },
+  -- Buffer specific
   ["<leader>bh"] = { "<cmd>bprev<cr>", "Previous Buffer" },
   ["<leader>bl"] = { "<cmd>bnext<cr>", "Next Buffer" },
-  ["<leader>\\"] = {"<cmd>lua vim.g.quote_me()<cr>", "Quote Stuff"}
+  -- Fun
+  ["<leader>\\"] = { "<cmd>lua vim.g.quote_me()<cr>", "Quote Stuff" },
+
+  -- Session specific
+  ["<leader>sc"] = { "<cmd>lua require(\"persistence\").load()<cr>", "Load Session from Current Directory" },
+  ["<leader>sl"] = { "<cmd>lua require(\"persistence\").load({ last = true })<cr>", "Load last session" },
+  ["<leader>sq"] = { "<cmd>lua require(\"persistence\").stop()<cr>", "Stop Session Recording" }
+
 })
 
 

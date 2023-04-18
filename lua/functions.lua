@@ -207,8 +207,9 @@ local evil_lualine_config = function()
       end
       return msg
     end,
-    icon = '⛭ LSP:',
-    color = { fg = '#ffffff', gui = 'bold' },
+    icon = '⛭',
+    -- color = { fg = '#ffffff', gui = 'bold' },
+    color = { fg = "#ffffff" },
   }
 
   -- Add components to right sections
@@ -334,7 +335,7 @@ local quoter = function()
     stdout_buffered = true,
     on_stdout = function(a, b, c)
       -- print(vim.inspect(b))
-      vim.notify(b[1], "info", { title = "QOTD", icon = nil })
+      vim.notify(b[1], "info", { hide_from_history = true })
     end,
   })
 end
