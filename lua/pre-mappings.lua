@@ -15,6 +15,8 @@ vim.api.nvim_set_keymap('n', '<c-s>', [[<cmd>lua vim.lsp.buf.format { async = tr
 
 vim.api.nvim_set_keymap('n', '<c-e>', '<cmd>NvimTreeToggle<cr>', { silent = true })
 
+vim.api.nvim_set_keymap('n', 'zz', [[<cmd>spellr<cr>]], {})
+
 
 -- local rename_lsp = function()
 --   vim.ui.input({ prompt = "rename with: " }, function(input)
