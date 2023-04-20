@@ -381,4 +381,17 @@ return {
       require("persistence").setup()
     end,
   },
+  {
+    "samueljoli/hurl.nvim",
+    config = function()
+      require("hurl").setup()
+    end
+  },
+  {
+    enabled = false,
+    'poljar/typos.nvim',
+    config = function()
+      require("typos").setup()
+    end,
+  },
 }

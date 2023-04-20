@@ -388,6 +388,7 @@ local nui_scratch = function()
 
   -- mount/open the component
   popup:mount()
+  vim.cmd[[set syntax=markdown]]
   vim.g.scratch_open = 1
 
   local exit_action = function()

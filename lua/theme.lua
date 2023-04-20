@@ -1,6 +1,6 @@
 -- Options
 
-vim.o.backgound = "dark"
+vim.o.background = "dark"
 vim.o.clipboard = "unnamedplus"
 vim.o.completeopt = "noinsert,menuone,noselect"
 vim.o.cursorline = true

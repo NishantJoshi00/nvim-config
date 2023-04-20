@@ -8,5 +8,6 @@ require("lazy").setup("plugins")
 -- end
 require("theme")
 require("post-mappings")
+require("masking")
 
 require('custom')
