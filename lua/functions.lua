@@ -297,6 +297,9 @@ local rust_analyzer_config = function()
               overrideCommand = nil
             }
           },
+          imports = {
+            prefix = "crate",
+          },
           diagnostics = {
             disabled = {
               "unresolved-macro-call"
@@ -348,7 +351,9 @@ local random_footer = function()
     "🥛 Boost is the secret of my energy.",
     "🥛 I am a complan boy",
     "⛰  Washing powder nirma",
-    "📜 Luck is the planning, that you don't see."
+    "📜 Luck is the planning, that you don't see.",
+    "💣 Every problem is a business opportunity."
+
   }
   math.randomseed(os.time())
   return footers[math.random(1, #footers)]
@@ -388,7 +393,7 @@ local nui_scratch = function()
 
   -- mount/open the component
   popup:mount()
-  vim.cmd[[set syntax=markdown]]
+  vim.cmd [[set syntax=markdown]]
   vim.g.scratch_open = 1
 
   local exit_action = function()

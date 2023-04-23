@@ -25,6 +25,7 @@ local mark_buffer_modifiable = function(buffer)
 
   map_buffer(buffer, function(bufnr)
     vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+    vim.api.nvim_buf_set_option(bufnr, "readonly", false)
     vim.cmd [[nnoremap : :]]
     vim.o.cmdheight = 1
   end)
@@ -36,6 +37,7 @@ local unmark_buffer_modifiable = function(buffer)
 
   map_buffer(buffer, function(bufnr)
     vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+    vim.api.nvim_buf_set_option(bufnr, "readonly", true)
     vim.cmd [[nnoremap : <Nop>]]
     vim.o.cmdheight = 0
   end)
@@ -57,6 +59,7 @@ vim.keymap.set('n', '<c-a>', mark_listed_bufs_m, {})
 
 
 return {
+  get_buffers = get_listed_buffers,
   mutable = mark_listed_bufs_m,
   immutable = unmark_listed_bufs_m
 }
