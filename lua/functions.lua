@@ -355,8 +355,15 @@ local random_footer = function()
 end
 
 
+local get_newline = function()
+  if vim.fn.has('win32') == 1 then
+    return '\r\n'
+  else
+    return '\n'
+  end
+end
 
-local nui_scratch = function()
+local nui_scratch = function(callback) -- callback gets the content from the scratch_pad
   if vim.g.scratch_open == 1 then
     return
   end
@@ -394,8 +401,10 @@ local nui_scratch = function()
   local exit_action = function()
     local popup_buffer = popup.bufnr
     local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
-    local content = table.concat(lines, "\n")
-    vim.fn.setreg("+", content)
+    local content = table.concat(lines, get_newline())
+
+    callback(content)
+    -- vim.fn.setreg("+", content)
 
     popup:unmount()
     vim.g.scratch_open = 0

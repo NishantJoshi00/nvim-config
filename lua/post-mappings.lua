@@ -32,16 +32,21 @@ wk.register({
   ["<leader>bl"] = { "<cmd>bnext<cr>", "Next Buffer" },
   -- Fun
   ["<leader>\\"] = { "<cmd>lua vim.g.quote_me()<cr>", "Quote Stuff" },
-
   -- Session specific
   ["<leader>sc"] = { "<cmd>lua require(\"persistence\").load()<cr>", "Load Session from Current Directory" },
   ["<leader>sl"] = { "<cmd>lua require(\"persistence\").load({ last = true })<cr>", "Load last session" },
   ["<leader>sq"] = { "<cmd>lua require(\"persistence\").stop()<cr>", "Stop Session Recording" }
-
 })
 
 
 
 vim.api.nvim_set_keymap('n', '<c-.>', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], {})
 
-vim.keymap.set("n", "<c-n>", require("functions").scratch_pad, {})
+vim.keymap.set("n", "<c-n>",
+  function()
+    require("functions")
+        .scratch_pad(
+          function(content)
+            vim.fn.setreg("+", content)
+          end)
+  end)
