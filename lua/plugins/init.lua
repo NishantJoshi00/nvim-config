@@ -7,12 +7,14 @@ return {
       if require("utils").is_day() then
         vim.cmd [[colorscheme catppuccin]]
       else
-        vim.cmd [[colorscheme catppuccin]]
+        vim.cmd [[colorscheme melange]]
       end
     end,
     dependencies = {
       "catppuccin/nvim",
-      'rebelot/kanagawa.nvim'
+      'rebelot/kanagawa.nvim',
+      'kvrohit/mellow.nvim',
+      'savq/melange-nvim'
     }
   },
   { 'rebelot/kanagawa.nvim' },
@@ -388,7 +390,7 @@ return {
     end
   },
   {
-    enabled = false,
+    -- enabled = false,
     'poljar/typos.nvim',
     config = function()
       require("typos").setup()

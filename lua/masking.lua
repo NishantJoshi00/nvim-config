@@ -27,6 +27,8 @@ local mark_buffer_modifiable = function(buffer)
     vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
     vim.api.nvim_buf_set_option(bufnr, "readonly", false)
     vim.cmd [[nnoremap : :]]
+    vim.cmd [[vnoremap : :]]
+    vim.cmd [[inoremap : :]]
     vim.o.cmdheight = 1
   end)
 end
@@ -39,6 +41,8 @@ local unmark_buffer_modifiable = function(buffer)
     vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
     vim.api.nvim_buf_set_option(bufnr, "readonly", true)
     vim.cmd [[nnoremap : <Nop>]]
+    vim.cmd [[vnoremap : <Nop>]]
+    vim.cmd [[inoremap : <Nop>]]
     vim.o.cmdheight = 0
   end)
 end

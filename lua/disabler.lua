@@ -11,38 +11,47 @@ local enable_all_keybinds = function()
   for _, data in ipairs(vim.g.keybind_store) do
     -- print(vim.inspect(data))
     if data.rhs == nil then
-      vim.keymap.set('n', data.lhs, data.callback, data.extra)
+      vim.keymap.set(data.mode, data.lhs, data.callback, data.extra)
     else
-      vim.api.nvim_set_keymap('n', data.lhs, data.rhs, data.extra)
+      vim.api.nvim_set_keymap(data.mode, data.lhs, data.rhs, data.extra)
     end
   end
 end
 
 local disable_all_keybinds = function()
   local keybinds = {}
-  for _, data in ipairs(vim.api.nvim_get_keymap('n')) do
-    local lhs = data.lhs;
+  local modes = { 'n', 'v' }
+  local registry_set = {}
+  for _, mode in ipairs(modes) do
+    registry_set[mode] = {}
+    for _, data in ipairs(vim.api.nvim_get_keymap(mode)) do
+      local lhs = data.lhs;
 
-    local keys = {
-      lhs = data.lhs,
-      rhs = data.rhs,
-      extra = {
-        noremap = data.noremap,
-        nowait = data.nowait,
-        silent = data.silent,
-        script = data.script,
-        -- expr = data.expr,
-      },
-      callback = data.callback
-    }
+      local keys = {
+        mode = mode,
+        lhs = data.lhs,
+        rhs = data.rhs,
+        extra = {
+          noremap = data.noremap,
+          nowait = data.nowait,
+          silent = data.silent,
+          script = data.script,
+          -- expr = data.expr,
+        },
+        callback = data.callback
+      }
 
 
-    table.insert(keybinds, keys)
-    vim.api.nvim_del_keymap('n', lhs)
+      table.insert(keybinds, keys)
+
+      if not registry_set[mode][lhs] then
+        vim.api.nvim_del_keymap(mode, lhs)
+        registry_set[mode][lhs] = true
+      end
+    end
   end
 
   vim.g.keybind_store = keybinds
-  vim.api.nvim_set_keymap('n', '<leader>xxx', [[<cmd>lua require("masking").enable()<cr>]], {})
 end
 
 
