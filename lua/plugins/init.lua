@@ -89,7 +89,7 @@ return {
   },
   { "ggandor/lightspeed.nvim" },
   { "akinsho/bufferline.nvim", config = function() require("bufferline").setup() end, },
-  { "akinsho/toggleterm.nvim", config = function() require("toggleterm").setup({ shell = vim.o.shell }) end, },
+  { "akinsho/toggleterm.nvim", config = require("plugins.config.toggleterm") },
   {
     "ellisonleao/glow.nvim",
     config = function()
