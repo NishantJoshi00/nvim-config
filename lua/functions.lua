@@ -161,10 +161,11 @@ local evil_lualine_config = function()
     cond = conditions.buffer_not_empty,
   }
 
-  ins_left {
+  ins_right {
     'filename',
+    path = 1,
     cond = conditions.buffer_not_empty,
-    color = { fg = colors.magenta, gui = 'bold' },
+    color = { fg = colors.blue },
   }
 
   ins_left { 'location' }

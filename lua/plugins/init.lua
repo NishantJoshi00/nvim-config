@@ -223,5 +223,37 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim"
     }
-  }
+  },
+  {
+    'edluffy/hologram.nvim',
+    enabled = function()
+      return not require("functions").disabled_on({ "win32" })
+    end,
+    config = function()
+      require("hologram").setup({
+      })
+    end
+  },
+  {
+    'giusgad/pets.nvim',
+    enabled = function()
+      return not require("functions").disabled_on({ "win32" })
+    end,
+    dependencies = {
+      'edluffy/hologram.nvim',
+      'MunifTanjim/nui.nvim'
+    },
+    config = function()
+      require('pets').setup({})
+    end
+  },
+  {
+    'ray-x/lsp_signature.nvim',
+    config = function()
+      require("lsp_signature").setup()
+    end,
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    }
+  },
 }

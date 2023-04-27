@@ -3,3 +3,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 
 vim.cmd [[set nofoldenable]]
 vim.cmd [[set termguicolors]]
+vim.o.updatetime = 300
