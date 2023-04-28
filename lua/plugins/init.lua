@@ -145,7 +145,7 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons"
     },
-    config = require("functions").lualine_config
+    config = require("plugins.config.lualine")
   },
   {
     "j-hui/fidget.nvim",
