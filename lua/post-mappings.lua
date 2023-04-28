@@ -35,7 +35,7 @@ wk.register({
   -- Session specific
   ["<leader>sc"] = { "<cmd>lua require(\"persistence\").load()<cr>", "Load Session from Current Directory" },
   ["<leader>sl"] = { "<cmd>lua require(\"persistence\").load({ last = true })<cr>", "Load last session" },
-  ["<leader>sq"] = { "<cmd>lua require(\"persistence\").stop()<cr>", "Stop Session Recording" }
+  ["<leader>sq"] = { "<cmd>lua require(\"persistence\").stop()<cr>", "Stop Session Recording" },
 })
 
 
@@ -50,3 +50,7 @@ vim.keymap.set("n", "<c-n>",
             vim.fn.setreg("+", content)
           end)
   end)
+
+vim.keymap.set("n", "<leader>l", function()
+  require("lsp_lines").toggle()
+end, { desc = "Toggle lsp_lines" })

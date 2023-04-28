@@ -10,7 +10,12 @@ return {
     }
   },
   { 'rebelot/kanagawa.nvim' },
-  { "tpope/vim-fugitive" },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end
+  },
   { "cohama/lexima.vim" },
   { "preservim/vim-markdown" },
   { "neovim/nvim-lspconfig" },
@@ -148,7 +153,11 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require("fidget").setup()
+      require("fidget").setup({
+        text = {
+          spinner = "dots"
+        }
+      })
     end
   },
   {
@@ -256,4 +265,15 @@ return {
       "neovim/nvim-lspconfig",
     }
   },
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("lsp_lines").setup({
+      })
+      require("lsp_lines").toggle()
+    end
+  }
 }
