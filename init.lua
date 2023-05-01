@@ -10,4 +10,4 @@ require("theme")
 require("post-mappings")
 require("masking")
 
-require('custom')
+require("custom")

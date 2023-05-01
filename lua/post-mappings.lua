@@ -2,55 +2,146 @@ vim.o.mapleader = " "
 
 local wk = require("which-key")
 
-wk.register({
-  -- Telescope mappings
-  ["<leader>ff"] = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "Find Files" },
-  ["<leader>fg"] = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live Grep" },
-  ["<leader>fb"] = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "Buffers" },
-  ["<leader>fh"] = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "Help Tags" },
-  ["<leader>fa"] = { "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", "Help Tags" },
-  -- NERDTree mappings
-  ["<leader>n"] = { "<cmd>NvimTreeFocus<cr>", "Focus Nerd Tree" },
-  ["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Toggle Nerd Tree" },
-  -- toggleterm
-  ["<leader>t"] = {
-    name = "+terminal",
-    m = { "<cmd>ToggleTerm<cr>", "Toggle Main Terminal" },
-    a = { "<cmd>ToggleTermToggleAll<cr>", "Toggle All Terminals" },
-  },
-  -- Personal
-  ["<leader>m"] = { "@", "Start Macro" },
-  -- Lsp
-  ["<leader>I"] = { "<cmd>lua vim.lsp.buf.hover()<cr>", "View function signature" },
-  ["<leader>K"] = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "View implementations" },
-  ["<leader>D"] = { "<cmd>lua vim.lsp.buf.definition()<cr>", "View Definition" },
-  -- Markdown specific
-  ["<leader>p"] = { "<cmd>Glow<cr>", "Markdown Preview Open" },
-  ["<leader>P"] = { "<cmd>Glow!<cr>", "Markdown Preview Close" },
-  -- Buffer specific
-  ["<leader>bh"] = { "<cmd>bprev<cr>", "Previous Buffer" },
-  ["<leader>bl"] = { "<cmd>bnext<cr>", "Next Buffer" },
-  -- Fun
-  ["<leader>\\"] = { "<cmd>lua vim.g.quote_me()<cr>", "Quote Stuff" },
-  -- Session specific
-  ["<leader>sc"] = { "<cmd>lua require(\"persistence\").load()<cr>", "Load Session from Current Directory" },
-  ["<leader>sl"] = { "<cmd>lua require(\"persistence\").load({ last = true })<cr>", "Load last session" },
-  ["<leader>sq"] = { "<cmd>lua require(\"persistence\").stop()<cr>", "Stop Session Recording" },
-})
+-- NERDTree mappings
+vim.api.nvim_set_keymap("n", "<leader>n", [[<cmd>NvimTreeFocus<cr>]], { desc = "Focus Nerd Tree" })
+vim.api.nvim_set_keymap("n", "<leader>e", [[<cmd>NvimTreeToggle<cr>]], { desc = "Toggle Nerd Tree" })
+-- Lsp
+vim.api.nvim_set_keymap("n", "<leader>I", [[<cmd>lua vim.lsp.buf.hover()<cr>]], { desc = "View function signature" })
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>K",
+	[[<cmd>lua vim.lsp.buf.implementation()<cr>]],
+	{ desc = "View implementations" }
+)
+vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr>]], { desc = "View Definition" })
+-- Markdown specific
+vim.api.nvim_set_keymap("n", "<leader>p", [[<cmd>Glow<cr>]], { desc = "Markdown Preview Open" })
+vim.api.nvim_set_keymap("n", "<leader>P", [[<cmd>Glow!<cr>]], { desc = "Markdown Preview Close" })
+-- Buffer specific
+vim.api.nvim_set_keymap("n", "<leader>bh", [[<cmd>bprev<cr>]], { desc = "Previous Buffer" })
+vim.api.nvim_set_keymap("n", "<leader>bl", [[<cmd>bnext<cr>]], { desc = "Next Buffer" })
+-- Fun
+vim.api.nvim_set_keymap("n", "<leader>\\", [[<cmd>lua vim.g.quote_me()<cr>]], { desc = "Quote Stuff" })
+-- Session specific
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>sc",
+	[[<cmd>lua require('persistence').load()<cr>]],
+	{ desc = "Load Session from Current Directory" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>sl",
+	[[<cmd>lua require('persistence').load({ last = true })<cr>]],
+	{ desc = "Load last session" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>sq",
+	[[<cmd>lua require('persistence').stop()<cr>]],
+	{ desc = "Stop Session Recording" }
+)
 
+-- Telescope mappings
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>ff",
+	[[<cmd>lua require('telescope.builtin').find_files()<cr>]],
+	{ desc = "Find Files" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>fg",
+	[[<cmd>lua require('telescope.builtin').live_grep()<cr>]],
+	{ desc = "Live Grep" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>fb",
+	[[<cmd>lua require('telescope.builtin').buffers()<cr>]],
+	{ desc = "Buffers" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>fh",
+	[[<cmd>lua require('telescope.builtin').help_tags()<cr>]],
+	{ desc = "Help Tags" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>fa",
+	[[<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>]],
+	{ desc = "LSP Search" }
+)
 
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>fb",
+	[[<cmd>lua require('telescope.builtin').builtin()<cr>]],
+	{ desc = "Search Builtin" }
+)
 
-vim.api.nvim_set_keymap('n', '<c-.>', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], {})
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>fs",
+	[[<cmd>lua require('telescope.builtin').spell_suggest()<cr>]],
+	{ desc = "Suggest Spellings" }
+)
 
-vim.keymap.set("n", "<c-n>",
-  function()
-    require("functions")
-        .scratch_pad(
-          function(content)
-            vim.fn.setreg("+", content)
-          end)
-  end)
+-- toggle term
+vim.api.nvim_set_keymap("n", "<leader>tm", [[<cmd>ToggleTerm<cr>]], { desc = "Toggle Main Terminal" })
+vim.api.nvim_set_keymap("n", "<leader>ta", [[<cmd>ToggleTermToggleAll<cr>]], { desc = "Toggle All Terminals" })
+
+vim.api.nvim_set_keymap("i", "<c-t>", "<cmd>ToggleTerm<cr>", { silent = true, desc = "toggle terminal" })
+vim.api.nvim_set_keymap("t", "<c-t>", "<cmd>ToggleTerm<cr>", { silent = true, desc = "toggle terminal" })
+vim.api.nvim_set_keymap("n", "<c-t>", "<cmd>ToggleTerm<cr>", { desc = "toggle terminal" })
+vim.api.nvim_set_keymap("n", "<c-/>", "<cmd>gcc<cr>", { desc = "code commenting" })
+
+vim.api.nvim_set_keymap(
+	"n",
+	"gpd",
+	[[<cmd>lua require('goto-preview').goto_preview_definition()<cr>]],
+	{ desc = "preview definition" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"gpt",
+	[[<cmd>lua require('goto-preview').goto_preview_type_definition()<cr>]],
+	{ desc = "preview type definition" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"gpi",
+	[[<cmd>lua require('goto-preview').goto_preview_implementation()<cr>]],
+	{ desc = "preview implementation" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"gP",
+	[[<cmd>lua require('goto-preview').close_all_win()<cr>]],
+	{ desc = "close all previews" }
+)
+vim.api.nvim_set_keymap(
+	"n",
+	"gpr",
+	[[<cmd>lua require('goto-preview').goto_preview_references()<cr>]],
+	{ desc = "preview references" }
+)
+
+vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
+
+vim.api.nvim_set_keymap("n", "<c-e>", "<cmd>NvimTreeToggle<cr>", { silent = true, desc = "toggle explorer" })
+
+vim.api.nvim_set_keymap("n", "zz", [[<cmd>spellr<cr>]], {})
+
+vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]], { desc = "code action" })
+
+vim.keymap.set("n", "<c-n>", function()
+	require("functions").scratch_pad(function(content)
+		vim.fn.setreg("+", content)
+	end)
+end, { desc = "open scratch pad" })
 
 vim.keymap.set("n", "<leader>l", function()
-  require("lsp_lines").toggle()
+	require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
