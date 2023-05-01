@@ -120,8 +120,8 @@ local get_newline = function()
 	end
 end
 
-local nui_scratch = function(callback) -- callback gets the content from the scratch_pad
-	if vim.g.scratch_open == 1 then
+local nui_copy_pad = function(callback) -- callback gets the content from the copy_pad
+	if vim.g.copy_pad_open == 1 then
 		return
 	end
 
@@ -134,7 +134,7 @@ local nui_scratch = function(callback) -- callback gets the content from the scr
 		border = {
 			style = "rounded",
 			text = {
-				bottom = "scratch pad",
+				bottom = "copy pad",
 				bottom_align = "center",
 			},
 			padding = { 1, 1 },
@@ -152,19 +152,25 @@ local nui_scratch = function(callback) -- callback gets the content from the scr
 
 	-- mount/open the component
 	popup:mount()
+
+	if vim.g.scratch_pad_content then
+		vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, vim.g.scratch_pad_content)
+	end
+
 	vim.cmd([[set syntax=markdown]])
-	vim.g.scratch_open = 1
+	vim.g.copy_pad_open = 1
 
 	local exit_action = function()
 		local popup_buffer = popup.bufnr
 		local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
+    vim.g.scratch_pad_content = lines
 		local content = table.concat(lines, get_newline())
 
 		callback(content)
 		-- vim.fn.setreg("+", content)
 
 		popup:unmount()
-		vim.g.scratch_open = 0
+		vim.g.copy_pad_open = 0
 	end
 
 	-- unmount component when cursor leaves buffer
@@ -178,5 +184,5 @@ return {
 	disabled_on = disabled_on,
 	quoter = quoter,
 	dashboard_footer = random_footer,
-	scratch_pad = nui_scratch,
+	copy_pad = nui_copy_pad,
 }

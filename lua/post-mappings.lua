@@ -136,9 +136,15 @@ vim.api.nvim_set_keymap("n", "zz", [[<cmd>spellr<cr>]], {})
 
 vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]], { desc = "code action" })
 
-vim.keymap.set("n", "<c-n>", function()
-	require("functions").scratch_pad(function(content)
+vim.keymap.set("n", "<c-N>", function()
+	require("functions").copy_pad(function(content)
 		vim.fn.setreg("+", content)
+	end)
+end, { desc = "open copy pad" })
+
+vim.keymap.set("n", "<c-n>", function()
+	require("functions").copy_pad(function(content)
+		-- Decide what to do with the content
 	end)
 end, { desc = "open scratch pad" })
 
