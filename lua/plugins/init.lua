@@ -20,6 +20,16 @@ return {
 	{ "preservim/vim-markdown" },
 	{ "neovim/nvim-lspconfig" },
 	{ "jose-elias-alvarez/null-ls.nvim" },
+	{ "mfussenegger/nvim-dap" },
+	{
+		"rcarriga/nvim-dap-ui",
+		config = function()
+			vim.cmd([[vnoremap <c-;> <Cmd>lua require("dapui").eval()<CR>]])
+		end,
+		dependencies = {
+			"jay-babu/mason-nvim-dap.nvim",
+		},
+	},
 	{
 		"williamboman/mason.nvim",
 		config = function()
@@ -44,6 +54,17 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		config = require("plugins.config.mason-null-ls"),
+	},
+	{
+		"jay-babu/mason-nvim-dap.nvim",
+		config = function()
+			require("plugins.config.nvim-dap")()
+			require("mason-nvim-dap").setup()
+		end,
+		dependencies = {
+			"williamboman/mason.nvim",
+			"mfussenegger/nvim-dap",
+		},
 	},
 	{ "nvim-lua/plenary.nvim" },
 	{ "nvim-telescope/telescope.nvim" },
@@ -293,5 +314,11 @@ return {
 			vim.diagnostic.config({ virtual_lines = false })
 		end,
 	},
-	{},
+	{
+		enabled = false,
+		"jbyuki/instant.nvim", -- This doesn't work as expected
+		config = function()
+			vim.cmd([[let g:instant_username = "nishant"]])
+		end,
+	},
 }

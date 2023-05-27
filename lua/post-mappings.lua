@@ -151,3 +151,8 @@ end, { desc = "open scratch pad" })
 vim.keymap.set("n", "<leader>l", function()
 	require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
+
+
+vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next Buffer" })
+vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })
+

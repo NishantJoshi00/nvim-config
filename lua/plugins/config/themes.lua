@@ -4,6 +4,6 @@ return function()
 	if require("utils").is_day() then
 		vim.cmd([[colorscheme melange]])
 	else
-		vim.cmd([[colorscheme catppuccin]])
+		vim.cmd([[colorscheme tokyodark]])
 	end
 end

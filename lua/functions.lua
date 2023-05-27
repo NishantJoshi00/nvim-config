@@ -134,7 +134,7 @@ local nui_copy_pad = function(callback) -- callback gets the content from the co
 		border = {
 			style = "rounded",
 			text = {
-				bottom = "copy pad",
+				bottom = "scratch pad",
 				bottom_align = "center",
 			},
 			padding = { 1, 1 },
