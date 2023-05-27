@@ -321,4 +321,7 @@ return {
 			vim.cmd([[let g:instant_username = "nishant"]])
 		end,
 	},
+  {
+    "gyim/vim-boxdraw"
+  },
 }

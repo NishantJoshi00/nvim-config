@@ -120,6 +120,65 @@ local get_newline = function()
 	end
 end
 
+local point_search = function()
+	local Input = require("nui.input")
+	local event = require("nui.utils.autocmd").event
+
+	local string_parser = function(data)
+		local regex = "^(.-):?(%d*):?(%d*)$"
+
+		local file_path, line_no, col_no = string.match(data, regex)
+
+		local file_exists = vim.fn.filereadable(file_path) > 0
+
+		if file_exists == false then
+			return
+		end
+
+		vim.cmd("edit " .. file_path)
+
+		if line_no == nil then
+			return
+		end
+		vim.cmd(":" .. line_no)
+
+		if col_no == nil then
+			return
+		end
+
+		vim.cmd(col_no .. "|")
+	end
+
+	local input = Input({
+		position = "50%",
+		size = {
+			width = 40,
+		},
+		border = {
+			style = "rounded",
+			text = {
+				top = "[point search]",
+				top_align = "center",
+			},
+		},
+		win_options = {
+			winhighlight = "Normal:Normal,FloatBorder:Normal",
+		},
+	}, {
+		prompt = "% ",
+		on_close = function() end,
+		on_submit = function(value)
+			string_parser(value)
+		end,
+	})
+
+	input:mount()
+
+	input:on(event.BufLeave, function()
+		input:unmount()
+	end)
+end
+
 local nui_copy_pad = function(callback) -- callback gets the content from the copy_pad
 	if vim.g.copy_pad_open == 1 then
 		return
@@ -163,7 +222,7 @@ local nui_copy_pad = function(callback) -- callback gets the content from the co
 	local exit_action = function()
 		local popup_buffer = popup.bufnr
 		local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
-    vim.g.scratch_pad_content = lines
+		vim.g.scratch_pad_content = lines
 		local content = table.concat(lines, get_newline())
 
 		callback(content)
@@ -185,4 +244,5 @@ return {
 	quoter = quoter,
 	dashboard_footer = random_footer,
 	copy_pad = nui_copy_pad,
+	point_search = point_search,
 }
