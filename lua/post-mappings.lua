@@ -156,5 +156,8 @@ vim.keymap.set("n", "<leader>l", function()
 	require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
 
+-- vim.keymap.set("n", "<leader>test", function()
+-- end, { desc = "Testing Lua" })
+
 vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next Buffer" })
 vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })

@@ -5,8 +5,8 @@ local rust_analyzer_config = function()
 			on_attach = function(_, bufnr)
 				vim.keymap.set(
 					"n",
-					"<c-space>",
-					rt.hover_actions.hover_actions,
+					"<leader>q",
+					"<cmd>RustHoverActions<cr>",
 					{ buffer = bufnr, desc = "Rust Hover Action" }
 				)
 				vim.keymap.set(
@@ -28,6 +28,7 @@ local rust_analyzer_config = function()
 					"<cmd>lua vim.lsp.buf.code_action()<cr>",
 					{ desc = "Rust Code Action" }
 				)
+
 				vim.api.nvim_set_keymap(
 					"v",
 					"<c-.>",
