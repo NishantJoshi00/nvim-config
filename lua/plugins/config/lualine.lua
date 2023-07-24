@@ -34,6 +34,17 @@ return function()
 		end,
 	}
 
+	local side_buffer = function()
+		local size = {
+			i = "████",
+			n = "█",
+			v = "██",
+			V = "██",
+			[""] = "███",
+		}
+		return size[vim.fn.mode()] or "█"
+	end
+
 	-- Config
 	local config = {
 		options = {
@@ -103,16 +114,7 @@ return function()
 	}
 
 	ins_left({
-		function()
-			local size = {
-				i = "████",
-				n = "█",
-				v = "██",
-				V = "██",
-				[""] = "███",
-			}
-			return size[vim.fn.mode()] or "█"
-		end,
+		side_buffer,
 		color = function()
 			return { fg = mode_color[vim.fn.mode()] }
 		end, -- Sets highlighting of component
@@ -122,33 +124,21 @@ return function()
 	ins_left({
 		-- mode component
 		function()
+			local mode_look = {
+        c = "󰘳 COMMAND",
+				n = "󰄛 NORMAL",
+				i = "󰩃 INSERT",
+				v = " VISUAL",
+				[""] = " VISUAL BLOCK",
+				V = " VISUAL LINE",
+				no = " PENDING",
+				t = " TERMINAL",
+			}
 			-- return ''
-			return "⽕ " .. vim.fn.mode()
+			return mode_look[vim.fn.mode()] or "⽕ " .. vim.fn.mode()
 		end,
 		color = function()
 			-- auto change color according to neovims mode
-			local mode_color = {
-				n = colors.red,
-				i = colors.green,
-				v = colors.blue,
-				[""] = colors.blue,
-				V = colors.blue,
-				c = colors.magenta,
-				no = colors.red,
-				s = colors.orange,
-				S = colors.orange,
-				[""] = colors.orange,
-				ic = colors.yellow,
-				R = colors.violet,
-				Rv = colors.violet,
-				cv = colors.red,
-				ce = colors.red,
-				r = colors.cyan,
-				rm = colors.cyan,
-				["r?"] = colors.cyan,
-				["!"] = colors.red,
-				t = colors.red,
-			}
 			return { fg = mode_color[vim.fn.mode()] }
 		end,
 		padding = { right = 1 },
@@ -247,16 +237,7 @@ return function()
 	})
 
 	ins_right({
-		function()
-			local size = {
-				i = "████",
-				n = "█",
-				v = "██",
-				V = "██",
-				[""] = "███",
-			}
-			return size[vim.fn.mode()] or "█"
-		end,
+		side_buffer,
 		color = function()
 			return { fg = mode_color[vim.fn.mode()] }
 		end, -- Sets highlighting of component

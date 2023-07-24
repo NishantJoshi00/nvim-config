@@ -178,6 +178,10 @@ local point_search = function()
 	input:on(event.BufLeave, function()
 		input:unmount()
 	end)
+
+	input:map("n", "<esc>", function()
+		input:unmount()
+	end)
 end
 
 local nui_copy_pad = function(callback) -- callback gets the content from the copy_pad
@@ -237,6 +241,7 @@ local nui_copy_pad = function(callback) -- callback gets the content from the co
 	popup:on(event.BufLeave, exit_action)
 
 	popup:map("n", "<esc>", exit_action)
+	popup:map("n", ":", exit_action)
 end
 
 return {

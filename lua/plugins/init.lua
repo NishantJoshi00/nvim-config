@@ -43,6 +43,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"simrat39/rust-tools.nvim",
 			"williamboman/mason.nvim",
+      "folke/neodev.nvim"
 		},
 		config = require("plugins.config.mason-lspconfig"),
 	},
@@ -124,7 +125,13 @@ return {
 		},
 		config = require("plugins.config.dashboard-nvim"),
 	},
-	{ "ggandor/lightspeed.nvim" },
+	-- { "ggandor/lightspeed.nvim" },
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = require("plugins.config.flash").key,
+	},
 	{
 		"akinsho/bufferline.nvim",
 		config = function()
@@ -325,4 +332,5 @@ return {
 		"gyim/vim-boxdraw",
 	},
 	{ "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
+	{ "folke/neodev.nvim", opts = {} },
 }

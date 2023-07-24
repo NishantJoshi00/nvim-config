@@ -5,6 +5,11 @@ local wk = require("which-key")
 -- NERDTree mappings
 vim.api.nvim_set_keymap("n", "<leader>n", [[<cmd>NvimTreeFocus<cr>]], { desc = "Focus Nerd Tree" })
 vim.api.nvim_set_keymap("n", "<leader>e", [[<cmd>NvimTreeToggle<cr>]], { desc = "Toggle Nerd Tree" })
+vim.keymap.set("n", "<c-e>", function()
+	local api = require("nvim-tree.api")
+	api.tree.toggle({ focus = false })
+end, { desc = "Toggle Nerd Tree" })
+
 -- Lsp
 vim.api.nvim_set_keymap("n", "<leader>I", [[<cmd>lua vim.lsp.buf.hover()<cr>]], { desc = "View function signature" })
 vim.api.nvim_set_keymap(
@@ -130,8 +135,6 @@ vim.api.nvim_set_keymap(
 
 vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
 
-vim.api.nvim_set_keymap("n", "<c-e>", "<cmd>NvimTreeToggle<cr>", { silent = true, desc = "toggle explorer" })
-
 vim.api.nvim_set_keymap("n", "zz", [[<cmd>spellr<cr>]], {})
 
 vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]], { desc = "code action" })
@@ -155,6 +158,18 @@ end)
 vim.keymap.set("n", "<leader>l", function()
 	require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
+
+vim.keymap.set("n", "'", function()
+	require("macro-recorder").repetable_macro()
+end, { desc = "Repeat Macro" })
+
+vim.keymap.set("n", "<leader>sm", function()
+	require("macro-recorder").select_macro()
+end, { desc = "Select Macro" })
+
+vim.keymap.set("n", "<leader>gb", function()
+	vim.cmd([[Gitsigns blame_line]])
+end, { desc = "Git blame" })
 
 -- vim.keymap.set("n", "<leader>test", function()
 -- end, { desc = "Testing Lua" })
