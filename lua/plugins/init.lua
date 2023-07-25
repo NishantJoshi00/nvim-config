@@ -43,9 +43,16 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"simrat39/rust-tools.nvim",
 			"williamboman/mason.nvim",
-      "folke/neodev.nvim"
+			"folke/neodev.nvim",
+			"VidocqH/lsp-lens.nvim",
 		},
 		config = require("plugins.config.mason-lspconfig"),
+	},
+	{
+		"VidocqH/lsp-lens.nvim",
+		config = function()
+			require("lsp-lens").setup({})
+		end,
 	},
 	{
 		"jay-babu/mason-null-ls.nvim",
@@ -185,10 +192,6 @@ return {
 	},
 	{ "airblade/vim-gitgutter" },
 	{
-		"beauwilliams/focus.nvim",
-		config = require("plugins.config.focus"),
-	},
-	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
@@ -196,10 +199,12 @@ return {
 		config = require("plugins.config.lualine"),
 	},
 	{
-		"j-hui/fidget.nvim",
 		dependencies = {
 			"neovim/nvim-lspconfig",
 		},
+		"j-hui/fidget.nvim",
+		tag = "legacy",
+		event = "LspAttach",
 		config = function()
 			require("fidget").setup({
 				text = {
