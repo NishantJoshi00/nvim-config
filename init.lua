@@ -11,3 +11,5 @@ require("post-mappings")
 require("masking")
 
 require("custom")
+
+vim.cmd([[set rtp+=~/.config/nvim/custom_ffi]])
