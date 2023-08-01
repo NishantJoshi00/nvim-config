@@ -1,12 +1,12 @@
 use nvim_oxi as oxi;
 use oxi::{Dictionary, Function};
 
+type Result<T> = std::result::Result<T, FError>;
+
 #[derive(thiserror::Error, Debug)]
-#[error(transparent)]
-pub struct WrapperError(#[from] anyhow::Error);
-
-type Result<T> = std::result::Result<T, WrapperError>;
-
+enum FError {
+    // #[error(transparent)]
+}
 #[oxi::module]
 fn custom_ffi() -> oxi::Result<Dictionary> {
     Ok(Dictionary::from_iter([("hi", Function::from_fn(hello))]))
@@ -15,5 +15,3 @@ fn custom_ffi() -> oxi::Result<Dictionary> {
 fn hello(_: ()) -> Result<String> {
     Ok("Hello, World!".to_string())
 }
-
-
