@@ -338,4 +338,21 @@ return {
 	},
 	{ "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
 	{ "folke/neodev.nvim", opts = {} },
+	{
+		"stevearc/dressing.nvim",
+		opts = {},
+		config = require("plugins.config.dressing"),
+	},
+	{
+		"stevearc/overseer.nvim",
+		opts = {},
+    config = require("plugins.config.overseer")
+	},
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = require("plugins.config.oil"),
+	},
 }

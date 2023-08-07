@@ -171,6 +171,11 @@ vim.keymap.set("n", "<leader>gb", function()
 	vim.cmd([[Gitsigns blame_line]])
 end, { desc = "Git blame" })
 
+vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+
+vim.keymap.set("n", "<leader>oo", require("overseer").toggle, { desc = "Toggle Overseer" })
+vim.keymap.set("n", "<leader>oa", require("overseer").run_template, { desc = "Run task from templates" })
+
 -- vim.keymap.set("n", "<leader>test", function()
 -- end, { desc = "Testing Lua" })
 
