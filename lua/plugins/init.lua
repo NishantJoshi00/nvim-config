@@ -7,6 +7,7 @@ return {
 			"rebelot/kanagawa.nvim",
 			"kvrohit/mellow.nvim",
 			"savq/melange-nvim",
+      "Alexis12119/nightly.nvim"
 		},
 	},
 	{ "rebelot/kanagawa.nvim" },
