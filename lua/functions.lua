@@ -243,6 +243,14 @@ local nui_copy_pad = function(callback) -- callback gets the content from the co
 	popup:map("n", ":", exit_action)
 end
 
+local get_current_location = function(callback)
+	local filename = vim.fn.expand("%")
+	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+
+  callback(filename .. ":" .. row .. ":" .. col)
+
+end
+
 return {
 	rust_analyzer_config = rust_analyzer_config,
 	disabled_on = disabled_on,
@@ -250,4 +258,5 @@ return {
 	dashboard_footer = random_footer,
 	copy_pad = nui_copy_pad,
 	point_search = point_search,
+	get_current_location = get_current_location,
 }

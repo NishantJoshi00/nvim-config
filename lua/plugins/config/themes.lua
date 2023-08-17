@@ -17,5 +17,6 @@ require("nightly").setup({
 		vim.cmd([[colorscheme nightly]])
 	else
 		vim.cmd([[colorscheme tokyodark]])
+		vim.cmd([[colorscheme nightly]])
 	end
 end

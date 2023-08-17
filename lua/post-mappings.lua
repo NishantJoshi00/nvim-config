@@ -139,6 +139,12 @@ vim.api.nvim_set_keymap("n", "zz", [[<cmd>spellr<cr>]], {})
 
 vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]], { desc = "code action" })
 
+vim.keymap.set("n", "<leader><c-p>", function()
+	require("functions").get_current_location(function(content)
+		vim.fn.setreg("+", content)
+	end)
+end)
+
 vim.keymap.set("n", "<c-N>", function()
 	require("functions").copy_pad(function(content)
 		vim.fn.setreg("+", content)
