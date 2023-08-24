@@ -7,7 +7,7 @@ return {
 			"rebelot/kanagawa.nvim",
 			"kvrohit/mellow.nvim",
 			"savq/melange-nvim",
-      "Alexis12119/nightly.nvim"
+			"Alexis12119/nightly.nvim",
 		},
 	},
 	{ "rebelot/kanagawa.nvim" },
@@ -347,7 +347,7 @@ return {
 	{
 		"stevearc/overseer.nvim",
 		opts = {},
-    config = require("plugins.config.overseer")
+		config = require("plugins.config.overseer"),
 	},
 	{
 		"stevearc/oil.nvim",
@@ -355,5 +355,14 @@ return {
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = require("plugins.config.oil"),
+	},
+	{
+		"willothy/flatten.nvim",
+		config = true,
+		-- or pass configuration with
+		-- opts = {  }
+		-- Ensure that it runs first to minimize delay when opening file from terminal
+		lazy = false,
+		priority = 1001,
 	},
 }

@@ -21,4 +21,3 @@ fn custom_ffi() -> oxi::Result<Dictionary> {
 fn hello(_: ()) -> Result<String> {
     Ok("Hello, World!".to_string())
 }
-

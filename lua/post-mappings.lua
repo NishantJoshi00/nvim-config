@@ -177,6 +177,19 @@ vim.keymap.set("n", "<leader>gb", function()
 	vim.cmd([[Gitsigns blame_line]])
 end, { desc = "Git blame" })
 
+vim.g.lsp_hidden = false
+vim.keymap.set("n", "<leader>hl", function()
+	if vim.g.lsp_hidden then
+		vim.diagnostic.config({ virtual_text = true })
+		vim.g.lsp_hidden = true
+	else
+		vim.diagnostic.config({ virtual_text = false })
+		vim.g.lsp_hidden = false
+	end
+end, { desc = "Toggle Hiding Lsp Hints" })
+
+vim.api.nvim_set_keymap("n", "<leader>hf", [[<cmd>noh]], { desc = "Hide Finds" })
+
 vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
 
 vim.keymap.set("n", "<leader>oo", require("overseer").toggle, { desc = "Toggle Overseer" })

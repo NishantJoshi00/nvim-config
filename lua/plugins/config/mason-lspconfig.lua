@@ -28,16 +28,16 @@ return function()
 
 		-- dedicated handlers
 		["rust_analyzer"] = require("functions").rust_analyzer_config,
-    ["lua_ls"] = function ()
-      require("lspconfig").lua_ls.setup({
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = "Replace"
-            }
-          }
-        }
-      })
-    end
+		["lua_ls"] = function()
+			require("lspconfig").lua_ls.setup({
+				settings = {
+					Lua = {
+						completion = {
+							callSnippet = "Replace",
+						},
+					},
+				},
+			})
+		end,
 	})
 end
