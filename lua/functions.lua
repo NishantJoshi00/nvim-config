@@ -183,8 +183,10 @@ local point_search = function()
 	end)
 end
 
-local nui_copy_pad = function(callback) -- callback gets the content from the copy_pad
-	if vim.g.copy_pad_open == 1 then
+vim.g.copy_pad_open = {}
+vim.g.scratch_pad_content = {}
+local nui_copy_pad = function(name, callback) -- callback gets the content from the copy_pad
+	if vim.g.copy_pad_open[name] == 1 then
 		return
 	end
 
@@ -197,7 +199,7 @@ local nui_copy_pad = function(callback) -- callback gets the content from the co
 		border = {
 			style = "rounded",
 			text = {
-				bottom = "scratch pad",
+				bottom = name,
 				bottom_align = "center",
 			},
 			padding = { 1, 1 },
@@ -216,24 +218,24 @@ local nui_copy_pad = function(callback) -- callback gets the content from the co
 	-- mount/open the component
 	popup:mount()
 
-	if vim.g.scratch_pad_content then
-		vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, vim.g.scratch_pad_content)
+	if vim.g.scratch_pad_content[name] then
+		vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, vim.g.scratch_pad_content[name])
 	end
 
 	vim.cmd([[set syntax=markdown]])
-	vim.g.copy_pad_open = 1
+	vim.g.copy_pad_open[name] = 1
 
 	local exit_action = function()
 		local popup_buffer = popup.bufnr
 		local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
-		vim.g.scratch_pad_content = lines
+		vim.g.scratch_pad_content[name] = lines
 		local content = table.concat(lines, get_newline())
 
 		callback(content)
 		-- vim.fn.setreg("+", content)
 
 		popup:unmount()
-		vim.g.copy_pad_open = 0
+		vim.g.copy_pad_open[name] = 0
 	end
 
 	-- unmount component when cursor leaves buffer

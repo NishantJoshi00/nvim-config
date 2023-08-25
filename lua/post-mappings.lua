@@ -145,14 +145,14 @@ vim.keymap.set("n", "<leader><c-p>", function()
 	end)
 end)
 
-vim.keymap.set("n", "<c-N>", function()
-	require("functions").copy_pad(function(content)
+vim.keymap.set("n", "<leader><c-n>", function()
+	require("functions").copy_pad("copy_pad", function(content)
 		vim.fn.setreg("+", content)
 	end)
 end, { desc = "open copy pad" })
 
 vim.keymap.set("n", "<c-n>", function()
-	require("functions").copy_pad(function(content)
+	require("functions").copy_pad("scratch_pad", function(content)
 		-- Decide what to do with the content
 	end)
 end, { desc = "open scratch pad" })
@@ -181,14 +181,14 @@ vim.g.lsp_hidden = false
 vim.keymap.set("n", "<leader>hl", function()
 	if vim.g.lsp_hidden then
 		vim.diagnostic.config({ virtual_text = true })
-		vim.g.lsp_hidden = true
+		vim.g.lsp_hidden = false
 	else
 		vim.diagnostic.config({ virtual_text = false })
-		vim.g.lsp_hidden = false
+		vim.g.lsp_hidden = true
 	end
 end, { desc = "Toggle Hiding Lsp Hints" })
 
-vim.api.nvim_set_keymap("n", "<leader>hf", [[<cmd>noh]], { desc = "Hide Finds" })
+vim.api.nvim_set_keymap("n", "<leader>hf", [[<cmd>noh<cr>]], { desc = "Hide Finds" })
 
 vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
 
