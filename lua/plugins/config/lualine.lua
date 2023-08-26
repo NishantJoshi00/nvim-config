@@ -78,7 +78,23 @@ return function()
 			lualine_c = {},
 			lualine_x = {},
 		},
+		-- tabline = {
+		-- 	lualine_a = {},
+		-- 	lualine_b = {},
+		-- 	lualine_c = {},
+		-- 	lualine_x = {},
+		-- 	lualine_y = {},
+		-- 	lualine_z = {},
+		-- },
 	}
+
+	local function ins_top_left(component)
+		table.insert(config.tabline.lualine_c, component)
+	end
+
+	local function ins_top_right(component)
+		table.insert(config.tabline.lualine_x, component)
+	end
 
 	-- Inserts a component in lualine_c at left section
 	local function ins_left(component)
@@ -125,7 +141,7 @@ return function()
 		-- mode component
 		function()
 			local mode_look = {
-        c = "󰘳 COMMAND",
+				c = "󰘳 COMMAND",
 				n = "󰄛 NORMAL",
 				i = "󰩃 INSERT",
 				v = " VISUAL",
@@ -157,6 +173,16 @@ return function()
 	})
 
 	ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+
+	ins_left({
+		function()
+			if vim.g.lsp_hidden then
+				return "[lsp:hidden]"
+			else
+				return "[lsp:inline]"
+			end
+		end,
+	})
 
 	ins_right({
 		"o:encoding", -- option component same as &encoding in viml
