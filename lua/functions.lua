@@ -218,24 +218,31 @@ local nui_copy_pad = function(name, callback) -- callback gets the content from 
 	-- mount/open the component
 	popup:mount()
 
+	local global_insert = function(old, key, value)
+		old[key] = value
+		return old
+	end
+
 	if vim.g.scratch_pad_content[name] then
 		vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, vim.g.scratch_pad_content[name])
 	end
 
 	vim.cmd([[set syntax=markdown]])
-	vim.g.copy_pad_open[name] = 1
+	vim.g.copy_pad_open = global_insert(vim.g.copy_pad_open, name, 1)
+
+	print(vim.inspect(vim.g.copy_pad_open))
 
 	local exit_action = function()
 		local popup_buffer = popup.bufnr
 		local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
-		vim.g.scratch_pad_content[name] = lines
+		vim.g.scratch_pad_content = global_insert(vim.g.scratch_pad_content, name, lines)
 		local content = table.concat(lines, get_newline())
 
 		callback(content)
 		-- vim.fn.setreg("+", content)
 
 		popup:unmount()
-		vim.g.copy_pad_open[name] = 0
+		vim.g.copy_pad_open = global_insert(vim.g.copy_pad_open, name, 0)
 	end
 
 	-- unmount component when cursor leaves buffer
@@ -249,8 +256,7 @@ local get_current_location = function(callback)
 	local filename = vim.fn.expand("%")
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
 
-  callback(filename .. ":" .. row .. ":" .. col)
-
+	callback(filename .. ":" .. row .. ":" .. col)
 end
 
 return {
