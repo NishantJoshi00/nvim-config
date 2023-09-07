@@ -44,6 +44,7 @@ return {
       "williamboman/mason.nvim",
       "folke/neodev.nvim",
       "VidocqH/lsp-lens.nvim",
+      "mrcjkb/haskell-tools.nvim"
     },
     config = require("plugins.config.mason-lspconfig"),
   },
@@ -363,4 +364,12 @@ return {
     lazy = false,
     priority = 1001,
   },
+  {
+    'mrcjkb/haskell-tools.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    branch = '2.x.x', -- Recommended
+    ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
+  }
 }
