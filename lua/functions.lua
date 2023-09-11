@@ -139,13 +139,14 @@ local point_search = function()
 
 		vim.cmd("edit " .. file_path)
 
-		if line_no == nil then
+		if line_no == "" then
 			line_no = "0"
 		end
 
-		if col_no == nil then
+		if col_no == "" then
 			col_no = "0"
 		end
+
 		vim.cmd("cal cursor(" .. line_no .. ", " .. col_no .. ")")
 	end
 
