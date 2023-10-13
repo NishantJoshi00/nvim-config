@@ -161,6 +161,11 @@ vim.keymap.set("n", "<c-p>", function()
   require("functions").point_search()
 end)
 
+
+vim.keymap.set("n", "<leader>fl", function()
+  require("functions").glob_search()
+end)
+
 vim.keymap.set("n", "<leader>l", function()
   require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })

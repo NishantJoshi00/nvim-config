@@ -79,6 +79,8 @@ local rust_analyzer_config = function()
 			},
 		},
 	})
+
+	require("quickfix").rust_quickfix()
 end
 
 local disabled_on = function(systems)
@@ -260,6 +262,45 @@ local get_current_location = function(callback)
 	callback(filename .. ":" .. row .. ":" .. col)
 end
 
+local glob_search = function()
+	local Input = require("nui.input")
+	local event = require("nui.utils.autocmd").event
+
+	local input = Input({
+		position = { row = "90%", col = "50%" },
+		size = {
+			width = 40,
+		},
+		border = {
+			style = "rounded",
+			text = {
+				top = "[glob_search]",
+				top_align = "center",
+			},
+		},
+		win_options = {
+			winhighlight = "Normal:Normal,FloatBorder:Normal",
+		},
+	}, {
+		prompt = "% ",
+		on_close = function() end,
+		on_submit = function(value)
+			require("telescope.builtin").live_grep({
+				glob_pattern = value,
+			})
+		end,
+	})
+
+	input:mount()
+
+	local exit_action = function()
+		input:unmount()
+	end
+
+	input:on(event.BufLeave, exit_action)
+	input:map("n", "<esc>", exit_action)
+end
+
 return {
 	rust_analyzer_config = rust_analyzer_config,
 	disabled_on = disabled_on,
@@ -268,4 +309,5 @@ return {
 	copy_pad = nui_copy_pad,
 	point_search = point_search,
 	get_current_location = get_current_location,
+  glob_search = glob_search
 }
