@@ -86,6 +86,8 @@ vim.api.nvim_set_keymap(
   { desc = "Search Builtin" }
 )
 
+vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>Telescope AST_grep<cr>]], { desc = "AST Search" })
+
 vim.api.nvim_set_keymap(
   "n",
   "<leader>fs",
