@@ -1,3 +1,3 @@
 return function()
-	require("dressing").setup()
+  require("dressing").setup()
 end

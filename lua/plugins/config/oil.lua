@@ -1,3 +1,3 @@
 return function()
-	require("oil").setup()
+  require("oil").setup()
 end

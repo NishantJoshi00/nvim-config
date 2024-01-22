@@ -1,6 +1,4 @@
-
-
---[[ 
+--[[
 --
 -- How to use quickfix list? search only
 --
@@ -10,8 +8,8 @@
 --
 -- ]]
 
-local rust_quickfix = function ()
-  vim.cmd[[set efm=%Eerror\[%*[0-9E]\]:\ %m,%C\ \ \ \ -->\ %f:%l:%c,%Z]]
+local rust_quickfix = function()
+  vim.cmd [[set efm=%Eerror\[%*[0-9E]\]:\ %m,%C\ \ \ \ -->\ %f:%l:%c,%Z]]
 end
 
 
