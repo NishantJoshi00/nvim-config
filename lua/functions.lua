@@ -36,7 +36,7 @@ local rust_analyzer_config = function()
 					{ desc = "Rust Code Action" }
 				)
 			end,
-			cmd = { "ra-multiplex" },
+			-- cmd = { "ra-multiplex" },
 			settings = {
 				["rust_analyzer"] = {
 					inlayHints = {

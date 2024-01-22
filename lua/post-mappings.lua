@@ -168,7 +168,7 @@ vim.keymap.set("n", "<leader>fl", function()
   require("functions").glob_search()
 end)
 
-vim.keymap.set("n", "<leader>l", function()
+vim.keymap.set("n", "<leader>tl", function()
   require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
 
@@ -207,3 +207,21 @@ vim.keymap.set("n", "<leader>oa", require("overseer").run_template, { desc = "Ru
 
 vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next Buffer" })
 vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })
+
+
+
+vim.api.nvim_set_keymap("n", "<leader>co", [[<cmd>copen<cr>]], { desc = "Open Quickfix List" })
+vim.api.nvim_set_keymap("n", "<leader>cc", [[<cmd>ccl<cr>]], { desc = "Close Quickfix List" })
+vim.api.nvim_set_keymap("n", "<leader>ct", [[<cmd>cw<cr>]], { desc = "Toggle List" })
+vim.api.nvim_set_keymap("n", "<leader>cn", [[<cmd>cn<cr>]], { desc = "Next Location" })
+vim.api.nvim_set_keymap("n", "<leader>cp", [[<cmd>cp<cr>]], { desc = "Previous Location" })
+
+
+
+
+
+vim.api.nvim_set_keymap("n", "<leader>lo", [[<cmd>copen<cr>]], { desc = "Open Location List" })
+vim.api.nvim_set_keymap("n", "<leader>lc", [[<cmd>ccl<cr>]], { desc = "Close Location List" })
+vim.api.nvim_set_keymap("n", "<leader>lt", [[<cmd>cw<cr>]], { desc = "Toggle Location List" })
+vim.api.nvim_set_keymap("n", "<leader>ln", [[<cmd>cn<cr>]], { desc = "Next Location in Location List" })
+vim.api.nvim_set_keymap("n", "<leader>lp", [[<cmd>cp<cr>]], { desc = "Previous Location in Location List" })
