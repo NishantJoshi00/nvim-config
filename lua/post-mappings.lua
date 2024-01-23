@@ -3,7 +3,6 @@ vim.o.mapleader = " "
 local wk = require("which-key")
 
 -- NERDTree mappings
-vim.api.nvim_set_keymap("n", "<leader>n", [[<cmd>NvimTreeFocus<cr>]], { desc = "Focus Nerd Tree" })
 vim.api.nvim_set_keymap("n", "<leader>e", [[<cmd>NvimTreeToggle<cr>]], { desc = "Toggle Nerd Tree" })
 vim.keymap.set("n", "<c-e>", function()
   local api = require("nvim-tree.api")
@@ -168,7 +167,7 @@ vim.keymap.set("n", "<leader>fl", function()
   require("functions").glob_search()
 end)
 
-vim.keymap.set("n", "<leader>tl", function()
+vim.keymap.set("n", "<leader>l", function()
   require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
 
@@ -216,12 +215,10 @@ vim.api.nvim_set_keymap("n", "<leader>ct", [[<cmd>cw<cr>]], { desc = "Toggle Lis
 vim.api.nvim_set_keymap("n", "<leader>cn", [[<cmd>cn<cr>]], { desc = "Next Location" })
 vim.api.nvim_set_keymap("n", "<leader>cp", [[<cmd>cp<cr>]], { desc = "Previous Location" })
 
+-- Clear notifications
 
-
-
-
-vim.api.nvim_set_keymap("n", "<leader>lo", [[<cmd>copen<cr>]], { desc = "Open Location List" })
-vim.api.nvim_set_keymap("n", "<leader>lc", [[<cmd>ccl<cr>]], { desc = "Close Location List" })
-vim.api.nvim_set_keymap("n", "<leader>lt", [[<cmd>cw<cr>]], { desc = "Toggle Location List" })
-vim.api.nvim_set_keymap("n", "<leader>ln", [[<cmd>cn<cr>]], { desc = "Next Location in Location List" })
-vim.api.nvim_set_keymap("n", "<leader>lp", [[<cmd>cp<cr>]], { desc = "Previous Location in Location List" })
+vim.keymap.set('n', "<leader>nd",
+  function()
+    vim.notify.dismiss({})
+  end,
+  { desc = "Dismiss Notifications" })
