@@ -75,7 +75,7 @@ return {
     },
   },
   { "nvim-lua/plenary.nvim" },
-  { "nvim-telescope/telescope.nvim" },
+  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope") },
   {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
