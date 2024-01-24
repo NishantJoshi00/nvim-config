@@ -6,7 +6,7 @@ return {
       "catppuccin/nvim",
       "rebelot/kanagawa.nvim",
       "kvrohit/mellow.nvim",
-      "savq/melange-nvim",
+      -- "savq/melange-nvim",
       "Alexis12119/nightly.nvim",
     },
   },

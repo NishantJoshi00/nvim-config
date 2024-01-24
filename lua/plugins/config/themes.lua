@@ -13,10 +13,15 @@ return function()
 
   require("custom.theme.catppuccin").config()
 
-  if require("utils").is_day() then
-    vim.cmd([[colorscheme nightly]])
-  else
-    vim.cmd([[colorscheme tokyodark]])
-    vim.cmd([[colorscheme nightly]])
-  end
+  vim.g.theme_choices = {
+    [[colorscheme nightly]],
+    [[colorscheme tokyodark]],
+    [[colorscheme kanagawa-dragon]],
+    [[colorscheme kanagawa]],
+    [[colorscheme mellow]],
+    [[colorscheme lunaperche]],
+    [[colorscheme slate]],
+  };
+
+  vim.cmd(vim.g.theme_choices[1])
 end
