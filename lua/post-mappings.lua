@@ -46,53 +46,54 @@ vim.api.nvim_set_keymap(
   { desc = "Stop Session Recording" }
 )
 
--- Telescope mappings
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>ff",
-  [[<cmd>lua require('telescope.builtin').find_files()<cr>]],
-  { desc = "Find Files" }
-)
-vim.api.nvim_set_keymap(
+local telescope_theme = require("functions").telescope_theme;
+
+vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files(telescope_theme({})) end,
+  { desc = "Find Files" })
+
+vim.keymap.set(
   "n",
   "<leader>fg",
-  [[<cmd>lua require('telescope.builtin').live_grep()<cr>]],
+  function() require('telescope.builtin').live_grep(telescope_theme({})) end,
   { desc = "Live Grep" }
 )
-vim.api.nvim_set_keymap(
+
+vim.keymap.set(
   "n",
   "<leader>fb",
-  [[<cmd>lua require('telescope.builtin').buffers()<cr>]],
+  function() require('telescope.builtin').buffers(telescope_theme({})) end,
   { desc = "Buffers" }
 )
-vim.api.nvim_set_keymap(
+vim.keymap.set(
   "n",
   "<leader>fh",
-  [[<cmd>lua require('telescope.builtin').help_tags()<cr>]],
+  function() require('telescope.builtin').help_tags(telescope_theme({})) end,
   { desc = "Help Tags" }
 )
-vim.api.nvim_set_keymap(
+vim.keymap.set(
   "n",
   "<leader>fa",
-  [[<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>]],
+  function() require('telescope.builtin').lsp_dynamic_workspace_symbols(telescope_theme({})) end,
   { desc = "LSP Search" }
 )
 
-vim.api.nvim_set_keymap(
+vim.keymap.set(
   "n",
   "<leader>fb",
-  [[<cmd>lua require('telescope.builtin').builtin()<cr>]],
+  function() require('telescope.builtin').builtin(telescope_theme({})) end,
   { desc = "Search Builtin" }
 )
 
-vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>Telescope AST_grep<cr>]], { desc = "AST Search" })
 
-vim.api.nvim_set_keymap(
+vim.keymap.set(
   "n",
   "<leader>fs",
-  [[<cmd>lua require('telescope.builtin').spell_suggest()<cr>]],
+  function() require('telescope.builtin').spell_suggest(telescope_theme({})) end,
   { desc = "Suggest Spellings" }
 )
+
+
+vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>Telescope AST_grep<cr>]], { desc = "AST Search" })
 
 -- toggle term
 vim.api.nvim_set_keymap("n", "<leader>tm", [[<cmd>ToggleTerm<cr>]], { desc = "Toggle Main Terminal" })

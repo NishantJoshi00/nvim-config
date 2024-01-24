@@ -285,9 +285,9 @@ local glob_search = function()
     prompt = "% ",
     on_close = function() end,
     on_submit = function(value)
-      require("telescope.builtin").live_grep({
+      require("telescope.builtin").live_grep(telescope_theme({
         glob_pattern = value,
-      })
+      }))
     end,
   })
 
@@ -301,6 +301,11 @@ local glob_search = function()
   input:map("n", "<esc>", exit_action)
 end
 
+local telescope_theme = function(opts)
+  return require("telescope.themes").get_ivy(opts)
+  -- return opts
+end
+
 return {
   rust_analyzer_config = rust_analyzer_config,
   disabled_on = disabled_on,
@@ -309,5 +314,6 @@ return {
   copy_pad = nui_copy_pad,
   point_search = point_search,
   get_current_location = get_current_location,
-  glob_search = glob_search
+  glob_search = glob_search,
+  telescope_theme = telescope_theme
 }
