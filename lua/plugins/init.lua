@@ -381,4 +381,13 @@ return {
       "nvim-telescope/telescope.nvim",
     },
   },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup {
+        enable = true,
+        separator = "_"
+      }
+    end
+  }
 }

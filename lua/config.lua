@@ -11,5 +11,5 @@ vim.o.undofile = true
 
 vim.o.cursorline = true
 
+vim.o.scrolloff = 4
 
--- vim.o.highlight
