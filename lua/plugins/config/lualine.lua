@@ -1,4 +1,4 @@
-return function()
+local custom_config = function()
   -- Eviline config for lualine
   -- Author: shadmansaleh
   -- Credit: glepnir
@@ -34,12 +34,26 @@ return function()
     end,
   }
 
-  local side_buffer = function()
+  local left_side_buffer = function()
     local size = {
       i = "████",
-      n = "█",
-      v = "██",
-      V = "██",
+      n = '',
+      v = '',
+      V = '',
+      [""] = "███",
+    }
+    return size[vim.fn.mode()] or "█"
+  end
+  -- comp.separator = left and { right = '' } or { left = '' }
+  --
+
+
+  local right_side_buffer = function()
+    local size = {
+      i = "████",
+      n = '',
+      v = '',
+      V = '',
       [""] = "███",
     }
     return size[vim.fn.mode()] or "█"
@@ -130,10 +144,10 @@ return function()
   }
 
   ins_left({
-    side_buffer,
+    left_side_buffer,
     color = function()
       return { fg = mode_color[vim.fn.mode()] }
-    end,                             -- Sets highlighting of component
+    end,                               -- Sets highlighting of component
     padding = { left = 0, right = 1 }, -- We don't need space before this
   })
 
@@ -157,7 +171,7 @@ return function()
       -- auto change color according to neovims mode
       return { fg = mode_color[vim.fn.mode()] }
     end,
-    padding = { right = 1 },
+    padding = { right = 2 },
   })
 
   ins_left({
@@ -185,7 +199,7 @@ return function()
   })
 
   ins_right({
-    "o:encoding",     -- option component same as &encoding in viml
+    "o:encoding",       -- option component same as &encoding in viml
     fmt = string.upper, -- I'm not sure why it's upper case either ;)
     cond = conditions.hide_in_width,
     color = { fg = colors.green, gui = "bold" },
@@ -263,7 +277,7 @@ return function()
   })
 
   ins_right({
-    side_buffer,
+    right_side_buffer,
     color = function()
       return { fg = mode_color[vim.fn.mode()] }
     end, -- Sets highlighting of component
@@ -273,3 +287,150 @@ return function()
   -- Now don't forget to initialize lualine
   lualine.setup(config)
 end
+
+local one00 = function()
+  local cmd = vim.cmd
+  -- Lualine configuration
+  local non_language_ft = {
+    'Startify',
+    'NVimTree',
+  }
+
+  local gruvbox = function()
+    local colors = { -- Gruvbox Dark
+      darkgray = "#282828",
+      gray = "#928374",
+      innerbg = nil,
+      outerbg = "#1d2021",
+      normal = "#458487",
+      insert = "#689c69",
+      visual = "#cb231d",
+      replace = "#d69821",
+      command = "#98961a",
+    }
+
+    return {
+      inactive = {
+        a = { fg = colors.gray, bg = colors.outerbg, gui = "bold" },
+        b = { fg = colors.gray, bg = colors.outerbg },
+        c = { fg = colors.gray, bg = colors.innerbg },
+      },
+      visual = {
+        a = { fg = colors.darkgray, bg = colors.visual, gui = "bold" },
+        b = { fg = colors.gray, bg = colors.outerbg },
+        c = { fg = colors.gray, bg = colors.innerbg },
+      },
+      replace = {
+        a = { fg = colors.darkgray, bg = colors.replace, gui = "bold" },
+        b = { fg = colors.gray, bg = colors.outerbg },
+        c = { fg = colors.gray, bg = colors.innerbg },
+      },
+      normal = {
+        a = { fg = colors.darkgray, bg = colors.normal, gui = "bold" },
+        b = { fg = colors.gray, bg = colors.outerbg },
+        c = { fg = colors.gray, bg = colors.innerbg },
+      },
+      insert = {
+        a = { fg = colors.darkgray, bg = colors.insert, gui = "bold" },
+        b = { fg = colors.gray, bg = colors.outerbg },
+        c = { fg = colors.gray, bg = colors.innerbg },
+      },
+      command = {
+        a = { fg = colors.darkgray, bg = colors.command, gui = "bold" },
+        b = { fg = colors.gray, bg = colors.outerbg },
+        c = { fg = colors.gray, bg = colors.innerbg },
+      },
+    }
+  end
+
+  local lsp_info = {
+    function()
+      local msg = ""
+      local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+      local clients = vim.lsp.get_active_clients()
+      if next(clients) == nil then
+        return msg
+      end
+      for _, client in ipairs(clients) do
+        local filetypes = client.config.filetypes
+        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+          return client.name
+        end
+      end
+      return msg
+    end,
+    color = { fg = '#ffffff', gui = 'bold' },
+    separator = "",
+  }
+
+  require('lualine').setup({
+    options = {
+      icons_enabled = true,
+      theme = gruvbox(),
+      -- Separators might look weird for certain fonts (eg Cascadia)
+      component_separators = { left = '', right = '' },
+      -- component_separators = {
+      --   left = '',
+      --   right = ''
+      -- },
+      section_separators = {
+        left = ' ',
+        right = ''
+      },
+      disabled_filetypes = {
+        statusline = {
+          'packer',
+          'NvimTree',
+        },
+        winbar = {
+          'packer',
+          'NvimTree',
+        },
+      },
+      globalstatus = true,
+    },
+    sections = {
+      --lualine_a = {'mode'},
+      lualine_a = { -- BubbleButt
+        {
+          'mode',
+          separator = {
+            left = '',
+            right = ''
+          },
+          right_padding = 0
+        },
+        'searchcount'
+      },
+      lualine_b = { 'branch', 'diff' },
+      lualine_c = {
+        'filetype',
+        {
+          'diagnostics',
+          sources = { 'nvim_diagnostic' },
+          sections = { 'error', 'warn', 'info' },
+        },
+      },
+
+      lualine_x = { 'encoding', 'filesize' },
+      lualine_y = { 'progress' },
+      lualine_z = {
+        'selectioncount',
+        { function() return '' end },
+        lsp_info,
+        'filename',
+        {
+          'location',
+          separator = {
+            left = '',
+            right = ''
+          },
+          left_padding = 0
+        }, -- BubbleButt
+      }
+    },
+  })
+end
+
+-- return custom_config;
+return one00;
