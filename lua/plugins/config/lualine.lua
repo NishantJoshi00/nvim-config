@@ -405,6 +405,7 @@ local one00 = function()
       lualine_b = { 'branch', 'diff' },
       lualine_c = {
         'filetype',
+        'filesize',
         {
           'diagnostics',
           sources = { 'nvim_diagnostic' },
@@ -412,7 +413,7 @@ local one00 = function()
         },
       },
 
-      lualine_x = { 'encoding', 'filesize' },
+      lualine_x = { 'encoding' },
       lualine_y = { 'progress' },
       lualine_z = {
         'selectioncount',

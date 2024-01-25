@@ -212,6 +212,7 @@ vim.keymap.set("n", "<leader>tc", require("functions").theme_choicer, { desc = "
 vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next Buffer" })
 vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })
 
+vim.api.nvim_set_keymap("x", "<leader>p", "\"_dP", { desc = "Special Paste" })
 
 
 vim.api.nvim_set_keymap("n", "<leader>co", [[<cmd>copen<cr>]], { desc = "Open Quickfix List" })
