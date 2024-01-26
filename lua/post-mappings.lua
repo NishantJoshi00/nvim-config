@@ -172,14 +172,6 @@ vim.keymap.set("n", "<leader>l", function()
   require("lsp_lines").toggle()
 end, { desc = "Toggle lsp_lines" })
 
-vim.keymap.set("n", "'", function()
-  require("macro-recorder").repetable_macro()
-end, { desc = "Repeat Macro" })
-
-vim.keymap.set("n", "<leader>sm", function()
-  require("macro-recorder").select_macro()
-end, { desc = "Select Macro" })
-
 vim.keymap.set("n", "<leader>gb", function()
   vim.cmd([[Gitsigns blame_line]])
 end, { desc = "Git blame" })
