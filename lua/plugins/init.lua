@@ -324,7 +324,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require("lsp_lines").setup({})
+      require("lsp_lines").setup()
       vim.diagnostic.config({ virtual_lines = false })
     end,
   },
@@ -386,8 +386,9 @@ return {
     config = function()
       require("treesitter-context").setup {
         enable = true,
-        separator = "_"
+        separator = "─"
       }
     end
-  }
+  },
+  { "github/copilot.vim" },
 }
