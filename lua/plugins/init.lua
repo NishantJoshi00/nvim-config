@@ -10,7 +10,6 @@ return {
       "Alexis12119/nightly.nvim",
     },
   },
-  { "rebelot/kanagawa.nvim" },
   {
     "lewis6991/gitsigns.nvim",
     config = require("plugins.config.gitsigns"),
@@ -390,5 +389,5 @@ return {
       }
     end
   },
-  { "github/copilot.vim" },
+  { "github/copilot.vim", config = require("plugins.config.copilot") },
 }

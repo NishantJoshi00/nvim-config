@@ -1,4 +1,5 @@
 require("bootstrap")
+require("theme")
 
 vim.g.mapleader = " "
 require("pre-mappings")
@@ -7,7 +8,6 @@ require("lazy").setup("plugins")
 -- end
 require("config")
 
-require("theme")
 require("post-mappings")
 require("masking")
 

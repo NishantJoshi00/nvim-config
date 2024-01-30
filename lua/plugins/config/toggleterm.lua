@@ -1,6 +1,6 @@
 return function()
   require("toggleterm").setup({
-    size = 70,
+    size = 30,
     open_mapping = [[<c-t>]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
@@ -9,7 +9,7 @@ return function()
     start_in_insert = true,
     persist_size = true,
     -- direction = 'vertical' | 'horizontal' | 'window' | 'float',
-    direction = "float",
+    direction = "horizontal",
     close_on_exit = true, -- close the terminal window when the process exits
     shell = vim.o.shell, -- change the default shell
     -- This field is only relevant if direction is set to 'float'
