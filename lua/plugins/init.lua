@@ -390,4 +390,5 @@ return {
     end
   },
   { "github/copilot.vim", config = require("plugins.config.copilot") },
+  { "tpope/vim-speeddating" }
 }
