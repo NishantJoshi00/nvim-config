@@ -17,7 +17,7 @@ return {
   { "cohama/lexima.vim" },
   { "preservim/vim-markdown" },
   { "neovim/nvim-lspconfig" },
-  { "jose-elias-alvarez/null-ls.nvim" },
+  { "nvimtools/none-ls.nvim" },
   { "mfussenegger/nvim-dap" },
   {
     "rcarriga/nvim-dap-ui",
@@ -57,7 +57,7 @@ return {
     "jay-babu/mason-null-ls.nvim",
     dependencies = {
       "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
     config = require("plugins.config.mason-null-ls"),

@@ -6,7 +6,6 @@
 -- end
 
 return function()
-  require("mason").setup()
   local null_ls = require("null-ls")
 
   require("mason-null-ls").setup({
