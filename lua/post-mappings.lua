@@ -104,6 +104,9 @@ vim.api.nvim_set_keymap("t", "<c-t>", "<cmd>ToggleTerm<cr>", { silent = true, de
 vim.api.nvim_set_keymap("n", "<c-t>", "<cmd>ToggleTerm<cr>", { desc = "toggle terminal" })
 vim.api.nvim_set_keymap("n", "<c-/>", "<cmd>gcc<cr>", { desc = "code commenting" })
 
+vim.api.nvim_set_keymap("n", "<c-/>", "gcc", { desc = "Comment Code" })
+vim.api.nvim_set_keymap("v", "<c-/>", "gcc", { desc = "Comment Code" })
+
 vim.api.nvim_set_keymap(
   "n",
   "gpd",

@@ -111,13 +111,7 @@ return {
     version = '^4',
     ft = { 'rust' },
   },
-  {
-    "tpope/vim-commentary",
-    config = function()
-      vim.api.nvim_set_keymap("n", "<c-/>", "gcc", { desc = "Comment Code" })
-      vim.api.nvim_set_keymap("v", "<c-/>", "gcc", { desc = "Comment Code" })
-    end,
-  },
+  { "tpope/vim-commentary" },
   {
     "nvim-treesitter/nvim-treesitter",
     config = require("plugins.config.nvim-treesitter"),
@@ -393,6 +387,7 @@ return {
       }
     end
   },
-  { "github/copilot.vim",   config = require("plugins.config.copilot") },
+  { "github/copilot.vim",    config = require("plugins.config.copilot") },
   { "tpope/vim-speeddating" },
+  { "LunarVim/bigfile.nvim", config = function() require("bigfile").config({}) end },
 }
