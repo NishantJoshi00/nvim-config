@@ -27,7 +27,11 @@ return function()
     end,
 
     -- dedicated handlers
-    ["rust_analyzer"] = require("functions").rust_analyzer_config,
+    ["rust_analyzer"] = function()
+      require("functions").rust_analyzer_config()
+
+      require("quickfix").rust_quickfix()
+    end,
     ["hls"] = function()
       -- this requires haskell-tools.nvim, hls, hlint
     end,

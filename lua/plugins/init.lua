@@ -39,7 +39,7 @@ return {
     dependencies = {
       "neovim/nvim-lspconfig",
       "hrsh7th/cmp-nvim-lsp",
-      "simrat39/rust-tools.nvim",
+      'mrcjkb/rustaceanvim',
       "williamboman/mason.nvim",
       "folke/neodev.nvim",
       "VidocqH/lsp-lens.nvim",
@@ -106,7 +106,11 @@ return {
     },
     config = require("plugins.config.nvim-cmp"),
   },
-  { "simrat39/rust-tools.nvim" },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^4',
+    ft = { 'rust' },
+  },
   {
     "tpope/vim-commentary",
     config = function()

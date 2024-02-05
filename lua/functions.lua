@@ -1,42 +1,6 @@
 local rust_analyzer_config = function()
-  local rt = require("rust-tools")
-  rt.setup({
+  vim.g.rustaceanvim = {
     server = {
-      on_attach = function(_, bufnr)
-        vim.keymap.set(
-          "n",
-          "<leader>q",
-          "<cmd>RustHoverActions<cr>",
-          { buffer = bufnr, desc = "Rust Hover Action" }
-        )
-        vim.keymap.set(
-          "n",
-          "<Leader>a",
-          rt.code_action_group.code_action_group,
-          { buffer = bufnr, desc = "Rust Code Action" }
-        )
-        vim.keymap.set(
-          "v",
-          "<c-space>",
-          rt.code_action_group.code_action_group,
-          { buffer = bufnr, desc = "Rust Code Action" }
-        )
-
-        vim.api.nvim_set_keymap(
-          "n",
-          "<c-.>",
-          "<cmd>lua vim.lsp.buf.code_action()<cr>",
-          { desc = "Rust Code Action" }
-        )
-
-        vim.api.nvim_set_keymap(
-          "v",
-          "<c-.>",
-          "<cmd>lua vim.lsp.buf.code_action()<cr>",
-          { desc = "Rust Code Action" }
-        )
-      end,
-      -- cmd = { "ra-multiplex" },
       settings = {
         ["rust_analyzer"] = {
           inlayHints = {
@@ -78,9 +42,8 @@ local rust_analyzer_config = function()
         },
       },
     },
-  })
-
-  require("quickfix").rust_quickfix()
+  }
+  return vim.g.rustaceanvim
 end
 
 local disabled_on = function(systems)

@@ -4,7 +4,7 @@ return function()
   require("dashboard").setup({
     theme = "hyper",
     config = {
-      header = ascii.art.text.neovim.sharp,
+      header = ascii.art.misc.hydra.hydra,
       shortcut = {
         { desc = "[  Github]", group = "DashboardShortCut" },
         {
