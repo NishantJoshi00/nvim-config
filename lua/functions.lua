@@ -1,5 +1,5 @@
 local rust_analyzer_config = function()
-  vim.g.rustaceanvim = {
+  return {
     server = {
       settings = {
         ["rust_analyzer"] = {
@@ -43,7 +43,6 @@ local rust_analyzer_config = function()
       },
     },
   }
-  return vim.g.rustaceanvim
 end
 
 local disabled_on = function(systems)
