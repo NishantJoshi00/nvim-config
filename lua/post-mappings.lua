@@ -233,3 +233,8 @@ vim.api.nvim_set_keymap("n", "<leader>ncs", [[<cmd>Copilot status<cr>]], { desc 
 vim.api.nvim_set_keymap("n", "<leader>ncp", [[<cmd>Copilot panel<cr>]], { desc = "Copilot Panel" })
 vim.api.nvim_set_keymap("n", "<leader>ncr", [[<cmd>Copilot restart<cr>]], { desc = "Copilot Restart" })
 
+
+
+vim.api.nvim_set_keymap("n", "<leader>ce", [[<cmd>set conceallevel=2<cr>]], { desc = "Enable Concealing" })
+vim.api.nvim_set_keymap("n", "<leader>cd", [[<cmd>set conceallevel=0<cr>]], { desc = "Disable Concealing" })
+
