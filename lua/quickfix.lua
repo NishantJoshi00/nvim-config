@@ -8,8 +8,14 @@
 --
 -- ]]
 
+local quickfixes = {
+  rust = [[%Eerror\[%*[0-9E]\]:\ %m,%C\ \ \ \ -->\ %f:%l:%c,%Z]],
+  python = [[%E\ %m,%C\ \ \ \ -->\ %f:%l:%c,%Z]],
+};
+
 local rust_quickfix = function()
-  vim.cmd [[set efm=%Eerror\[%*[0-9E]\]:\ %m,%C\ \ \ \ -->\ %f:%l:%c,%Z]]
+  -- vim.cmd [[set efm=%Eerror\[%*[0-9E]\]:\ %m,%C\ \ \ \ -->\ %f:%l:%c,%Z]]
+  vim.cmd(string.format('set efm=%s', quickfixes.rust))
 end
 
 
