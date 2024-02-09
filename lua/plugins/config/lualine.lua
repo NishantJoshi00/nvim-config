@@ -428,7 +428,10 @@ local one00 = function()
         -- { function() return '' end },
         { symbol_maker },
         lsp_info,
-        'filename',
+        {
+          'filename',
+          path = 1
+        },
         {
           'location',
           separator = {

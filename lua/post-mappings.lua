@@ -93,8 +93,6 @@ vim.keymap.set(
 )
 
 
-vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>Telescope AST_grep<cr>]], { desc = "AST Search" })
-
 -- toggle term
 vim.api.nvim_set_keymap("n", "<leader>tm", [[<cmd>ToggleTerm<cr>]], { desc = "Toggle Main Terminal" })
 vim.api.nvim_set_keymap("n", "<leader>ta", [[<cmd>ToggleTermToggleAll<cr>]], { desc = "Toggle All Terminals" })

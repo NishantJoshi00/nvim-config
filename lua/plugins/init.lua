@@ -372,13 +372,6 @@ return {
     ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
   },
   {
-    "ray-x/telescope-ast-grep.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-  },
-  {
     "nvim-treesitter/nvim-treesitter-context",
     config = function()
       require("treesitter-context").setup {
