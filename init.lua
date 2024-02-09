@@ -2,7 +2,6 @@ require("bootstrap")
 require("theme")
 
 vim.g.mapleader = " "
-require("pre-mappings")
 -- if not require("lazy.core.loader").init_done then
 require("lazy").setup(require("plugins"))
 -- end

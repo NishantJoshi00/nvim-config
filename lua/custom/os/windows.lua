@@ -1,8 +1,4 @@
-if vim.fn.has("win32") == 1 then
-  -- set shell=powershell
-  -- set shellcmdflag=-c
-  -- set shellquote=\"
-  -- set shellxquote=
+require("utils").gate("win32", function()
   vim.o.shell = "powershell"
   vim.o.shellcmdflag = "-c"
   vim.o.shellquote = '"'
@@ -14,4 +10,4 @@ if vim.fn.has("win32") == 1 then
     vim.g.neovide_scale_factor = 0.65
     vim.g.neovide_fullscreen = true
   end
-end
+end)
