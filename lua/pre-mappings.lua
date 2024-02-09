@@ -1,8 +1,0 @@
--- local rename_lsp = function()
---   vim.ui.input({ prompt = "rename with: " }, function(input)
---     if not input then
---     vim.lsp.buf.rename(input)
---     end
---   end
---   )
--- end
