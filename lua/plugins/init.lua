@@ -383,5 +383,10 @@ return {
   { "github/copilot.vim",    config = require("plugins.config.copilot") },
   { "tpope/vim-speeddating" },
   { "LunarVim/bigfile.nvim", config = function() require("bigfile").config({}) end },
-  { "florentc/vim-tla" }
+  { "florentc/vim-tla" },
+  {
+    'nvim-focus/focus.nvim',
+    version = '*',
+    config = require("plugins.config.focus")
+  }
 }
