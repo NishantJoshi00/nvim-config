@@ -24,6 +24,7 @@ vim.cmd([[syntax on]])
 vim.cmd([[highlight IndentBlanklineChar guifg=#202020 gui=nocombine]])
 vim.cmd([[highlight IndentBlanklineContextChar guifg=#505050 gui=nocombine]])
 vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray]])
+vim.cmd([[set termguicolors]])
 
 -- vim.cmd [[PetsNewCustom dog black black]]
 -- vim.cmd [[PetsNewCustom dog beige beige]]

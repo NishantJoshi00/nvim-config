@@ -135,7 +135,8 @@ local point_search = function()
   local event = require("nui.utils.autocmd").event
 
   local string_parser = function(data)
-    local regex = "^(.-):?(%d*):?(%d*)$"
+    local regex = "%s*([A-Za-z0-9/.]+):?(%d*):?(%d*)%s*$"
+    -- local regex = "%s*(.-):?(%d*):?(%d*)%s*$"
 
     local file_path, line_no, col_no = string.match(data, regex)
 
@@ -239,7 +240,7 @@ local nui_copy_pad = function(name, callback) -- callback gets the content from 
   vim.cmd([[set syntax=markdown]])
   vim.g.copy_pad_open = global_insert(vim.g.copy_pad_open, name, 1)
 
-  print(vim.inspect(vim.g.copy_pad_open))
+  -- print(vim.inspect(vim.g.copy_pad_open))
 
   local exit_action = function()
     local popup_buffer = popup.bufnr
