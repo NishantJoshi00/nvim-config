@@ -214,6 +214,10 @@ vim.api.nvim_set_keymap("n", "<leader>ct", [[<cmd>cw<cr>]], { desc = "Toggle Lis
 vim.api.nvim_set_keymap("n", "<leader>cn", [[<cmd>cn<cr>]], { desc = "Next Location" })
 vim.api.nvim_set_keymap("n", "<leader>cp", [[<cmd>cp<cr>]], { desc = "Previous Location" })
 
+
+vim.api.nvim_set_keymap("i", "<c-r>'", [[<c-r>=eval(getline("."))<cr>]], { desc = "Evaluate Copy" })
+
+
 -- Clear notifications
 
 vim.keymap.set('n', "<leader>nd",
