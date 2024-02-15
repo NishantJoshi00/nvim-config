@@ -215,8 +215,7 @@ vim.api.nvim_set_keymap("n", "<leader>cn", [[<cmd>cn<cr>]], { desc = "Next Locat
 vim.api.nvim_set_keymap("n", "<leader>cp", [[<cmd>cp<cr>]], { desc = "Previous Location" })
 
 
-vim.api.nvim_set_keymap("i", "<c-r>'", [[<c-r>=eval(getline("."))<cr>]], { desc = "Evaluate Copy" })
-
+vim.api.nvim_set_keymap("i", "<c-r>'", [[<c-r>=eval(getline(prevnonblank(".")))<cr>]], { desc = "Evaluate Copy" })
 
 -- Clear notifications
 
@@ -225,7 +224,6 @@ vim.keymap.set('n', "<leader>nd",
     vim.notify.dismiss({})
   end,
   { desc = "Dismiss Notifications" })
-
 
 -- Copilot mappings
 
