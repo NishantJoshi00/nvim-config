@@ -1,6 +1,10 @@
 return function()
 	local focus = require("focus")
-	focus.setup()
+	focus.setup({
+    autoresize = {
+      enable = false
+    },
+  })
 
 	vim.api.nvim_set_keymap("n", "<c-h>", ":FocusSplitLeft<CR>", { silent = true, desc = "Focus Left" })
 	vim.api.nvim_set_keymap("n", "<c-j>", ":FocusSplitDown<CR>", { silent = true, desc = "Focus Down" })
