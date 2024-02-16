@@ -135,8 +135,7 @@ local point_search = function()
   local event = require("nui.utils.autocmd").event
 
   local string_parser = function(data)
-    local regex = "%s*([A-Za-z0-9/.]+):?(%d*):?(%d*)%s*$"
-    -- local regex = "%s*(.-):?(%d*):?(%d*)%s*$"
+    local regex = "%s*([A-Za-z0-9/._-]+):?(%d*):?(%d*)%s*$"
 
     local file_path, line_no, col_no = string.match(data, regex)
 

@@ -388,5 +388,12 @@ return {
     'nvim-focus/focus.nvim',
     version = '*',
     config = require("plugins.config.focus")
+  },
+  {
+    "LunarVim/breadcrumbs.nvim",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+    },
+    config = require("plugins.config.breadcrumbs"),
   }
 }
