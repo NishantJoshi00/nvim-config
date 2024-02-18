@@ -15,3 +15,23 @@ vim.o.scrolloff = 4
 vim.cmd([[highlight IndentBlanklineChar guifg=#202020 gui=nocombine]])
 vim.cmd([[highlight IndentBlanklineContextChar guifg=#505050 gui=nocombine]])
 vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray guibg=NONE]])
+
+-- vim.o.list = true
+
+---join
+---@param list table<string, string>
+---@return string
+local function join(list)
+  local output = nil
+  for key, value in pairs(list) do
+    if output == nil then
+      output = key .. ":" .. value
+    else
+      output = output .. "," .. key .. ":" .. value
+    end
+  end
+  return output
+end
+
+vim.o.list = true
+vim.o.listchars = join({ trail = "·" })
