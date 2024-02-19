@@ -1,3 +1,4 @@
+---This function will return true if it is day time
 ---
 ---@return boolean
 local is_day = function()
@@ -9,7 +10,10 @@ local is_day = function()
   end
 end
 
----comment
+---This function will execute the function passed to it if the feature is available
+---example usage:
+---gate("win32", function() print("I'm on windows") end)
+---
 ---@param feature table|nil|string
 ---@param fun function
 ---@return nil
