@@ -254,7 +254,7 @@ return {
     "saecki/crates.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("crates").setup()
+      require("crates").setup({})
     end,
   },
   {
@@ -403,8 +403,14 @@ return {
       require("nerdicons").setup({
         down = '<Down>',
         up = '<Up>',
-        copy = 'y'
+        copy = '<Right>'
       })
     end,
+  },
+  {
+    'kosayoda/nvim-lightbulb',
+    config = function()
+      require("nvim-lightbulb").setup({ autocmd = { enabled = true }, sign = { text = "" } })
+    end
   }
 }
