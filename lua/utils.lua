@@ -38,7 +38,24 @@ local gated_execute = function(feature, fun)
 end
 
 
+---join
+---@param list table<string, string>
+---@return string
+local function join(list)
+  local output = nil
+  for key, value in pairs(list) do
+    if output == nil then
+      output = key .. ":" .. value
+    else
+      output = output .. "," .. key .. ":" .. value
+    end
+  end
+  return output
+end
+
+
 return {
   is_day = is_day,
-  gate = gated_execute
+  gate = gated_execute,
+  join = join
 }

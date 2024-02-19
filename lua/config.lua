@@ -18,20 +18,5 @@ vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray guibg=NO
 
 -- vim.o.list = true
 
----join
----@param list table<string, string>
----@return string
-local function join(list)
-  local output = nil
-  for key, value in pairs(list) do
-    if output == nil then
-      output = key .. ":" .. value
-    else
-      output = output .. "," .. key .. ":" .. value
-    end
-  end
-  return output
-end
-
 vim.o.list = true
-vim.o.listchars = join({ trail = "·" })
+vim.o.listchars = require("utils").join({ trail = "·", tab = "▸ " })
