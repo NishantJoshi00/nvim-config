@@ -365,7 +365,7 @@ local one00 = function()
 
   local symbol_maker = function()
     if lsp_info[1]() == "" then
-      return "♬"
+      return ""
     else
       return ''
     end
@@ -425,7 +425,6 @@ local one00 = function()
       lualine_y = { 'progress' },
       lualine_z = {
         'selectioncount',
-        -- { function() return '' end },
         { symbol_maker },
         lsp_info,
         {

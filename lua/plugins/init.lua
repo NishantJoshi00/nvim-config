@@ -395,5 +395,16 @@ return {
       "SmiteshP/nvim-navic",
     },
     config = require("plugins.config.breadcrumbs"),
+  },
+  {
+    "nvimdev/nerdicons.nvim",
+    cmd = "NerdIcons",
+    config = function()
+      require("nerdicons").setup({
+        down = '<Down>',
+        up = '<Up>',
+        copy = 'y'
+      })
+    end,
   }
 }
