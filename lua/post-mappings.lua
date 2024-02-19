@@ -138,7 +138,7 @@ vim.api.nvim_set_keymap(
 
 vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
 
-vim.api.nvim_set_keymap("n", "zz", [[<cmd>spellr<cr>]], {})
+vim.api.nvim_set_keymap("n", "<leader>zz", [[<cmd>spellr<cr>]], {})
 
 vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]], { desc = "code action" })
 
