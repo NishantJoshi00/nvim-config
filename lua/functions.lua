@@ -45,6 +45,10 @@ local rust_analyzer_config = function()
   }
 end
 
+---Check if the system is disabled
+---
+---@param systems string[]
+---@return boolean
 local disabled_on = function(systems)
   for _, val in ipairs(systems) do
     if vim.fn.has(val) == 1 then
@@ -54,6 +58,8 @@ local disabled_on = function(systems)
   return false
 end
 
+---Get a random quote - and display it in a vim.notify
+---
 local quoter = function()
   vim.fn.jobstart("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
     stdout_buffered = true,
@@ -65,6 +71,9 @@ local quoter = function()
 end
 vim.g.quote_me = quoter
 
+---Get a random footer for the dashboard
+---
+---@return string
 local random_footer = function()
   local footers = {
     "🚀 Sharp tools make good work.",
@@ -159,9 +168,10 @@ local point_search = function()
   end
 
   local input = Input({
-    position = "50%",
+    position = { row = "20%", col = "50%" },
+    -- position = "50%",
     size = {
-      width = 40,
+      width = 80,
     },
     border = {
       style = "rounded",
