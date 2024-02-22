@@ -3,6 +3,7 @@ return function()
 
   dap.configurations.rust = {
     {
+      name = "Launch",
       type = "codelldb",
       request = "launch",
       -- This is where cargo outputs the executable
