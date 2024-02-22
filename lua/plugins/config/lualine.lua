@@ -1,10 +1,4 @@
 local one00 = function()
-  local cmd = vim.cmd
-  -- Lualine configuration
-  local non_language_ft = {
-    'Startify',
-    'NVimTree',
-  }
 
   local gruvbox = function()
     local colors = { -- Gruvbox Dark
@@ -85,12 +79,7 @@ local one00 = function()
     options = {
       icons_enabled = true,
       theme = gruvbox(),
-      -- Separators might look weird for certain fonts (eg Cascadia)
       component_separators = { left = '', right = '' },
-      -- component_separators = {
-      --   left = '',
-      --   right = ''
-      -- },
       section_separators = {
         left = ' ',
         right = ''
@@ -148,11 +137,10 @@ local one00 = function()
             right = ''
           },
           left_padding = 0
-        }, -- BubbleButt
+        },
       }
     },
   })
 end
 
--- return custom_config;
 return one00;
