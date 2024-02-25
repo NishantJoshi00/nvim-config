@@ -1,5 +1,4 @@
 local one00 = function()
-
   local gruvbox = function()
     local colors = { -- Gruvbox Dark
       darkgray = "#282828",
@@ -107,7 +106,7 @@ local one00 = function()
           },
           right_padding = 0
         },
-        'searchcount'
+        'searchcount',
       },
       lualine_b = { 'branch', 'diff' },
       lualine_c = {

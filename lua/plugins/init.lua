@@ -74,7 +74,7 @@ return {
     },
   },
   { "nvim-lua/plenary.nvim" },
-  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope") },
+  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "folke/trouble.nvim" } },
   {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
@@ -107,11 +107,12 @@ return {
     config = require("plugins.config.nvim-cmp"),
   },
   {
-    'mrcjkb/rustaceanvim',
+    "mrcjkb/rustaceanvim",
     version = '^4',
     ft = { 'rust' },
   },
   { "tpope/vim-commentary" },
+  { "tpope/vim-surround" },
   {
     "nvim-treesitter/nvim-treesitter",
     config = require("plugins.config.nvim-treesitter"),
@@ -410,5 +411,10 @@ return {
   {
     'kosayoda/nvim-lightbulb',
     config = require("plugins.config.lightbulb")
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
   }
 }

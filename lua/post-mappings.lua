@@ -238,3 +238,11 @@ vim.api.nvim_set_keymap("n", "<leader>ncr", [[<cmd>Copilot restart<cr>]], { desc
 vim.api.nvim_set_keymap("n", "<leader>ce", [[<cmd>set conceallevel=2<cr>]], { desc = "Enable Concealing" })
 vim.api.nvim_set_keymap("n", "<leader>cd", [[<cmd>set conceallevel=0<cr>]], { desc = "Disable Concealing" })
 
+
+-- Lua
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end)
