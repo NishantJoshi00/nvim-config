@@ -29,7 +29,7 @@ return function()
 
     -- dedicated handlers
     ["rust_analyzer"] = function()
-      vim.g.rustaceanvim = require("functions").rust_analyzer_config()
+      vim.g.rustaceanvim = require("opts")["rust-analyzer"]
 
       require("quickfix").rust_quickfix()
     end,

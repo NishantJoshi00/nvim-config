@@ -14,7 +14,6 @@ vim.o.title = true
 vim.o.ttimeoutlen = 0
 vim.o.wildmenu = true
 
--- Tabs size
 vim.o.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
@@ -22,8 +21,3 @@ vim.o.tabstop = 2
 vim.cmd([[filetype plugin indent on]])
 vim.cmd([[syntax on]])
 vim.cmd([[set termguicolors]])
-
-
--- vim.cmd [[PetsNewCustom dog black black]]
--- vim.cmd [[PetsNewCustom dog beige beige]]
--- vim.cmd [[PetsNewCustom dog brown brown]]

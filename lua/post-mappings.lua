@@ -1,5 +1,3 @@
-vim.o.mapleader = " "
-
 local wk = require("which-key")
 
 -- NERDTree mappings
@@ -18,14 +16,18 @@ vim.api.nvim_set_keymap(
   { desc = "View implementations" }
 )
 vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr>]], { desc = "View Definition" })
+
 -- Markdown specific
 vim.api.nvim_set_keymap("n", "<leader>p", [[<cmd>Glow<cr>]], { desc = "Markdown Preview Open" })
 vim.api.nvim_set_keymap("n", "<leader>P", [[<cmd>Glow!<cr>]], { desc = "Markdown Preview Close" })
+
 -- Buffer specific
 vim.api.nvim_set_keymap("n", "<leader>bh", [[<cmd>bprev<cr>]], { desc = "Previous Buffer" })
 vim.api.nvim_set_keymap("n", "<leader>bl", [[<cmd>bnext<cr>]], { desc = "Next Buffer" })
+
 -- Fun
 vim.api.nvim_set_keymap("n", "<leader>\\", [[<cmd>lua vim.g.quote_me()<cr>]], { desc = "Quote Stuff" })
+
 -- Session specific
 vim.api.nvim_set_keymap(
   "n",
@@ -46,6 +48,7 @@ vim.api.nvim_set_keymap(
   { desc = "Stop Session Recording" }
 )
 
+-- Telescope
 local telescope_theme = require("functions").telescope_theme;
 
 vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files(telescope_theme({})) end,
@@ -93,18 +96,20 @@ vim.keymap.set(
 )
 
 
--- toggle term
+-- Toggle Term
 vim.api.nvim_set_keymap("n", "<leader>tm", [[<cmd>ToggleTerm<cr>]], { desc = "Toggle Main Terminal" })
 vim.api.nvim_set_keymap("n", "<leader>ta", [[<cmd>ToggleTermToggleAll<cr>]], { desc = "Toggle All Terminals" })
 
 vim.api.nvim_set_keymap("i", "<c-t>", "<cmd>ToggleTerm<cr>", { silent = true, desc = "toggle terminal" })
 vim.api.nvim_set_keymap("t", "<c-t>", "<cmd>ToggleTerm<cr>", { silent = true, desc = "toggle terminal" })
 vim.api.nvim_set_keymap("n", "<c-t>", "<cmd>ToggleTerm<cr>", { desc = "toggle terminal" })
-vim.api.nvim_set_keymap("n", "<c-/>", "<cmd>gcc<cr>", { desc = "code commenting" })
 
+-- Commenting
+vim.api.nvim_set_keymap("n", "<c-/>", "<cmd>gcc<cr>", { desc = "code commenting" })
 vim.api.nvim_set_keymap("n", "<c-/>", "gcc", { desc = "Comment Code" })
 vim.api.nvim_set_keymap("v", "<c-/>", "gcc", { desc = "Comment Code" })
 
+-- Goto Preview
 vim.api.nvim_set_keymap(
   "n",
   "gpd",
@@ -136,18 +141,32 @@ vim.api.nvim_set_keymap(
   { desc = "preview references" }
 )
 
+-- Lsp
 vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
 
 vim.api.nvim_set_keymap("n", "<leader>zz", [[<cmd>spellr<cr>]], {})
 
 vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]], { desc = "code action" })
 
+vim.keymap.set("n", "<leader>l", function() require("lsp_lines").toggle() end, { desc = "Toggle lsp_lines" })
+
+-- Lsp (Custom)
 vim.keymap.set("n", "<leader><c-p>", function()
   require("functions").get_current_location(function(content)
     vim.fn.setreg("+", content)
   end)
 end)
 
+vim.keymap.set("n", "<c-p>", function()
+  require("functions").point_search()
+end)
+
+
+vim.keymap.set("n", "<leader>fl", function()
+  require("functions").glob_search()
+end)
+
+-- Scratch Pad
 vim.keymap.set("n", "<leader><c-n>", function()
   require("functions").copy_pad("copy_pad", function(content)
     vim.fn.setreg("+", content)
@@ -160,19 +179,8 @@ vim.keymap.set("n", "<c-n>", function()
   end)
 end, { desc = "open scratch pad" })
 
-vim.keymap.set("n", "<c-p>", function()
-  require("functions").point_search()
-end)
 
-
-vim.keymap.set("n", "<leader>fl", function()
-  require("functions").glob_search()
-end)
-
-vim.keymap.set("n", "<leader>l", function()
-  require("lsp_lines").toggle()
-end, { desc = "Toggle lsp_lines" })
-
+-- Git
 vim.keymap.set("n", "<leader>gb", function()
   vim.cmd([[Gitsigns blame_line]])
 end, { desc = "Git blame" })
@@ -199,13 +207,9 @@ vim.keymap.set("n", "<leader>oa", require("overseer").run_template, { desc = "Ru
 vim.keymap.set("n", "<leader>tc", require("functions").theme_choicer, { desc = "Cycle themes" })
 
 
--- vim.keymap.set("n", "<leader>test", function()
--- end, { desc = "Testing Lua" })
-
+-- Buffer
 vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next Buffer" })
 vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })
-
-vim.api.nvim_set_keymap("x", "<leader>p", "\"_dP", { desc = "Special Paste" })
 
 
 vim.api.nvim_set_keymap("n", "<leader>co", [[<cmd>copen<cr>]], { desc = "Open Quickfix List" })
@@ -214,7 +218,7 @@ vim.api.nvim_set_keymap("n", "<leader>ct", [[<cmd>cw<cr>]], { desc = "Toggle Lis
 vim.api.nvim_set_keymap("n", "<leader>cn", [[<cmd>cn<cr>]], { desc = "Next Location" })
 vim.api.nvim_set_keymap("n", "<leader>cp", [[<cmd>cp<cr>]], { desc = "Previous Location" })
 
-
+-- Evaluation
 vim.api.nvim_set_keymap("i", "<c-r>'", [[<c-r>=eval(getline(prevnonblank(".")))<cr>]], { desc = "Evaluate Copy" })
 
 -- Clear notifications
@@ -234,12 +238,12 @@ vim.api.nvim_set_keymap("n", "<leader>ncp", [[<cmd>Copilot panel<cr>]], { desc =
 vim.api.nvim_set_keymap("n", "<leader>ncr", [[<cmd>Copilot restart<cr>]], { desc = "Copilot Restart" })
 
 
-
+-- Concealing
 vim.api.nvim_set_keymap("n", "<leader>ce", [[<cmd>set conceallevel=2<cr>]], { desc = "Enable Concealing" })
 vim.api.nvim_set_keymap("n", "<leader>cd", [[<cmd>set conceallevel=0<cr>]], { desc = "Disable Concealing" })
 
 
--- Lua
+-- Trouble
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
 vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
 vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
