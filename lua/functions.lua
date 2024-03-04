@@ -225,7 +225,7 @@ local nui_copy_pad = function(name, callback) -- callback gets the content from 
 end
 
 local get_current_location = function(callback)
-  local filename = vim.fn.expand("%")
+  local filename = vim.fn.expand("%:.")
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
 
   callback(filename .. ":" .. row .. ":" .. col)
