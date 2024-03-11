@@ -21,18 +21,14 @@ return {
   { "mfussenegger/nvim-dap" },
   {
     "rcarriga/nvim-dap-ui",
-    config = function()
-      vim.cmd([[vnoremap <c-;> <Cmd>lua require("dapui").eval()<CR>]])
-    end,
+    config = require("plugins.config.nvim-dap-ui"),
     dependencies = {
       "jay-babu/mason-nvim-dap.nvim",
     },
   },
   {
     "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
+    config = require("plugins.config.mason"),
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -49,9 +45,7 @@ return {
   },
   {
     "VidocqH/lsp-lens.nvim",
-    config = function()
-      require("lsp-lens").setup({})
-    end,
+    config = require("plugins.config.lsp-lens"),
   },
   {
     "jay-babu/mason-null-ls.nvim",
@@ -64,10 +58,7 @@ return {
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
-    config = function()
-      require("plugins.config.nvim-dap")()
-      require("mason-nvim-dap").setup()
-    end,
+    config = require("plugins.config.mason-nvim-dap"),
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
@@ -82,9 +73,7 @@ return {
   { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
   {
     "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup()
-    end,
+    config = require("plugins.config.which-key"),
   },
   { "ryanoasis/vim-devicons" },
 
@@ -140,37 +129,23 @@ return {
   },
   {
     "akinsho/bufferline.nvim",
-    config = function()
-      require("bufferline").setup()
-    end,
+    config = require("plugins.config.bufferline"),
   },
   { "akinsho/toggleterm.nvim", config = require("plugins.config.toggleterm") },
   {
     "ellisonleao/glow.nvim",
-    config = function()
-      require("glow").setup({})
-    end,
+    config = require("plugins.config.glow"),
     enabled = function()
       return not require("functions").disabled_on({ "win32" })
     end,
   },
   {
     "gelguy/wilder.nvim",
-    config = function()
-      require("wilder").setup({ modes = { ":", "/", "?" } })
-    end,
+    config = require("plugins.config.wilder"),
   },
   {
     "rcarriga/nvim-notify",
-    config = function()
-      require("notify").setup({
-        render = "compact",
-      })
-
-      vim.notify = require("notify")
-
-      require("functions").quoter()
-    end,
+    config = require("plugins.config.nvim-notify"),
   },
   {
     "rmagatti/goto-preview",
@@ -180,12 +155,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
-    config = function()
-      -- require("indent_blankline").setup({
-      --   show_current_context = true,
-      --   show_current_context_start = true,
-      -- })
-    end,
+    config = require("plugins.config.indent-blankline"),
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
@@ -205,25 +175,10 @@ return {
     "j-hui/fidget.nvim",
     tag = "legacy",
     event = "LspAttach",
-    config = function()
-      require("fidget").setup({
-        text = {
-          spinner = "dots",
-        },
-      })
-    end,
-  },
-  {
-    -- Notion Integration for NeoVim
-    "chrsm/impulse.nvim",
-    enabled = false,
-    config = function()
-      require("impulse").setup()
-    end,
+    config = require("plugins.config.fidget"),
   },
   {
     "MunifTanjim/nui.nvim",
-    config = function() end,
   },
   {
     "MaximilianLloyd/ascii.nvim",
@@ -243,42 +198,22 @@ return {
   {
     enabled = false,
     "folke/twilight.nvim",
-    config = function()
-      require("twilight").setup({
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      })
-    end,
   },
   {
     "saecki/crates.nvim",
     requires = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("crates").setup({})
-    end,
+    config = require("plugins.config.crates"),
   },
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
     module = "persistence",
-    config = function()
-      require("persistence").setup()
-    end,
+    config = require("plugins.config.persistence"),
   },
   {
     "samueljoli/hurl.nvim",
-    config = function()
-      require("hurl").setup()
-    end,
+    config = require("plugins.config.hurl"),
   },
-  -- {
-  --   -- enabled = false,
-  --   "poljar/typos.nvim",
-  --   config = function()
-  --     require("typos").setup()
-  --   end,
-  -- },
   {
     "sindrets/diffview.nvim",
     dependencies = {
@@ -290,9 +225,7 @@ return {
     enabled = function()
       return not require("functions").disabled_on({ "win32" })
     end,
-    config = function()
-      require("hologram").setup({})
-    end,
+    config = require("plugins.config.hologram"),
   },
   {
     "giusgad/pets.nvim",
@@ -303,15 +236,11 @@ return {
       "edluffy/hologram.nvim",
       "MunifTanjim/nui.nvim",
     },
-    config = function()
-      require("pets").setup({})
-    end,
+    config = require("plugins.config.pets"),
   },
   {
     "ray-x/lsp_signature.nvim",
-    config = function()
-      require("lsp_signature").setup()
-    end,
+    config = require("plugins.config.lsp_signature"),
     dependencies = {
       "neovim/nvim-lspconfig",
     },
@@ -321,17 +250,7 @@ return {
     dependencies = {
       "neovim/nvim-lspconfig",
     },
-    config = function()
-      require("lsp_lines").setup()
-      vim.diagnostic.config({ virtual_lines = false })
-    end,
-  },
-  {
-    enabled = false,
-    "jbyuki/instant.nvim", -- This doesn't work as expected
-    config = function()
-      vim.cmd([[let g:instant_username = "nishant"]])
-    end,
+    config = require("plugins.config.lsp_lines"),
   },
   {
     "gyim/vim-boxdraw",
@@ -374,16 +293,11 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    config = function()
-      require("treesitter-context").setup {
-        enable = true,
-        separator = "─"
-      }
-    end
+    config = require("plugins.config.nvim-treesitter-context"),
   },
   { "github/copilot.vim",    config = require("plugins.config.copilot") },
   { "tpope/vim-speeddating" },
-  { "LunarVim/bigfile.nvim", config = function() require("bigfile").config({}) end },
+  { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
   { "florentc/vim-tla" },
   {
     'nvim-focus/focus.nvim',
@@ -400,13 +314,7 @@ return {
   {
     "nvimdev/nerdicons.nvim",
     cmd = "NerdIcons",
-    config = function()
-      require("nerdicons").setup({
-        down = '<Down>',
-        up = '<Up>',
-        copy = '<Right>'
-      })
-    end,
+    config = require("plugins.config.nerdicons"),
   },
   {
     'kosayoda/nvim-lightbulb',
