@@ -12,8 +12,10 @@ return function()
       end,
     },
     window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+      -- completion = dressing.input,
+      -- documentation = nui.win_config
     },
     mapping = cmp.mapping.preset.insert({
       ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -25,12 +27,29 @@ return function()
     sources = cmp.config.sources({
       { name = "nvim_lsp" },
       { name = "vsnip" }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
+      { name = 'luasnip' }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {
       { name = "buffer" },
+      { name = "path" }
     }),
+    formatting = {
+      format = function(entry, vim_item)
+        vim_item.menu = ({
+          nvim_lsp = "[LSP]",
+          buffer = "[Buffer]",
+          path = "[Path]",
+          vsnip = "[VSnip]",
+          luasnip = "[LuaSnip]",
+        })[entry.source.name]
+
+        return vim_item
+      end,
+      expandable_indicator = true,
+      fields = { "menu", "abbr", "kind" },
+
+    },
   })
 
   -- Set configuration for specific filetype.
@@ -53,6 +72,7 @@ return function()
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
+    window = cmp.config.window.bordered(),
     sources = cmp.config.sources({
       { name = "path" },
     }, {
