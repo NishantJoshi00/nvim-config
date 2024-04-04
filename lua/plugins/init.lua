@@ -136,7 +136,8 @@ return {
     "ellisonleao/glow.nvim",
     config = require("plugins.config.glow"),
     enabled = function()
-      return not require("functions").disabled_on({ "win32" })
+      -- return not require("functions").disabled_on({ "win32" })
+      return false
     end,
   },
   {
@@ -329,5 +330,11 @@ return {
     "lukas-reineke/headlines.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {},
+  },
+  {
+    "grapp-dev/nui-components.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim"
+    }
   }
 }
