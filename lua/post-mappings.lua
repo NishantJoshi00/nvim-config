@@ -17,10 +17,6 @@ vim.api.nvim_set_keymap(
 )
 vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr>]], { desc = "View Definition" })
 
--- Markdown specific
-vim.api.nvim_set_keymap("n", "<leader>p", [[<cmd>Glow<cr>]], { desc = "Markdown Preview Open" })
-vim.api.nvim_set_keymap("n", "<leader>P", [[<cmd>Glow!<cr>]], { desc = "Markdown Preview Close" })
-
 -- Buffer specific
 vim.api.nvim_set_keymap("n", "<leader>bh", [[<cmd>bprev<cr>]], { desc = "Previous Buffer" })
 vim.api.nvim_set_keymap("n", "<leader>bl", [[<cmd>bnext<cr>]], { desc = "Next Buffer" })
@@ -250,3 +246,9 @@ vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document
 vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
 vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
 vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end)
+
+
+
+
+-- Markdown specific
+vim.keymap.set("x", "<leader>p", require("markdown-tree").visualize, { desc = "Visualize Checklist" })
