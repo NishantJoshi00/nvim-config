@@ -90,11 +90,14 @@ function convert_checklist(content)
       })
     end
   end
-  local base_space = nodes[1].depth
+
+  if #nodes == 0 then
+    return {}
+  end
 
   local tree = make_children(nodes)
 
-  return tree, base_space
+  return tree
 end
 
 function apply_children(nodes, func)
@@ -115,8 +118,7 @@ function visualize()
   local data, s_start, s_end = get_text()
   local parent_bufnr = vim.api.nvim_get_current_buf()
 
-  local nodes, base_space = convert_checklist(data)
-  local nodes = apply_children(nodes, function(node)
+  local nodes = apply_children(convert_checklist(data), function(node)
     return NuiTree.Node({
       text = node.text,
       is_done = node.is_done,
@@ -174,13 +176,16 @@ function visualize()
   popup:mount()
   ntree:render()
 
+  local changes = false
+
   local exit_action = function()
     popup:unmount()
-
-    set_text(ntree.nodes, 2, parent_bufnr, s_start, s_end)
+    if changes then
+      set_text(ntree.nodes, 2, parent_bufnr, s_start, s_end)
+    end
   end
 
-  local map_options = { noremap = true, nowait = true }
+
 
   popup:on(event.BufLeave, exit_action)
 
@@ -189,14 +194,14 @@ function visualize()
 
   popup:map("n", { "l", "<right>" }, function()
     local node = ntree:get_node()
-    if node:expand() then
+    if node and node:expand() then
       ntree:render()
     end
   end)
 
   popup:map("n", { "h", "<left>" }, function()
     local node = ntree:get_node()
-    if node:collapse() then
+    if node and node:collapse() then
       ntree:render()
     end
   end)
@@ -221,10 +226,11 @@ function visualize()
     end
   end)
 
-  popup:map("n", "<cr>", function()
+  popup:map("n", { "<cr>", "<leader>" }, function()
     local node = ntree:get_node()
     if node then
       node.is_done = not node.is_done
+      changes = true
       ntree:render()
     end
   end)
