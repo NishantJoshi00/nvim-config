@@ -224,14 +224,14 @@ return {
   {
     "edluffy/hologram.nvim",
     enabled = function()
-      return not require("functions").disabled_on({ "win32" })
+      return (os.getenv("TERM") == "xterm-kitty") and (not vim.g.neovide)
     end,
     config = require("plugins.config.hologram"),
   },
   {
     "giusgad/pets.nvim",
     enabled = function()
-      return not require("functions").disabled_on({ "win32" })
+      return (os.getenv("TERM") == "xterm-kitty") and (not vim.g.neovide)
     end,
     dependencies = {
       "edluffy/hologram.nvim",
