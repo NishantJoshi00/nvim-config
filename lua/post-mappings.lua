@@ -251,4 +251,9 @@ vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_refer
 
 
 -- Markdown specific
-vim.keymap.set("x", "<leader>p", require("markdown-tree").visualize, { desc = "Visualize Checklist" })
+vim.keymap.set("x", "<leader>Mv", require("markdown-tree").checklist_visualize, { desc = "Visualize Checklist Markdown" })
+vim.keymap.set("n", "<leader>Mt", require("markdown-tree").checklist_toggle, { desc = "Tick Current Checklist Markdown" })
+vim.keymap.set("n", "<leader>Mc", require("markdown-tree").checklist_create, { desc = "Tick Current Checklist Markdown" })
+vim.api.nvim_set_keymap("x", "<leader>mhd", [[<cmd>HeaderDecrease<cr>]], { desc = "Decrease Header" })
+vim.api.nvim_set_keymap("x", "<leader>mhi", [[<cmd>HeaderIncrease<cr>]], { desc = "Increase Header" })
+

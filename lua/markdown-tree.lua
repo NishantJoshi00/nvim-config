@@ -13,6 +13,20 @@ local function get_text()
   return table.concat(lines, '\n'), s_start, s_end
 end
 
+local function tick_this()
+  local current_line = vim.api.nvim_get_current_line()
+
+  local pattern = "^(%s*)%-%s*%[%s*(x?)%](.*)$"
+
+  local space, xs, msg = string.match(current_line, pattern)
+
+  if (space) then
+    local check = xs == "x" and " " or "x"
+    local new_line = space .. "- [" .. check .. "]" .. msg
+    vim.api.nvim_set_current_line(new_line)
+  end
+end
+
 
 ---@param ids string[]
 ---@param spaces number
@@ -24,7 +38,6 @@ function convert_lines(ids, spaces, registry)
   for _, node_id in pairs(ids) do
     local node = registry[node_id]
     local space = string.rep(" ", spaces * (node:get_depth() - 1))
-    print(space .. "--")
     local check = node.is_done and "x" or " "
     table.insert(output, space .. "- [" .. check .. "]" .. node.text)
     if #node:get_child_ids() > 0 then
@@ -111,7 +124,7 @@ function apply_children(nodes, func)
   return output
 end
 
-function visualize()
+function checklist_visualize()
   local NuiTree = require("nui.tree")
   local NuiLine = require("nui.line")
 
@@ -165,7 +178,7 @@ function visualize()
         line:append("  ")
       end
 
-      line:append(node.is_done and "🗸" or "🞎")
+      line:append(node.is_done and "✔" or "⎅")
 
       line:append(node.text)
 
@@ -236,6 +249,15 @@ function visualize()
   end)
 end
 
+local function tick_create()
+  local line = vim.api.nvim_get_current_line()
+  local prefix = "- [ ] "
+  local new_line = prefix .. line
+  vim.api.nvim_set_current_line(new_line)
+end
+
 return {
-  visualize = visualize
+  checklist_visualize = checklist_visualize,
+  checklist_toggle = tick_this,
+  checklist_create = tick_create,
 }
