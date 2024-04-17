@@ -329,7 +329,7 @@ return {
   {
     "lukas-reineke/headlines.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = {},
+    config = require("plugins.config.headlines"),
   },
   {
     "grapp-dev/nui-components.nvim",
