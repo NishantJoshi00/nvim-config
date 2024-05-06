@@ -159,11 +159,10 @@ function checklist_visualize()
       row = "50%",
       col = "50%",
     },
-    size = "20%",
-    -- size = {
-    --   width = "40%",
-    --   height = "70%",
-    -- },
+    size = {
+      width = "70%",
+      height = "40%",
+    },
   })
 
   local ntree = NuiTree({
@@ -178,9 +177,14 @@ function checklist_visualize()
         line:append("  ")
       end
 
-      line:append(node.is_done and "✔" or "⎅")
+      line:append(node.is_done and "✔" or "⬚")
 
-      line:append(node.text)
+      if (node.is_done) then
+        line:append(node.text, "Comment")
+      else
+        line:append(node.text)
+      end
+
 
       return line
     end

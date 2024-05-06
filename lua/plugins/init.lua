@@ -8,6 +8,7 @@ return {
       "kvrohit/mellow.nvim",
       -- "savq/melange-nvim",
       "Alexis12119/nightly.nvim",
+      "dgox16/oldworld.nvim"
     },
   },
   {
@@ -337,5 +338,5 @@ return {
       "MunifTanjim/nui.nvim"
     },
     enabled = false
-  }
+  },
 }

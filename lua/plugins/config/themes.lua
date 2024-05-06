@@ -21,8 +21,10 @@ return function()
     [[colorscheme mellow]],
     [[colorscheme lunaperche]],
     [[colorscheme slate]],
+    [[colorscheme oldworld]],
   };
 
 
-  vim.cmd("colorscheme kanagawa-dragon")
+  -- vim.cmd("colorscheme kanagawa-dragon")
+  vim.cmd("colorscheme oldworld")
 end
