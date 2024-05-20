@@ -5,5 +5,5 @@ return function()
 
   vim.notify = require("notify")
 
-  require("functions").quoter()
+  -- require("functions").quoter()
 end
