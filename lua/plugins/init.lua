@@ -232,7 +232,8 @@ return {
   {
     "giusgad/pets.nvim",
     enabled = function()
-      return (os.getenv("TERM") == "xterm-kitty") and (not vim.g.neovide)
+      -- return (os.getenv("TERM") == "xterm-kitty") and (not vim.g.neovide)
+      return false
     end,
     dependencies = {
       "edluffy/hologram.nvim",
@@ -341,5 +342,8 @@ return {
   },
   {
     "tpope/vim-abolish"
+  },
+  {
+    "mattn/emmet-vim"
   }
 }
