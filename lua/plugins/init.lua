@@ -6,9 +6,7 @@ return {
       "catppuccin/nvim",
       "rebelot/kanagawa.nvim",
       "kvrohit/mellow.nvim",
-      -- "savq/melange-nvim",
-      "Alexis12119/nightly.nvim",
-      "dgox16/oldworld.nvim"
+      "dgox16/oldworld.nvim",
     },
   },
   {
@@ -126,21 +124,13 @@ return {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {},
-    keys = require("plugins.config.flash").key,
+    keys = require("plugins.config.flash"),
   },
   {
     "akinsho/bufferline.nvim",
     config = require("plugins.config.bufferline"),
   },
   { "akinsho/toggleterm.nvim", config = require("plugins.config.toggleterm") },
-  {
-    "ellisonleao/glow.nvim",
-    config = require("plugins.config.glow"),
-    enabled = function()
-      -- return not require("functions").disabled_on({ "win32" })
-      return false
-    end,
-  },
   {
     "gelguy/wilder.nvim",
     config = require("plugins.config.wilder"),
@@ -221,25 +211,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-  },
-  {
-    "edluffy/hologram.nvim",
-    enabled = function()
-      return (os.getenv("TERM") == "xterm-kitty") and (not vim.g.neovide)
-    end,
-    config = require("plugins.config.hologram"),
-  },
-  {
-    "giusgad/pets.nvim",
-    enabled = function()
-      -- return (os.getenv("TERM") == "xterm-kitty") and (not vim.g.neovide)
-      return false
-    end,
-    dependencies = {
-      "edluffy/hologram.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-    config = require("plugins.config.pets"),
   },
   {
     "ray-x/lsp_signature.nvim",
@@ -342,6 +313,9 @@ return {
   },
   {
     "tpope/vim-abolish"
+  },
+  {
+    "tpope/vim-fugitive"
   },
   {
     "mattn/emmet-vim"
