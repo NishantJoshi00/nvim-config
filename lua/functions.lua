@@ -92,33 +92,33 @@ local theme_choicer = function()
   menu:mount()
 end
 
+local point_search_inner = function(data)
+  local regex = "%s*([A-Za-z0-9/._-]+):?(%d*):?(%d*)%s*$"
+
+  local file_path, line_no, col_no = string.match(data, regex)
+
+  local file_exists = vim.fn.filereadable(file_path) > 0
+
+  if file_exists == false then
+    return
+  end
+
+  vim.cmd("edit " .. file_path)
+
+  if line_no == "" then
+    line_no = "0"
+  end
+
+  if col_no == "" then
+    col_no = "0"
+  end
+
+  vim.cmd("cal cursor(" .. line_no .. ", " .. col_no .. ")")
+end
+
 local point_search = function()
   local Input = require("nui.input")
   local event = require("nui.utils.autocmd").event
-
-  local string_parser = function(data)
-    local regex = "%s*([A-Za-z0-9/._-]+):?(%d*):?(%d*)%s*$"
-
-    local file_path, line_no, col_no = string.match(data, regex)
-
-    local file_exists = vim.fn.filereadable(file_path) > 0
-
-    if file_exists == false then
-      return
-    end
-
-    vim.cmd("edit " .. file_path)
-
-    if line_no == "" then
-      line_no = "0"
-    end
-
-    if col_no == "" then
-      col_no = "0"
-    end
-
-    vim.cmd("cal cursor(" .. line_no .. ", " .. col_no .. ")")
-  end
 
   local input = Input({
     position = { row = "20%", col = "50%" },
@@ -140,7 +140,7 @@ local point_search = function()
     prompt = "% ",
     on_close = function() end,
     on_submit = function(value)
-      string_parser(value)
+      point_search_inner(value)
     end,
   })
 

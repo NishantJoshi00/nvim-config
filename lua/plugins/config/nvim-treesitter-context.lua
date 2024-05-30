@@ -1,6 +1,6 @@
 return function()
   require("treesitter-context").setup {
-    enable = true,
+    enable = false,
     separator = "─"
   }
 end

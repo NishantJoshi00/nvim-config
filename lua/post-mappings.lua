@@ -20,6 +20,9 @@ vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr
 -- Buffer specific
 vim.api.nvim_set_keymap("n", "<leader>bh", [[<cmd>bprev<cr>]], { desc = "Previous Buffer" })
 vim.api.nvim_set_keymap("n", "<leader>bl", [[<cmd>bnext<cr>]], { desc = "Next Buffer" })
+vim.api.nvim_set_keymap("n", "<leader>bd", [[<cmd>bdel<cr>]], { desc = "Delete Buffer" })
+vim.api.nvim_set_keymap("n", "<leader>bn", [[<cmd>tab new<cr>]], { desc = "New Buffer" })
+
 
 -- Fun
 vim.api.nvim_set_keymap("n", "<leader>\\", [[<cmd>lua vim.g.quote_me()<cr>]], { desc = "Quote Stuff" })
@@ -240,12 +243,12 @@ vim.api.nvim_set_keymap("n", "<leader>cd", [[<cmd>set conceallevel=0<cr>]], { de
 
 
 -- Trouble
-vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
-vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
-vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
-vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
-vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
-vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end)
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end, { desc = "Toggle Trouble" })
+vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end, { desc = "Toggle Workspace Diagnostics" })
+vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end, { desc = "Toggle Document Diagnostics" })
+vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end, { desc = "Toggle Quickfix" })
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end , { desc = "Toggle Loclist" })
+vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end, { desc = "Toggle Lsp References" })
 
 
 -- Markdown specific
