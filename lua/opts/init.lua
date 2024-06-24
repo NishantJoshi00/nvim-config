@@ -31,7 +31,7 @@ local rust_analyzer_config = function()
         only_current_line_autocmd = "CursorHold",
         -- whether to show parameter hints with the inlay hints or not
         -- default: true
-        show_parameter_hints = true,
+        show_parameter_hints = false,
         -- whether to show variable name before type hints with the inlay hints or not
         -- default: false
         show_variable_name = false,
@@ -46,7 +46,7 @@ local rust_analyzer_config = function()
         -- padding from the left if max_len_align is true
         max_len_align_padding = 1,
         -- whether to align to the extreme right or not
-        right_align = false,
+        right_align = true,
         -- padding from the right if right_align is true
         right_align_padding = 7,
         -- The color of the hints
@@ -222,7 +222,7 @@ local rust_analyzer_config = function()
           },
         },
       }, -- settings
-      on_attach = function(client, bufnr)
+      on_attach = function(_client, bufnr)
         vim.lsp.inlay_hint.enable(true, {
           bufnr = bufnr,
         })
@@ -231,6 +231,7 @@ local rust_analyzer_config = function()
     -- debugging stuff
   }
 end
+
 
 
 return {
