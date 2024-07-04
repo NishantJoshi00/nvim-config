@@ -210,6 +210,9 @@ vim.keymap.set("n", "<leader>tc", require("functions").theme_choicer, { desc = "
 vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next Buffer" })
 vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })
 
+-- Tab
+vim.api.nvim_set_keymap("n", "<leader>l", [[<cmd>tabnext<cr>]], { desc = "Go to next Tab" })
+
 
 vim.api.nvim_set_keymap("n", "<leader>co", [[<cmd>copen<cr>]], { desc = "Open Quickfix List" })
 vim.api.nvim_set_keymap("n", "<leader>cc", [[<cmd>ccl<cr>]], { desc = "Close Quickfix List" })
@@ -251,11 +254,14 @@ vim.api.nvim_set_keymap("n", "<leader>cd", [[<cmd>set conceallevel=0<cr>]], { de
 
 -- Trouble
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end, { desc = "Toggle Trouble" })
-vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end, { desc = "Toggle Workspace Diagnostics" })
-vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end, { desc = "Toggle Document Diagnostics" })
+vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end,
+  { desc = "Toggle Workspace Diagnostics" })
+vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,
+  { desc = "Toggle Document Diagnostics" })
 vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end, { desc = "Toggle Quickfix" })
-vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end , { desc = "Toggle Loclist" })
-vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end, { desc = "Toggle Lsp References" })
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end, { desc = "Toggle Loclist" })
+vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end,
+  { desc = "Toggle Lsp References" })
 
 
 -- Markdown specific
