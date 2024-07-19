@@ -21,6 +21,7 @@ vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr
 vim.api.nvim_set_keymap("n", "<leader>bh", [[<cmd>bprev<cr>]], { desc = "Previous Buffer" })
 vim.api.nvim_set_keymap("n", "<leader>bl", [[<cmd>bnext<cr>]], { desc = "Next Buffer" })
 vim.api.nvim_set_keymap("n", "<leader>bd", [[<cmd>bdel<cr>]], { desc = "Delete Buffer" })
+vim.api.nvim_set_keymap("n", "<leader>bdf", [[<cmd>bdel<cr>]], { desc = "Force Delete Buffer" })
 vim.api.nvim_set_keymap("n", "<leader>bn", [[<cmd>tab new<cr>]], { desc = "New Buffer" })
 
 
@@ -211,7 +212,7 @@ vim.api.nvim_set_keymap("n", "<S-l>", [[<cmd>bnext<cr>]], { desc = "Go to next B
 vim.api.nvim_set_keymap("n", "<S-h>", [[<cmd>bprev<cr>]], { desc = "Go to prev Buffer" })
 
 -- Tab
-vim.api.nvim_set_keymap("n", "<leader>l", [[<cmd>tabnext<cr>]], { desc = "Go to next Tab" })
+vim.api.nvim_set_keymap("n", "<leader><S-l>", [[<cmd>tabnext<cr>]], { desc = "Go to next Tab" })
 
 
 vim.api.nvim_set_keymap("n", "<leader>co", [[<cmd>copen<cr>]], { desc = "Open Quickfix List" })

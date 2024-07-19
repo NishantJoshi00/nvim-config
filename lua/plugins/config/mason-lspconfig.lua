@@ -27,6 +27,11 @@ return function()
       })
     end,
 
+    ["zls"] = function()
+      require("lspconfig").zls.setup {}
+      vim.lsp.set_log_level("debug")
+    end,
+
     -- dedicated handlers
     ["rust_analyzer"] = function()
       vim.g.rustaceanvim = require("opts")["rust-analyzer"]
