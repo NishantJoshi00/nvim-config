@@ -277,7 +277,6 @@ local glob_search = function()
   input:map("n", "<esc>", exit_action)
 end
 
-
 return {
   disabled_on = disabled_on,
   quoter = quoter,
