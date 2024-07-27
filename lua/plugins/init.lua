@@ -39,6 +39,7 @@ return {
       "folke/neodev.nvim",
       "VidocqH/lsp-lens.nvim",
       "mrcjkb/haskell-tools.nvim",
+      "NTBBloodbath/zig-tools.nvim"
     },
     config = require("plugins.config.mason-lspconfig"),
   },

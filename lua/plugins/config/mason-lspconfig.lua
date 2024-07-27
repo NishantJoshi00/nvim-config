@@ -38,6 +38,11 @@ return function()
 
       require("quickfix").rust_quickfix()
     end,
+    ["zls"] = function()
+      require("zig-tools").setup()
+      require("lspconfig").zls.setup({})
+    end,
+
     ["hls"] = function()
       -- this requires haskell-tools.nvim, hls, hlint
     end,
