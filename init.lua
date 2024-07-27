@@ -11,5 +11,3 @@ require("masking")
 require("custom")
 
 require("functions.up-to-date").check()
-
-vim.cmd([[set rtp+=~/.config/nvim/custom_ffi]])
