@@ -9,12 +9,8 @@ end, { desc = "Toggle Nerd Tree" })
 
 -- Lsp
 vim.api.nvim_set_keymap("n", "<leader>I", [[<cmd>lua vim.lsp.buf.hover()<cr>]], { desc = "View function signature" })
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>K",
-  [[<cmd>lua vim.lsp.buf.implementation()<cr>]],
-  { desc = "View implementations" }
-)
+vim.api.nvim_set_keymap("n", "<leader>K", [[<cmd>lua vim.lsp.buf.implementation()<cr>]],
+  { desc = "View implementations" })
 vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr>]], { desc = "View Definition" })
 
 -- Buffer specific
@@ -29,24 +25,14 @@ vim.api.nvim_set_keymap("n", "<leader>bn", [[<cmd>tab new<cr>]], { desc = "New B
 vim.api.nvim_set_keymap("n", "<leader>\\", [[<cmd>lua vim.g.quote_me()<cr>]], { desc = "Quote Stuff" })
 
 -- Session specific
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>sc",
-  [[<cmd>lua require('persistence').load()<cr>]],
-  { desc = "Load Session from Current Directory" }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>sl",
-  [[<cmd>lua require('persistence').load({ last = true })<cr>]],
-  { desc = "Load last session" }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>sq",
-  [[<cmd>lua require('persistence').stop()<cr>]],
-  { desc = "Stop Session Recording" }
-)
+vim.api.nvim_set_keymap("n", "<leader>sc", [[<cmd>lua require('persistence').load()<cr>]],
+  { desc = "Load Session from Current Directory" })
+
+vim.api.nvim_set_keymap("n", "<leader>sl", [[<cmd>lua require('persistence').load({ last = true })<cr>]],
+  { desc = "Load last session" })
+
+vim.api.nvim_set_keymap("n", "<leader>sq", [[<cmd>lua require('persistence').stop()<cr>]],
+  { desc = "Stop Session Recording" })
 
 -- Telescope
 local telescope_theme = require("functions").telescope_theme;
@@ -54,46 +40,24 @@ local telescope_theme = require("functions").telescope_theme;
 vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files(telescope_theme({})) end,
   { desc = "Find Files" })
 
-vim.keymap.set(
-  "n",
-  "<leader>fg",
-  function() require('telescope.builtin').live_grep(telescope_theme({})) end,
-  { desc = "Live Grep" }
-)
+vim.keymap.set("n", "<leader>fg", function() require('telescope.builtin').live_grep(telescope_theme({})) end,
+  { desc = "Live Grep" })
 
-vim.keymap.set(
-  "n",
-  "<leader>fb",
-  function() require('telescope.builtin').buffers(telescope_theme({})) end,
-  { desc = "Buffers" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>fh",
-  function() require('telescope.builtin').help_tags(telescope_theme({})) end,
-  { desc = "Help Tags" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>fa",
-  function() require('telescope.builtin').lsp_dynamic_workspace_symbols(telescope_theme({})) end,
-  { desc = "LSP Search" }
-)
+vim.keymap.set("n", "<leader>fb", function() require('telescope.builtin').buffers(telescope_theme({})) end,
+  { desc = "Buffers" })
 
-vim.keymap.set(
-  "n",
-  "<leader>fb",
-  function() require('telescope.builtin').builtin(telescope_theme({})) end,
-  { desc = "Search Builtin" }
-)
+vim.keymap.set("n", "<leader>fh", function() require('telescope.builtin').help_tags(telescope_theme({})) end,
+  { desc = "Help Tags" })
+
+vim.keymap.set("n", "<leader>fa",
+  function() require('telescope.builtin').lsp_dynamic_workspace_symbols(telescope_theme({})) end, { desc = "LSP Search" })
+
+vim.keymap.set("n", "<leader>fb", function() require('telescope.builtin').builtin(telescope_theme({})) end,
+  { desc = "Search Builtin" })
 
 
-vim.keymap.set(
-  "n",
-  "<leader>fs",
-  function() require('telescope.builtin').spell_suggest(telescope_theme({})) end,
-  { desc = "Suggest Spellings" }
-)
+vim.keymap.set("n", "<leader>fs", function() require('telescope.builtin').spell_suggest(telescope_theme({})) end,
+  { desc = "Suggest Spellings" })
 
 
 -- Toggle Term
@@ -110,36 +74,16 @@ vim.api.nvim_set_keymap("n", "<c-/>", "gcc", { desc = "Comment Code" })
 vim.api.nvim_set_keymap("v", "<c-/>", "gcc", { desc = "Comment Code" })
 
 -- Goto Preview
-vim.api.nvim_set_keymap(
-  "n",
-  "gpd",
-  [[<cmd>lua require('goto-preview').goto_preview_definition()<cr>]],
-  { desc = "preview definition" }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "gpt",
-  [[<cmd>lua require('goto-preview').goto_preview_type_definition()<cr>]],
-  { desc = "preview type definition" }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "gpi",
-  [[<cmd>lua require('goto-preview').goto_preview_implementation()<cr>]],
-  { desc = "preview implementation" }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "gP",
-  [[<cmd>lua require('goto-preview').close_all_win()<cr>]],
-  { desc = "close all previews" }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "gpr",
-  [[<cmd>lua require('goto-preview').goto_preview_references()<cr>]],
-  { desc = "preview references" }
-)
+vim.api.nvim_set_keymap("n", "gpd", [[<cmd>lua require('goto-preview').goto_preview_definition()<cr>]],
+  { desc = "preview definition" })
+vim.api.nvim_set_keymap("n", "gpt", [[<cmd>lua require('goto-preview').goto_preview_type_definition()<cr>]],
+  { desc = "preview type definition" })
+vim.api.nvim_set_keymap("n", "gpi", [[<cmd>lua require('goto-preview').goto_preview_implementation()<cr>]],
+  { desc = "preview implementation" })
+vim.api.nvim_set_keymap("n", "gP", [[<cmd>lua require('goto-preview').close_all_win()<cr>]],
+  { desc = "close all previews" })
+vim.api.nvim_set_keymap("n", "gpr", [[<cmd>lua require('goto-preview').goto_preview_references()<cr>]],
+  { desc = "preview references" })
 
 -- Lsp
 vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
@@ -151,15 +95,10 @@ vim.api.nvim_set_keymap("n", "<c-.>", [[<cmd>lua vim.lsp.buf.code_action()<cr>]]
 vim.keymap.set("n", "<leader>l", function() require("lsp_lines").toggle() end, { desc = "Toggle lsp_lines" })
 
 -- Lsp (Custom)
-vim.keymap.set("n", "<leader><c-p>", function()
-  require("functions").get_current_location(function(content)
-    vim.fn.setreg("+", content)
-  end)
-end)
+vim.keymap.set("n", "<leader><c-p>",
+  function() require("functions").get_current_location(function(content) vim.fn.setreg("+", content) end) end)
 
-vim.keymap.set("n", "<c-p>", function()
-  require("functions").point_search()
-end)
+vim.keymap.set("n", "<c-p>", function() require("functions").point_search() end)
 
 
 vim.keymap.set("n", "<leader>fl", function()
@@ -241,10 +180,8 @@ vim.api.nvim_set_keymap("n", "<leader>ncp", [[<cmd>Copilot panel<cr>]], { desc =
 vim.api.nvim_set_keymap("n", "<leader>ncr", [[<cmd>Copilot restart<cr>]], { desc = "Copilot Restart" })
 
 
-vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
-  expr = true,
-  replace_keycodes = false
-})
+vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
+
 vim.g.copilot_no_tab_map = true
 
 
