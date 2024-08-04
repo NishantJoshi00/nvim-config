@@ -17,7 +17,9 @@ return {
   { "preservim/vim-markdown" },
   { "neovim/nvim-lspconfig" },
   { "nvimtools/none-ls.nvim" },
-  { "mfussenegger/nvim-dap" },
+  {
+    "mfussenegger/nvim-dap",
+  },
   {
     "rcarriga/nvim-dap-ui",
     config = require("plugins.config.nvim-dap-ui"),
@@ -180,19 +182,6 @@ return {
     },
   },
   {
-    enabled = false,
-    "folke/noice.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-    config = require("plugins.config.noice"),
-  },
-  {
-    enabled = false,
-    "folke/twilight.nvim",
-  },
-  {
     "saecki/crates.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = require("plugins.config.crates"),
@@ -229,6 +218,7 @@ return {
   },
   {
     "gyim/vim-boxdraw",
+    enabled = false -- Sun Aug  4 12:33:59 PM IST 2024
   },
   { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
   { "folke/neodev.nvim",               opts = {} },
@@ -273,7 +263,10 @@ return {
   { "github/copilot.vim",    config = require("plugins.config.copilot") },
   { "tpope/vim-speeddating" },
   { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
-  { "florentc/vim-tla" },
+  {
+    "florentc/vim-tla",
+    enabled = false -- Sun Aug  4 12:34:49 PM IST 2024
+  },
   {
     'nvim-focus/focus.nvim',
     version = '*',
@@ -306,19 +299,13 @@ return {
     config = require("plugins.config.headlines"),
   },
   {
-    "grapp-dev/nui-components.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim"
-    },
-    enabled = false
-  },
-  {
     "tpope/vim-abolish"
   },
   {
     "tpope/vim-fugitive"
   },
   {
-    "mattn/emmet-vim"
+    "mattn/emmet-vim",
+    enabled = false, -- Sun Aug  4 12:30:06 PM IST 2024
   }
 }
