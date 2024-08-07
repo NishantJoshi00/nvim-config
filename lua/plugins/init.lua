@@ -307,5 +307,9 @@ return {
   {
     "mattn/emmet-vim",
     enabled = false, -- Sun Aug  4 12:30:06 PM IST 2024
+  },
+  {
+    "andweeb/presence.nvim",
+    config = require("plugins.config.presence"),
   }
 }

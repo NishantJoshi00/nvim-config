@@ -208,3 +208,26 @@ vim.keymap.set("n", "<leader>Mt", require("markdown-tree").checklist_toggle, { d
 vim.keymap.set("n", "<leader>Mc", require("markdown-tree").checklist_create, { desc = "Tick Current Checklist Markdown" })
 vim.api.nvim_set_keymap("x", "<leader>mhd", [[<cmd>HeaderDecrease<cr>]], { desc = "Decrease Header" })
 vim.api.nvim_set_keymap("x", "<leader>mhi", [[<cmd>HeaderIncrease<cr>]], { desc = "Increase Header" })
+
+
+vim.keymap.set(
+  "n",
+  "<leader>mro",
+  function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+    vim.api.nvim_buf_set_option(bufnr, "readonly", true)
+  end,
+  { desc = "Mark current buffer as read-only" }
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>mrw",
+  function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+    vim.api.nvim_buf_set_option(bufnr, "readonly", false)
+  end,
+  { desc = "Mark current buffer as read-write" }
+)
