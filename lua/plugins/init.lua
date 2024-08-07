@@ -45,6 +45,7 @@ return {
       "mrcjkb/haskell-tools.nvim",
       "NTBBloodbath/zig-tools.nvim"
     },
+    lazy = true,
     config = require("plugins.config.mason-lspconfig"),
   },
   {
@@ -58,10 +59,12 @@ return {
       "nvimtools/none-ls.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
+    lazy = true,
     config = require("plugins.config.mason-null-ls"),
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
+    lazy = true,
     config = require("plugins.config.mason-nvim-dap"),
     dependencies = {
       "williamboman/mason.nvim",
@@ -74,6 +77,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
+    lazy = true,
   },
   { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" }, lazy = true },
   {
@@ -241,6 +245,7 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = require("plugins.config.oil"),
+    lazy = true,
   },
   {
     "willothy/flatten.nvim",
