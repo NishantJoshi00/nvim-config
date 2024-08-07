@@ -45,7 +45,6 @@ return {
       "mrcjkb/haskell-tools.nvim",
       "NTBBloodbath/zig-tools.nvim"
     },
-    lazy = true,
     config = require("plugins.config.mason-lspconfig"),
   },
   {
@@ -59,7 +58,6 @@ return {
       "nvimtools/none-ls.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
-    lazy = true,
     config = require("plugins.config.mason-null-ls"),
   },
   {
@@ -79,7 +77,7 @@ return {
     config = require("plugins.config.nvim-tree"),
     lazy = true,
   },
-  { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" }, lazy = true },
+  { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
   {
     "folke/which-key.nvim",
     config = require("plugins.config.which-key"),
@@ -166,7 +164,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      -- "nvim-tree/nvim-web-devicons",
     },
     config = require("plugins.config.lualine"),
   },
