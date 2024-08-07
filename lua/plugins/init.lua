@@ -19,6 +19,7 @@ return {
   { "nvimtools/none-ls.nvim" },
   {
     "mfussenegger/nvim-dap",
+    enabled = false, -- Wed Aug  7 12:08:48 IST 2024
   },
   {
     "rcarriga/nvim-dap-ui",
@@ -26,6 +27,7 @@ return {
     dependencies = {
       "jay-babu/mason-nvim-dap.nvim",
     },
+    enabled = false, -- Wed Aug  7 12:08:48 IST 2024
   },
   {
     "williamboman/mason.nvim",
@@ -65,9 +67,10 @@ return {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
     },
+    enabled = false, -- Wed Aug  7 12:08:48 IST 2024
   },
   { "nvim-lua/plenary.nvim" },
-  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "folke/trouble.nvim" } },
+  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope") },
   {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
@@ -292,6 +295,7 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
+    enabled = false, -- Wed Aug  7 12:17:11 IST 2024
   },
   {
     "lukas-reineke/headlines.nvim",

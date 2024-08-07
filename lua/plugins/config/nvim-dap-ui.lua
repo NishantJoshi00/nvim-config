@@ -1,3 +1,3 @@
 return function()
-  vim.cmd([[vnoremap <c-;> <Cmd>lua require("dapui").eval()<CR>]])
+  vim.cmd([[nnoremap <c-;> <Cmd>lua require("dapui").eval()<CR>]])
 end

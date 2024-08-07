@@ -190,18 +190,6 @@ vim.api.nvim_set_keymap("n", "<leader>ce", [[<cmd>set conceallevel=2<cr>]], { de
 vim.api.nvim_set_keymap("n", "<leader>cd", [[<cmd>set conceallevel=0<cr>]], { desc = "Disable Concealing" })
 
 
--- Trouble
-vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end, { desc = "Toggle Trouble" })
-vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end,
-  { desc = "Toggle Workspace Diagnostics" })
-vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,
-  { desc = "Toggle Document Diagnostics" })
-vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end, { desc = "Toggle Quickfix" })
-vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end, { desc = "Toggle Loclist" })
-vim.keymap.set("n", "<leader>r", function() require("trouble").toggle("lsp_references") end,
-  { desc = "Toggle Lsp References" })
-
-
 -- Markdown specific
 vim.keymap.set("x", "<leader>Mv", require("markdown-tree").checklist_visualize, { desc = "Visualize Checklist Markdown" })
 vim.keymap.set("n", "<leader>Mt", require("markdown-tree").checklist_toggle, { desc = "Tick Current Checklist Markdown" })
