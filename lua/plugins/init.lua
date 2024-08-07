@@ -40,18 +40,20 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       'mrcjkb/rustaceanvim',
       "williamboman/mason.nvim",
-      -- "folke/neodev.nvim",
+      "folke/neodev.nvim",
       "VidocqH/lsp-lens.nvim",
       "mrcjkb/haskell-tools.nvim",
       "NTBBloodbath/zig-tools.nvim"
     },
     config = require("plugins.config.mason-lspconfig"),
+    event = "VeryLazy"
   },
   {
     "VidocqH/lsp-lens.nvim",
     config = require("plugins.config.lsp-lens"),
   },
   {
+    event = "VeryLazy",
     "jay-babu/mason-null-ls.nvim",
     dependencies = {
       "williamboman/mason.nvim",
@@ -62,7 +64,7 @@ return {
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
-    lazy = true,
+    event = "VeryLazy",
     config = require("plugins.config.mason-nvim-dap"),
     dependencies = {
       "williamboman/mason.nvim",
@@ -75,7 +77,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
-    lazy = true,
+    event = "VeryLazy",
   },
   { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
   {
@@ -226,7 +228,7 @@ return {
     enabled = false -- Sun Aug  4 12:33:59 PM IST 2024
   },
   { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
-  { "folke/neodev.nvim",               opts = {},                                 lazy = true },
+  { "folke/neodev.nvim",               opts = {},                                 event = "VeryLazy" },
   {
     "stevearc/dressing.nvim",
     opts = {},
@@ -243,7 +245,7 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = require("plugins.config.oil"),
-    lazy = true,
+    event = "VeryLazy",
   },
   {
     "willothy/flatten.nvim",
