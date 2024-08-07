@@ -40,7 +40,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       'mrcjkb/rustaceanvim',
       "williamboman/mason.nvim",
-      "folke/neodev.nvim",
+      -- "folke/neodev.nvim",
       "VidocqH/lsp-lens.nvim",
       "mrcjkb/haskell-tools.nvim",
       "NTBBloodbath/zig-tools.nvim"
@@ -75,7 +75,7 @@ return {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
   },
-  { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
+  { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" }, lazy = true },
   {
     "folke/which-key.nvim",
     config = require("plugins.config.which-key"),
@@ -224,7 +224,7 @@ return {
     enabled = false -- Sun Aug  4 12:33:59 PM IST 2024
   },
   { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
-  { "folke/neodev.nvim",               opts = {} },
+  { "folke/neodev.nvim",               opts = {},                                 lazy = true },
   {
     "stevearc/dressing.nvim",
     opts = {},
