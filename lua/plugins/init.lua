@@ -321,5 +321,9 @@ return {
   {
     "andweeb/presence.nvim",
     config = require("plugins.config.presence"),
+  },
+  {
+    "mbbill/undotree",
+    config = require("plugins.config.undotree")
   }
 }

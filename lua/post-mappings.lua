@@ -8,7 +8,6 @@ vim.keymap.set("n", "<c-e>", function()
 end, { desc = "Toggle Nerd Tree" })
 
 -- Lsp
-vim.api.nvim_set_keymap("n", "<leader>I", [[<cmd>lua vim.lsp.buf.hover()<cr>]], { desc = "View function signature" })
 vim.api.nvim_set_keymap("n", "<leader>K", [[<cmd>lua vim.lsp.buf.implementation()<cr>]],
   { desc = "View implementations" })
 vim.api.nvim_set_keymap("n", "<leader>D", [[<cmd>lua vim.lsp.buf.definition()<cr>]], { desc = "View Definition" })
