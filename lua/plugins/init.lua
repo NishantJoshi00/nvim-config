@@ -306,6 +306,7 @@ return {
     "lukas-reineke/headlines.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = require("plugins.config.headlines"),
+    enabled = false
   },
   {
     "tpope/vim-abolish"
