@@ -129,12 +129,11 @@ return {
     },
     config = require("plugins.config.dashboard-nvim"),
   },
-  -- { "ggandor/lightspeed.nvim" },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = {},
-    keys = require("plugins.config.flash"),
+    opts = require("plugins.config.flash").opts,
+    keys = require("plugins.config.flash").keys,
   },
   {
     "akinsho/bufferline.nvim",
