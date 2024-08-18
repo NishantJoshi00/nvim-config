@@ -11,3 +11,8 @@ require("masking")
 require("custom")
 
 require("functions.up-to-date").check()
+
+
+vim.opt.rtp:prepend("~/.config/nvim/ffi")
+
+require("telemetry.keybinds")
