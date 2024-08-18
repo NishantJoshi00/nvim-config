@@ -32,6 +32,13 @@ function keybinds(mode, f)
       -- remove <Cmd> and <CR> from the rhs
       local command = string.gsub(data.rhs, "<Cmd>", "")
       command = string.gsub(command, "<CR>", "")
+      command = string.gsub(command, "<Plug>", "")
+      -- if command has CommentryLine change it to Commentry
+
+      -- exceptions
+      if string.find(command, "CommentaryLine") then
+        command = string.gsub(command, "CommentaryLine", "Commentary")
+      end
 
       exec = function(...)
         vim.cmd(command)
@@ -54,7 +61,7 @@ if require("telemetry.metrics").config.keybinds.telemetry then
   local filename = require("telemetry.metrics").filename
   for _, mode in ipairs(require("telemetry.metrics").config.keybinds.modes) do
     keybinds(mode, function(m, key, desc)
-      require("telemetry").increment(filename, m, key, desc)
+      require("telemetry").increment(filename, m, key, desc or "")
     end)
   end
 end
