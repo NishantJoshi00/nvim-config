@@ -3,7 +3,7 @@ local filename = vim.fn.stdpath('config') .. "/data/state.bin"
 local config = {
   keybinds = {
     modes = { "n" },
-    telemetry = true,
+    telemetry = false,
     notify = true
   },
 }

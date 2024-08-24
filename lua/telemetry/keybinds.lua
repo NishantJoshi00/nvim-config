@@ -2,14 +2,11 @@
 --- Telemetry: Keybinds
 ---
 --- This fill is responsible for adding telemetry functionality to all the keybinds.
---- This is a optional functionality that can be enabled or disabled by the user.
+--- This is a optional functionality that can be enabled or disabled by the user.CommentaryLine
 --- This can help the user to understand how the keybinds are being used and how often.
 ---
 --- Note: Adding this functionality can have a performance impact on the system. Use it only if you wish to analyze the keybinds usage.
 ---
----
-
-
 
 ---@param mode string
 ---@param f function
@@ -30,18 +27,20 @@ function keybinds(mode, f)
 
     if data.rhs ~= nil then
       -- remove <Cmd> and <CR> from the rhs
-      local command = string.gsub(data.rhs, "<Cmd>", "")
-      command = string.gsub(command, "<CR>", "")
-      command = string.gsub(command, "<Plug>", "")
-      -- if command has CommentryLine change it to Commentry
+      local command = data.rhs
+      -- if command has CommentaryLine change it to Commentry
 
       -- exceptions
       if string.find(command, "CommentaryLine") then
-        command = string.gsub(command, "CommentaryLine", "Commentary")
+        command = string.gsub(command, "CommentaryLine", "<Cmd>Commentary<CR>")
       end
 
+      -- if string.find(command, "<Plug>") then
+      --   print(command)
+      -- end
+
       exec = function(...)
-        vim.cmd(command)
+        vim.api.nvim_input(command)
       end
     else
       exec = data.callback

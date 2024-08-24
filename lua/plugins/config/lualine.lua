@@ -1,4 +1,4 @@
-local one00 = function()
+local custom = function()
   local gruvbox = function()
     local colors = { -- Gruvbox Dark
       darkgray = "#282828",
@@ -46,6 +46,14 @@ local one00 = function()
     }
   end
 
+  local mode = vim.fn.mode()
+
+  local left = "";
+  local right = "";
+
+  local tright = "";
+  local tleft = "";
+
   local lsp_info = {
     function()
       local msg = ""
@@ -80,8 +88,10 @@ local one00 = function()
       theme = gruvbox(),
       component_separators = { left = '', right = '' },
       section_separators = {
-        left = ' ',
-        right = ''
+        -- slash
+        left = right,
+        -- slash
+        right = left,
       },
       disabled_filetypes = {
         statusline = {
@@ -96,13 +106,12 @@ local one00 = function()
       globalstatus = true,
     },
     sections = {
-      --lualine_a = {'mode'},
-      lualine_a = { -- BubbleButt
+      lualine_a = {
         {
           'mode',
           separator = {
-            left = '',
-            right = '',
+            left = left,
+            right = right,
           },
           right_padding = 0
         },
@@ -132,8 +141,8 @@ local one00 = function()
         {
           'location',
           separator = {
-            left = '',
-            right = ''
+            left = left,
+            right = right,
           },
           left_padding = 0
         },
@@ -142,4 +151,4 @@ local one00 = function()
   })
 end
 
-return one00;
+return custom;
