@@ -1,16 +1,17 @@
 local custom = function()
   local gruvbox = function()
-    local colors = { -- Gruvbox Dark
+    local colors = {
       darkgray = "#282828",
       gray = "#928374",
       innerbg = nil,
       outerbg = "#1d2021",
-      normal = "#458487",
-      insert = "#689c69",
-      visual = "#cb231d",
+      normal = "#548687",
+      insert = "#50579f",
+      visual = "#7371fc",
       replace = "#d69821",
-      command = "#98961a",
+      command = "#bc3908",
     }
+
 
     return {
       inactive = {
@@ -88,6 +89,18 @@ local custom = function()
     end
   end
 
+  local os_icon = function()
+    local os = vim.loop.os_uname().sysname
+    if os == 'Linux' then
+      return unix
+    elseif os == 'Darwin' then
+      return mac
+    elseif os == 'Windows' then
+      return dos
+    end
+  end
+
+
   require('lualine').setup({
     extensions = { 'oil', 'fzf', 'mason', 'lazy' },
     options = {
@@ -95,9 +108,7 @@ local custom = function()
       theme = gruvbox(),
       component_separators = { left = '', right = '' },
       section_separators = {
-        -- slash
         left = right,
-        -- slash
         right = left,
       },
       disabled_filetypes = {
@@ -124,27 +135,28 @@ local custom = function()
         },
         'searchcount',
       },
-      lualine_b = { 'branch', 'diff' },
+      lualine_b = { { os_icon }, 'branch', 'diff' },
       lualine_c = {
         'filetype',
         'filesize',
         {
           'diagnostics',
-          sources = { 'nvim_diagnostic' },
-          sections = { 'error', 'warn', 'info' },
+          sources = { 'nvim_diagnostic', 'nvim_lsp' },
+          sections = { 'error', 'warn' },
         },
       },
 
       lualine_x = { 'encoding' },
-      lualine_y = { 'progress' },
-      lualine_z = {
+      lualine_y = { 'progress',
         'selectioncount',
-        { symbol_maker },
-        lsp_info,
         {
           'filename',
           path = 1
         },
+        { symbol_maker },
+      },
+      lualine_z = {
+        lsp_info,
         {
           'location',
           separator = {
