@@ -46,13 +46,19 @@ local custom = function()
     }
   end
 
-  local mode = vim.fn.mode()
 
   local left = "";
   local right = "";
 
   local tright = "";
   local tleft = "";
+
+
+  local unix = '';
+  local dos = '';
+  local mac = '';
+
+
 
   local lsp_info = {
     function()
@@ -83,6 +89,7 @@ local custom = function()
   end
 
   require('lualine').setup({
+    extensions = { 'oil', 'fzf', 'mason', 'lazy' },
     options = {
       icons_enabled = true,
       theme = gruvbox(),
