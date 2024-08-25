@@ -25,6 +25,6 @@ return function()
   };
 
 
-  -- vim.cmd("colorscheme kanagawa-dragon")
-  vim.cmd("colorscheme oldworld")
+  -- vim.cmd("colorscheme oldworld")
+  vim.cmd [[ colorscheme mellow ]]
 end

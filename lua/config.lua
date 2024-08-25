@@ -30,3 +30,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end
 })
+
+
+vim.api.nvim_create_user_command('LuaToBuffer', function(opts)
+  local output = vim.fn.execute('lua ' .. opts.args)
+  vim.api.nvim_buf_set_lines(0, -1, -1, false, vim.split(output, '\n'))
+end, { nargs = '+' })
