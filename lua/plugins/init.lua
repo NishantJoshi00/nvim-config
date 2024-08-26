@@ -46,7 +46,7 @@ return {
       "NTBBloodbath/zig-tools.nvim"
     },
     config = require("plugins.config.mason-lspconfig"),
-    event = "VeryLazy"
+    -- event = "VeryLazy"
   },
   {
     "VidocqH/lsp-lens.nvim",
