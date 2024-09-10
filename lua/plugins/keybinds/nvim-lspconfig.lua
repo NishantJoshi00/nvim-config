@@ -5,6 +5,7 @@ return function()
 
   vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
 
+  vim.api.nvim_set_keymap("n", "<leader>re", [[<cmd>RustLsp expandMacro<cr>]], { desc = "Expand Macro" })
 
   vim.g.lsp_hidden = false
 
@@ -17,5 +18,4 @@ return function()
       vim.g.lsp_hidden = true
     end
   end, { desc = "Toggle Hiding Lsp Hints" })
-
 end

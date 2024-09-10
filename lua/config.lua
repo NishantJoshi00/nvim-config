@@ -18,6 +18,8 @@ vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray guibg=NO
 vim.o.list = true
 vim.o.listchars = require("utils").join({ trail = "·", tab = "▸ " })
 
+vim.cmd([[autocmd BufRead,BufNewFile *.Jenkinsfile setfiletype groovy]])
+
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
