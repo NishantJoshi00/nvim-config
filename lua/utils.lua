@@ -53,6 +53,13 @@ local function join(list)
   return output
 end
 
+---load_project
+---@param directory string
+---@return table
+local function load_project(directory)
+  -- change the directory to the project directory
+  vim.cmd("cd " .. directory)
+end
 
 return {
   is_day = is_day,

@@ -1,30 +1,17 @@
 return function()
-  -- require("nightly").setup({
-  --   transparent = false,
-  --   styles = {
-  --     comments = { italic = true },
-  --     functions = { italic = false },
-  --     variables = { italic = false },
-  --     keywords = { italic = false },
-  --   },
-  --   highlights = {},
-  -- })
-
-
-  -- require("custom.theme.catppuccin").config()
-
   vim.g.theme_choices = {
     [[colorscheme kanagawa-dragon]],
     [[colorscheme kanagawa]],
-    [[colorscheme nightly]],
     [[colorscheme tokyodark]],
     [[colorscheme mellow]],
-    [[colorscheme lunaperche]],
-    [[colorscheme slate]],
     [[colorscheme oldworld]],
   };
 
+  local current_hour = tonumber(os.date("%H"));
 
-  vim.cmd("colorscheme oldworld")
-  -- vim.cmd [[ colorscheme mellow ]]
+  if current_hour >= 6 and current_hour < 19 then
+    vim.cmd [[ colorscheme oldworld ]]
+  else
+    vim.cmd [[ colorscheme kanagawa-dragon ]]
+  end
 end

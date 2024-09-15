@@ -5,7 +5,6 @@ return {
     dependencies = {
       "catppuccin/nvim",
       "rebelot/kanagawa.nvim",
-      "kvrohit/mellow.nvim",
       "dgox16/oldworld.nvim",
     },
   },
