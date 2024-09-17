@@ -1,6 +1,8 @@
 return function()
   require("notify").setup({
-    render = "compact",
+    render = "minimal",
+    stages = "slide",
+    fps = 60,
   })
 
   vim.notify = require("notify")
