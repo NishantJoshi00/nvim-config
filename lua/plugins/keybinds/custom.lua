@@ -72,4 +72,7 @@ return function()
     end,
     { desc = "Mark current buffer as read-write" }
   )
+
+  vim.api.nvim_set_keymap("n", "<leader>T", [[<cmd>TSCaptureUnderCursor<CR>]], { desc = "Capture TS context" })
+
 end
