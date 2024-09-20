@@ -25,5 +25,8 @@ return function()
       enable = true,
       additional_vim_regex_highlighting = true,
     },
+    playground = {
+      persist_queries = true
+    }
   })
 end
