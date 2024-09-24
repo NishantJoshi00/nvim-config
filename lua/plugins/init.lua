@@ -72,7 +72,12 @@ return {
     enabled = false, -- Wed Aug  7 12:08:48 IST 2024
   },
   { "nvim-lua/plenary.nvim" },
-  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope") },
+  { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "nvim-telescope/telescope-fzf-native.nvim" } },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = "make",
+    config = require("plugins.config.telescope-fzf-native"),
+  },
   {
     "nvim-tree/nvim-tree.lua",
     config = require("plugins.config.nvim-tree"),
@@ -272,7 +277,7 @@ return {
   { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
   {
     "florentc/vim-tla",
-    enabled = false -- Sun Aug  4 12:34:49 PM IST 2024
+    enabled = true -- Sun Aug  4 12:34:49 PM IST 2024
   },
   {
     'nvim-focus/focus.nvim',

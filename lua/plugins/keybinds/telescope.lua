@@ -1,7 +1,10 @@
 return function()
   local telescope_theme = require("functions").telescope_theme;
 
-  vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files(telescope_theme({})) end,
+  vim.keymap.set("n", "<leader>ff", function()
+      require("telescope.builtin").find_files(telescope_theme({
+      }))
+    end,
     { desc = "Find Files" })
 
   vim.keymap.set("n", "<leader>fg", function() require('telescope.builtin').live_grep(telescope_theme({})) end,
