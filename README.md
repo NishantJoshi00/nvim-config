@@ -1,10 +1,16 @@
 ## NVIM Configuration
 
+<a href="https://dotfyle.com/NishantJoshi00/nvim-config"><img src="https://dotfyle.com/NishantJoshi00/nvim-config/badges/plugins?style=for-the-badge" /></a>
+<a href="https://dotfyle.com/NishantJoshi00/nvim-config"><img src="https://dotfyle.com/NishantJoshi00/nvim-config/badges/leaderkey?style=for-the-badge" /></a>
+<a href="https://dotfyle.com/NishantJoshi00/nvim-config"><img src="https://dotfyle.com/NishantJoshi00/nvim-config/badges/plugin-manager?style=for-the-badge" /></a>
+
 This is my personal neovim configuration. It is a work in progress as I find new ways to organize my configuration. I have been using neovim for a few years now and have been through many iterations of my configuration. I have finally settled on a configuration that I am happy with and that I can maintain.
 
 I will now start to tag the configuration so that I can easily revert to a previous state if I make a change that I do not like.
 
 ## Installation
+
+> Install requires Neovim 0.9+. Always review the code before installing a configuration.
 
 To install the configuration, you will need to clone the repository to your XDG_CONFIG_HOME directory. If you do not have an XDG_CONFIG_HOME directory, you can clone the repository to `~/.config/nvim`.
 

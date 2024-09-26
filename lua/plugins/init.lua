@@ -3,11 +3,12 @@ return {
     "tiagovla/tokyodark.nvim",
     config = require("plugins.config.themes"),
     dependencies = {
-      "catppuccin/nvim",
       "rebelot/kanagawa.nvim",
       "dgox16/oldworld.nvim",
+      "rose-pine/neovim"
     },
   },
+  { "rose-pine/neovim",      name = "rose-pine" },
   {
     "lewis6991/gitsigns.nvim",
     config = require("plugins.config.gitsigns"),
