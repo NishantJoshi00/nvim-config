@@ -5,7 +5,8 @@ return {
     dependencies = {
       "rebelot/kanagawa.nvim",
       "dgox16/oldworld.nvim",
-      "rose-pine/neovim"
+      "vague2k/vague.nvim",
+      "EdenEast/nightfox.nvim"
     },
   },
   { "rose-pine/neovim",      name = "rose-pine" },
