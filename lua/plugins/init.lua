@@ -211,6 +211,7 @@ return {
   },
   {
     "sindrets/diffview.nvim",
+    config = require("plugins.config.diffview"),
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -319,6 +320,7 @@ return {
   },
   {
     "tpope/vim-fugitive"
+    -- what's up!
   },
   {
     "mattn/emmet-vim",
