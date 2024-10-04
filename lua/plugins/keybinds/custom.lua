@@ -19,13 +19,13 @@ return function()
   vim.keymap.set("n", "<leader><c-n>", function()
     require("functions").copy_pad("copy_pad", function(content)
       vim.fn.setreg("+", content)
-    end)
+    end, nil)
   end, { desc = "open copy pad" })
 
   vim.keymap.set("n", "<c-n>", function()
     require("functions").copy_pad("scratch_pad", function(content)
-      -- Decide what to do with the content
-    end)
+      -- use the content to do anything
+    end, nil)
   end, { desc = "open scratch pad" })
 
 
@@ -42,11 +42,11 @@ return function()
 
 
   -- Markdown specific
-  vim.keymap.set("x", "<leader>Mv", require("markdown-tree").checklist_visualize,
+  vim.keymap.set("x", "<leader>MV", require("markdown-tree").checklist_visualize,
     { desc = "Visualize Checklist Markdown" })
-  vim.keymap.set("n", "<leader>Mt", require("markdown-tree").checklist_toggle,
+  vim.keymap.set("n", "<leader>MT", require("markdown-tree").checklist_toggle,
     { desc = "Tick Current Checklist Markdown" })
-  vim.keymap.set("n", "<leader>Mc", require("markdown-tree").checklist_create,
+  vim.keymap.set("n", "<leader>MC", require("markdown-tree").checklist_create,
     { desc = "Tick Current Checklist Markdown" })
   vim.api.nvim_set_keymap("x", "<leader>mhd", [[<cmd>HeaderDecrease<cr>]], { desc = "Decrease Header" })
   vim.api.nvim_set_keymap("x", "<leader>mhi", [[<cmd>HeaderIncrease<cr>]], { desc = "Increase Header" })
@@ -74,5 +74,4 @@ return function()
   )
 
   vim.api.nvim_set_keymap("n", "<leader>T", [[<cmd>TSCaptureUnderCursor<CR>]], { desc = "Capture TS context" })
-
 end

@@ -157,7 +157,11 @@ end
 
 vim.g.copy_pad_open = {}
 vim.g.scratch_pad_content = {}
-local nui_copy_pad = function(name, callback) -- callback gets the content from the copy_pad
+local nui_copy_pad = function(name, callback, init) -- callback gets the content from the copy_pad
+  if init ~= nil and vim.g.scratch_pad_content[name] == nil then
+    vim.g.scratch_pad_content[name] = init()
+  end
+
   if vim.g.copy_pad_open[name] == 1 then
     return
   end
@@ -210,7 +214,7 @@ local nui_copy_pad = function(name, callback) -- callback gets the content from 
     vim.g.scratch_pad_content = global_insert(vim.g.scratch_pad_content, name, lines)
     local content = table.concat(lines, get_newline())
 
-    callback(content)
+    callback(content, name, lines)
     -- vim.fn.setreg("+", content)
 
     popup:unmount()
