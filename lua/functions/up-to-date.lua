@@ -8,9 +8,14 @@ local function check()
 
   local git = "git -C " .. config_location .. " "
 
+  local remote = "origin"
+  local branch = "lazy-lua"
+  local remote_branch = remote .. "/" .. branch
+
+
   vim.fn.jobstart(git .. "fetch", {
     on_exit = function()
-      vim.fn.jobstart(git .. "rev-list --left-right --count origin/lazy-lua...HEAD", {
+      vim.fn.jobstart(git .. "rev-list --left-right --count " .. remote_branch .. "...HEAD", {
         stdout_buffered = true,
         on_stdout = function(_, data, _)
           local first = data[1]

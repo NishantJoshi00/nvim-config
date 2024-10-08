@@ -133,7 +133,7 @@ local custom = function()
           },
           right_padding = 0
         },
-        'searchcount',
+        { 'searchcount', maxcount = 999 },
       },
       lualine_b = { { os_icon }, 'branch', 'diff' },
       lualine_c = {
