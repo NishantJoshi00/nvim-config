@@ -47,12 +47,34 @@ local custom = function()
     }
   end
 
+  local symbols = {
+    ["left"] = {
+      left = "",
+      right = "",
+    },
+    ["right"] = {
+      left = "",
+      right = "",
+    },
+    ["bubble"] = {
+      left = "",
+      right = "",
+    },
+    ["arrow"] = {
+      left = "",
+      right = "",
+    },
+    ["rect"] = {
+      left = "▐",
+      right = "▌",
+    }
+  }
 
-  local left = "";
-  local right = "";
+  local current = symbols.rect;
 
-  local tright = "";
-  local tleft = "";
+  local left = current.left;
+  local right = current.right;
+
 
 
   local unix = '';
