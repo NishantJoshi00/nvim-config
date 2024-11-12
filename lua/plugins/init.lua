@@ -44,7 +44,7 @@ return {
       "folke/neodev.nvim",
       "VidocqH/lsp-lens.nvim",
       "mrcjkb/haskell-tools.nvim",
-      "NTBBloodbath/zig-tools.nvim"
+      "ziglang/zig.vim"
     },
     config = require("plugins.config.mason-lspconfig"),
     -- event = "VeryLazy"
