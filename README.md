@@ -10,7 +10,7 @@ I will now start to tag the configuration so that I can easily revert to a previ
 
 ## Installation
 
-> Install requires Neovim 0.9+. Always review the code before installing a configuration.
+> Install requires Neovim 0.10+. Always review the code before installing a configuration.
 
 To install the configuration, you will need to clone the repository to your XDG_CONFIG_HOME directory. If you do not have an XDG_CONFIG_HOME directory, you can clone the repository to `~/.config/nvim`.
 
