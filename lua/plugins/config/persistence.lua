@@ -1,3 +1,3 @@
 return function()
-      require("persistence").setup()
-    end
+    require("persistence").setup()
+end
