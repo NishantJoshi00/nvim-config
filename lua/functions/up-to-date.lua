@@ -9,7 +9,7 @@ local function check()
   local git = "git -C " .. config_location .. " "
 
   local remote = "origin"
-  local branch = "lazy-lua"
+  local branch = "main"
   local remote_branch = remote .. "/" .. branch
 
 
