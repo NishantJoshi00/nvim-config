@@ -6,7 +6,6 @@ return {
             "rebelot/kanagawa.nvim",
             "dgox16/oldworld.nvim",
             "vague2k/vague.nvim",
-            "EdenEast/nightfox.nvim"
         },
     },
     { "rose-pine/neovim",      name = "rose-pine" },
@@ -198,6 +197,7 @@ return {
         "saecki/crates.nvim",
         requires = { "nvim-lua/plenary.nvim" },
         config = require("plugins.config.crates"),
+        event = "VeryLazy",
     },
     {
         "folke/persistence.nvim",
@@ -206,15 +206,12 @@ return {
         config = require("plugins.config.persistence"),
     },
     {
-        "samueljoli/hurl.nvim",
-        config = require("plugins.config.hurl"),
-    },
-    {
         "sindrets/diffview.nvim",
         config = require("plugins.config.diffview"),
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
+        event = "VeryLazy",
     },
     {
         "ray-x/lsp_signature.nvim",
@@ -275,7 +272,7 @@ return {
         "nvim-treesitter/nvim-treesitter-context",
         config = require("plugins.config.nvim-treesitter-context"),
     },
-    { "github/copilot.vim",    config = require("plugins.config.copilot") },
+    { "github/copilot.vim",    config = require("plugins.config.copilot"), event = "VeryLazy" },
     { "tpope/vim-speeddating" },
     { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
     {
