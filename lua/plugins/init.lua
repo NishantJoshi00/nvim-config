@@ -272,7 +272,7 @@ return {
         "nvim-treesitter/nvim-treesitter-context",
         config = require("plugins.config.nvim-treesitter-context"),
     },
-    { "github/copilot.vim",    config = require("plugins.config.copilot"), event = "VeryLazy" },
+    { "github/copilot.vim",    config = require("plugins.config.copilot") },
     { "tpope/vim-speeddating" },
     { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
     {
@@ -332,7 +332,6 @@ return {
         config = require("plugins.config.undotree")
     },
     {
-        event = "VeryLazy",
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
         opts = {},
