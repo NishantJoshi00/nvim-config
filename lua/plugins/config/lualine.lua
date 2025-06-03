@@ -1,61 +1,38 @@
 local custom = function()
     local gruvbox = function()
-        -- local colors = {
-        --     darkgray = "#282828",
-        --     gray = "#928374",
-        --     innerbg = nil,
-        --     outerbg = "#1d2021",
-        --     normal = "#548687",
-        --     -- insert = "#7A7FA8",
-        --     insert = "#CC7C5E",
-        --     visual = "#7371fc",
-        --     replace = "#d69821",
-        --     command = "#bc3908",
-        -- }
 
-
-        local colors = {
-            darkgray = "#1f1d1d",             -- keep as base/unused bg
-            gray = "#c5c9c5",                 -- theme foreground
-            innerbg = "#161616",
-            outerbg = "#1e1e1e",
-            normal = "#8ba4b0",               -- blue
-            insert = "#c4746e",               -- red
-            visual = "#938aa9",               -- bright magenta
-            replace = "#e6c384",              -- bright yellow
-            command = "#c4b28a",              -- yellow
-        }
+        local color = require("exports").colors
 
         return {
             inactive = {
-                a = { fg = colors.gray, bg = colors.outerbg, gui = "bold" },
-                b = { fg = colors.gray, bg = colors.outerbg },
-                c = { fg = colors.gray, bg = colors.innerbg },
+                a = { fg = color.foreground, bg = color.shades[2], gui = "bold" },
+                b = { fg = color.foreground, bg = color.shades[2] },
+                c = { fg = color.foreground, bg = color.shades[1] },
             },
             visual = {
-                a = { fg = colors.darkgray, bg = colors.visual, gui = "bold" },
-                b = { fg = colors.gray, bg = colors.outerbg },
-                c = { fg = colors.gray, bg = colors.innerbg },
+                a = { fg = color.shades[3], bg = color.ansi[6], gui = "bold" },
+                b = { fg = color.foreground, bg = color.shades[2] },
+                c = { fg = color.foreground, bg = color.shades[1] },
             },
             replace = {
-                a = { fg = colors.darkgray, bg = colors.replace, gui = "bold" },
-                b = { fg = colors.gray, bg = colors.outerbg },
-                c = { fg = colors.gray, bg = colors.innerbg },
+                a = { fg = color.shades[3], bg = color.brights[4], gui = "bold" },
+                b = { fg = color.foreground, bg = color.shades[2] },
+                c = { fg = color.foreground, bg = color.shades[1] },
             },
             normal = {
-                a = { fg = colors.darkgray, bg = colors.normal, gui = "bold" },
-                b = { fg = colors.gray, bg = colors.outerbg },
-                c = { fg = colors.gray, bg = colors.innerbg },
+                a = { fg = color.shades[3], bg = color.ansi[5], gui = "bold" },
+                b = { fg = color.foreground, bg = color.shades[2] },
+                c = { fg = color.foreground, bg = color.shades[1] },
             },
             insert = {
-                a = { fg = colors.darkgray, bg = colors.insert, gui = "bold" },
-                b = { fg = colors.gray, bg = colors.outerbg },
-                c = { fg = colors.gray, bg = colors.innerbg },
+                a = { fg = color.shades[3], bg = color.ansi[2], gui = "bold" },
+                b = { fg = color.foreground, bg = color.shades[2] },
+                c = { fg = color.foreground, bg = color.shades[1] },
             },
             command = {
-                a = { fg = colors.darkgray, bg = colors.command, gui = "bold" },
-                b = { fg = colors.gray, bg = colors.outerbg },
-                c = { fg = colors.gray, bg = colors.innerbg },
+                a = { fg = color.shades[3], bg = color.ansi[4], gui = "bold" },
+                b = { fg = color.foreground, bg = color.shades[2] },
+                c = { fg = color.foreground, bg = color.shades[1] },
             },
         }
     end

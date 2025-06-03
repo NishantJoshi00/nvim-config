@@ -22,3 +22,7 @@ vim.o.tabstop = 4
 vim.cmd([[filetype plugin indent on]])
 vim.cmd([[syntax on]])
 vim.cmd([[set termguicolors]])
+
+
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#181616", fg = "#c5c9c5" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#181616" })
