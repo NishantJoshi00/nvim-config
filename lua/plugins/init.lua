@@ -34,16 +34,17 @@ return {
         config = require("plugins.config.mason"),
     },
     {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
             "hrsh7th/cmp-nvim-lsp",
             'mrcjkb/rustaceanvim',
-            "williamboman/mason.nvim",
-            "folke/neodev.nvim",
+            "mason-org/mason.nvim",
+            "folke/lazydev.nvim",
             "VidocqH/lsp-lens.nvim",
             "mrcjkb/haskell-tools.nvim",
-            "ziglang/zig.vim"
+            "ziglang/zig.vim",
+            "neovim/nvim-lspconfig"
         },
         config = require("plugins.config.mason-lspconfig"),
         -- event = "VeryLazy"
@@ -215,6 +216,7 @@ return {
     },
     {
         "ray-x/lsp_signature.nvim",
+        branch = "master",
         config = require("plugins.config.lsp_signature"),
         dependencies = {
             "neovim/nvim-lspconfig",
@@ -232,7 +234,7 @@ return {
         enabled = false -- Sun Aug  4 12:33:59 PM IST 2024
     },
     { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
-    { "folke/neodev.nvim",               opts = {},                                 event = "VeryLazy" },
+    { "folke/lazydev.nvim", opts = {}, event = "VeryLazy", ft = "lua" },
     {
         "stevearc/dressing.nvim",
         opts = {},

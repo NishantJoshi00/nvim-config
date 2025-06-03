@@ -8,43 +8,20 @@ end
 
 
 
-
-
 return function()
-    require("mason-lspconfig").setup()
+    -- Configure LSP borders
+    local border = "rounded"
+    
+    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or border
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    end
+
+    require("mason-lspconfig").setup({})
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 
     unmanaged_handlers()
-
-    -- managed handlers
-    require("mason-lspconfig").setup_handlers({
-        -- default handler
-        function(server_name)
-            require("lspconfig")[server_name].setup({
-                capabilities = capabilities,
-            })
-        end,
-
-        -- dedicated handlers
-        ["rust_analyzer"] = function()
-            vim.g.rustaceanvim = require("opts")["rust-analyzer"]
-
-            require("quickfix").rust_quickfix()
-        end,
-        ["hls"] = function()
-            -- this requires haskell-tools.nvim, hls, hlint
-        end,
-        ["lua_ls"] = function()
-            require("lspconfig").lua_ls.setup({
-                settings = {
-                    Lua = {
-                        completion = {
-                            callSnippet = "Replace",
-                        },
-                    },
-                },
-            })
-        end,
-    })
 end
