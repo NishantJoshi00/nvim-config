@@ -6,6 +6,7 @@ return {
             "rebelot/kanagawa.nvim",
             "dgox16/oldworld.nvim",
             "vague2k/vague.nvim",
+            "dotsilas/darcubox-nvim",
         },
     },
     { "rose-pine/neovim",      name = "rose-pine" },
