@@ -60,16 +60,16 @@ local custom = function()
         }
     }
 
-    local current = symbols.rect;
+    local current = symbols.left;
 
     local left = current.left;
     local right = current.right;
 
 
 
-    local unix = '';
-    local dos = '';
-    local mac = '';
+    local unix = '  ';
+    local dos = '  ';
+    local mac = '  ';
 
 
 
@@ -95,9 +95,9 @@ local custom = function()
 
     local symbol_maker = function()
         if lsp_info[1]() == "" then
-            return ""
+            return "  "
         else
-            return ''
+            return '  '
         end
     end
 
