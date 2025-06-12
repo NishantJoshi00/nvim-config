@@ -8,7 +8,7 @@ vim.o.undodir = vim.fn.stdpath("cache") .. "/undodir"
 vim.o.undofile = true
 
 vim.o.cursorline = true
-
+vim.o.showmode = false
 vim.o.scrolloff = 4
 
 vim.cmd([[highlight IndentBlanklineChar guifg=#202020 gui=nocombine]])
