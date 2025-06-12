@@ -63,24 +63,51 @@ return function()
     )
 
     vim.keymap.set("n", "<leader>eer", function()
-        local query = require('vim.treesitter.query')
-        local parser = vim.treesitter.get_parser(0, nil)
-        local tree = parser:parse()[1]
-        local root = tree:root()
-        local lang = parser:lang()
-        -- local query_input = [[
-        --     (import
-        --         names: (import_list
-        --         (import_name
-        --             (variable) @import.name)))
-        -- ]]
-        local query_input = "(function name: (variable) @function.name)"
-        local q = query.parse(lang, query_input)
-        local names = {}
-        for id, node in q:iter_captures(root, 0, 0, -1) do
-            table.insert(names, vim.treesitter.get_node_text(node, 0))
+        local Input = require("nui.input")
+        local event = require("nui.utils.autocmd").event
+
+        local input = Input({
+            position = { row = "90%", col = "50%" },
+            size = {
+                width = 60,
+            },
+            border = {
+                style = "rounded",
+                text = {
+                    top = "[treesitter query]",
+                    top_align = "center",
+                },
+            },
+            win_options = {
+                winhighlight = "Normal:Normal,FloatBorder:Normal",
+            },
+        }, {
+            prompt = "% ",
+            default_value = "(function_call name: (variable) @function.name)",
+            on_close = function() end,
+            on_submit = function(query_input)
+                local query = require('vim.treesitter.query')
+                local parser = vim.treesitter.get_parser(0, nil)
+                local tree = parser:parse()[1]
+                local root = tree:root()
+                local lang = parser:lang()
+                local q = query.parse(lang, query_input)
+                local names = {}
+                for id, node in q:iter_captures(root, 0, 0, -1) do
+                    table.insert(names, vim.treesitter.get_node_text(node, 0))
+                end
+                vim.api.nvim_buf_set_lines(0, 0, -1, false, names)
+            end,
+        })
+
+        input:mount()
+
+        local exit_action = function()
+            input:unmount()
         end
-        vim.api.nvim_buf_set_lines(0, 0, -1, false, names)
+
+        input:on(event.BufLeave, exit_action)
+        input:map("n", "<esc>", exit_action)
     end, { desc = "extract" })
 
     vim.keymap.set(

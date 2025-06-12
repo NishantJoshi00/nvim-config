@@ -4,12 +4,8 @@ return {
         config = require("plugins.config.themes"),
         dependencies = {
             "rebelot/kanagawa.nvim",
-            "dgox16/oldworld.nvim",
-            "vague2k/vague.nvim",
-            "dotsilas/darcubox-nvim",
         },
     },
-    { "rose-pine/neovim",      name = "rose-pine" },
     {
         "lewis6991/gitsigns.nvim",
         config = require("plugins.config.gitsigns"),
@@ -48,7 +44,6 @@ return {
             "neovim/nvim-lspconfig"
         },
         config = require("plugins.config.mason-lspconfig"),
-        -- event = "VeryLazy"
     },
     {
         "VidocqH/lsp-lens.nvim",
@@ -72,7 +67,7 @@ return {
             "williamboman/mason.nvim",
             "mfussenegger/nvim-dap",
         },
-        enabled = false, -- Wed Aug  7 12:08:48 IST 2024
+        enabled = false,
     },
     { "nvim-lua/plenary.nvim" },
     { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "nvim-telescope/telescope-fzf-native.nvim" } },
@@ -217,7 +212,6 @@ return {
     },
     {
         "ray-x/lsp_signature.nvim",
-        branch = "master",
         config = require("plugins.config.lsp_signature"),
         dependencies = {
             "neovim/nvim-lspconfig",
