@@ -8,15 +8,15 @@
 
 ## Description
 
-A modern, feature-rich Neovim configuration focused on providing a powerful and efficient development environment. This configuration combines carefully selected plugins with custom configurations to enhance your editing experience while maintaining good performance.
+A modern, feature-rich Neovim configuration built with a modular architecture and event-driven loading strategy for optimal performance. This configuration follows clear separation of concerns with dedicated modules for plugins, configurations, and keybindings.
 
-Key aspects:
+**Architecture Highlights:**
 
-- Built with Lua for better performance and maintainability
-- Modular architecture for easy customization
-- Extensive LSP integration for powerful development features
-- Carefully tuned for both functionality and aesthetics
-- Supports multiple platforms (Linux, MacOS, Windows)
+- **Modular Design**: Clear separation between core config, plugins, and keybindings
+- **Performance Optimized**: Lazy loading with `event = "VeryLazy"` and file-type triggers
+- **Cross-Platform**: Linux, macOS, and Windows support with platform-specific customizations
+- **LSP-Centric**: Comprehensive language server integration with Mason tool management
+- **Event-Driven**: Strategic plugin loading order with automatic update checking
 
 ## Installation
 
@@ -52,49 +52,79 @@ Key aspects:
 
 ## Features
 
-### Core Features
+### Core Architecture
 
-- **Advanced LSP Integration**: Full language server support with auto-completion, diagnostics, and code actions
-- **Smart Code Navigation**: Telescope-powered fuzzy finding for files, symbols, and references
-- **Git Integration**: Built-in git management with Gitsigns and Fugitive
-- **Terminal Integration**: Integrated terminal with toggleterm.nvim
-- **Enhanced Syntax**: Treesitter-based syntax highlighting and code folding
-- **Intelligent Completion**: Context-aware suggestions using nvim-cmp and Copilot
-- **Customizable UI**: Beautiful and functional interface with adaptive themes
+- **Modular Plugin System**: Plugins organized in `lua/plugins/` with separate config and keybind modules
+- **Event-Driven Loading**: Strategic lazy loading using `event = "VeryLazy"` and file-type triggers
+- **Configuration Hierarchy**: Clear loading order from bootstrap → theme → plugins → config → mappings
+- **Platform Customization**: OS-specific configurations in `lua/custom/os/` directory
 
-### Development Tools
+### Language & Development Tools
 
-- **Debug Adapter Protocol**: Full debugging support for multiple languages
-- **Task Runner**: Integrated task management with Overseer
-- **Project Management**: Enhanced project navigation and session management
-- **Document Symbols**: Code outline and breadcrumbs navigation
-- **Format on Save**: Automatic code formatting with LSP and null-ls
+- **LSP Integration**: Mason-managed language servers with nvim-lspconfig and language-specific configs
+- **Multi-Source Completion**: nvim-cmp with LSP, buffer, path, and snippet sources
+- **Git Workflow**: Gitsigns and vim-fugitive for comprehensive version control
+- **File Navigation**: Telescope fuzzy finding + nvim-tree + oil.nvim for flexible file management
+- **Terminal Integration**: toggleterm.nvim for integrated terminal sessions
 
-### Quality of Life Features
+### Advanced Features
 
-- **File Explorer**: Enhanced file browsing with nvim-tree and oil.nvim
-- **Status Line**: Informative and customizable status line with lualine
-- **Tab Management**: Intuitive buffer and tab management
-- **Markdown Preview**: Live preview for markdown files
-- **Undo History**: Visual undo tree navigation
+- **TreeSitter Integration**: Enhanced syntax highlighting with interactive query interface (`<leader>eer`)
+- **Custom Functions**: Copy/scratch pad system, theme cycling, location copying utilities
+- **Auto-Update System**: Git-based configuration update checking on startup
+- **Performance Monitoring**: Built-in startup profiling with `:Lazy profile`
+- **Debug Support**: nvim-dap configuration (currently disabled for performance)
+
+### Key Bindings & Navigation
+
+- **Leader Key Strategy**: `<space>` leader with consistent namespacing (`<leader>f*`, `<leader>g*`, `<leader>m*`)
+- **Plugin-Specific Bindings**: Isolated keybind modules in `lua/plugins/keybinds/`
+- **Custom Commands**: `:LuaToBuffer`, `:checkhealth`, development-focused commands
+
+## Project Structure
+
+```
+lua/
+├── init.lua                 # Entry point with strict loading order
+├── bootstrap.lua           # lazy.nvim plugin manager setup
+├── theme.lua              # Basic vim options and theme setup
+├── config.lua             # Core config: LSP, diagnostics, autocmds
+├── mappings.lua           # Keybinding loader
+├── utils.lua              # Helper functions (gate, is_day, join)
+├── plugins/
+│   ├── init.lua           # Main plugin specifications
+│   ├── config/            # Individual plugin configurations
+│   └── keybinds/          # Plugin-specific keybindings
+├── custom/
+│   ├── init.lua           # Platform-specific loader
+│   └── os/                # OS-specific configurations
+└── functions/             # Custom utility functions
+```
+
+## Development Workflow
+
+**Adding New Plugins:**
+1. Add plugin spec to `lua/plugins/init.lua` with dependencies
+2. Create config in `lua/plugins/config/<plugin-name>.lua` (returns function)
+3. Create keybinds in `lua/plugins/keybinds/<plugin-name>.lua` (returns function)
+4. Add keybind require to `lua/mappings.lua`
+5. Use `:Lazy reload <plugin-name>` to test
+
+**Configuration Debugging:**
+- `:checkhealth` - Verify installation and plugin health
+- `:Lazy profile` - Analyze startup performance
+- `require("functions").point_search()` (Ctrl+P) - Content search
+- `:TSCaptureUnderCursor` - Debug TreeSitter highlighting
 
 ## Contributing Guidelines
 
-1. Fork the repository and create your feature branch:
-
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-
-2. Follow these guidelines when contributing:
-
-   - Tag issues appropriately ([BUG], [FEATURE], [ENHANCEMENT])
-   - Don't work on already assigned issues
-   - Ensure your code follows the existing style
-   - Include comments for complex code sections
-   - Test your changes thoroughly
-
-3. Submit a pull request with a clear description of your changes
+1. Fork the repository and create your feature branch
+2. Follow the modular architecture patterns:
+   - Plugin configs return functions for lazy loading
+   - Keybinds use consistent leader key namespacing
+   - Maintain separation between config and keybinds
+3. Test thoroughly with `:checkhealth` and `:Lazy profile`
+4. Submit a pull request with clear description
 
 ## Acknowledgments
 
