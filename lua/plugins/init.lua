@@ -338,4 +338,8 @@ return {
         event = "LspAttach",
         config = require("plugins.config.nvim-lsp-endhints"),
     },
+    {
+        'MagicDuck/grug-far.nvim',
+        config = require("plugins.config.grug-far"),
+    }
 }
