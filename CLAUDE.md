@@ -71,17 +71,23 @@ When adding new plugins:
 - TreeSitter query testing via `<leader>eer` for syntax analysis
 - Use `:TSCaptureUnderCursor` to debug TreeSitter highlighting issues
 
+### Buffer Management & Protection
+- **Buffer Masking System**: `<leader><c-d>` makes all buffers immutable (read-only protection)
+- **Buffer Unmasking**: `<leader><c-a>` makes all buffers mutable (enables editing)
+- **Disabler Integration**: Works with `disabler` plugin to temporarily disable functionality
+- **Command Line Protection**: When masked, command mode (`:`) is disabled to prevent accidental changes
+
 ## Loading Order & Initialization
 
-The configuration follows a strict loading order (defined in init.lua:1-9):
+The configuration follows a strict loading order (defined in init.lua:1-15):
 1. Leader key setup (must be first)
 2. Bootstrap lazy.nvim plugin manager
-3. Theme and basic vim options
-4. Plugin loading via lazy.nvim
-5. Core configuration (LSP, diagnostics, autocmds)
-6. Keybinding setup
-7. Masking configuration
-8. Custom platform/terminal configurations
+3. Plugin loading via lazy.nvim
+4. Core configuration (LSP, diagnostics, autocmds)
+5. Keybinding setup
+6. Masking configuration (buffer protection system)
+7. Custom platform/terminal configurations
+8. Theme and basic vim options
 9. Auto-update check on startup
 
 ## Utility Functions
