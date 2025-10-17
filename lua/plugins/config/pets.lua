@@ -1,3 +1,3 @@
 return function()
-  require("pets").setup({})
+    require("pets").setup({})
 end
