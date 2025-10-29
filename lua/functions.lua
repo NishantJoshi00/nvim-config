@@ -50,6 +50,18 @@ local random_footer = function()
         "🔧 If it compiles, ship it.",
         "🔥 That wasn’t a bug. It was undocumented brilliance.",
         "💡 At day’s end, it’s all ideas in binary.",
+        "🧙 Any sufficiently advanced bug is indistinguishable from a feature.",
+        "🎯 Precision is overrated. Ship it.",
+        "🎪 Production is just staging with consequences.",
+        "🍕 Code is poetry. Bugs are free verse.",
+        "🧙‍♂️ sudo make me a sandwich.",
+        "🎲 Move fast. Break things. Blame cache.",
+        "🧦 Life is too short for matching socks.",
+        "🎯 Have you tried turning your life off and on again?",
+        "💡 Tip: Deleting bugs makes your code have fewer bugs.",
+        "⚡ Tip: Pressing i won't work here, this is a loading screen.",
+        "⚛️ Tip: In another universe, this tip is a bug report about itself.",
+        "🕳️ This escaped random() to find you."
     }
     math.randomseed(os.time())
     return footers[math.random(1, #footers)]

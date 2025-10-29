@@ -22,19 +22,25 @@ vim.cmd([[autocmd BufRead,BufNewFile *.Jenkinsfile setfiletype groovy]])
 
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client.server_capabilities.inlayHintProvider then
-      vim.lsp.inlay_hint.enable(true, {
-        bufnr = args.buf
-      })
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, {
+                bufnr = args.buf
+            })
+        end
     end
-  end
 })
 
 
 vim.api.nvim_create_user_command('LuaToBuffer', function(opts)
-  local output = vim.fn.execute('lua ' .. opts.args)
-  vim.api.nvim_buf_set_lines(0, -1, -1, false, vim.split(output, '\n'))
+    local output = vim.fn.execute('lua ' .. opts.args)
+    vim.api.nvim_buf_set_lines(0, -1, -1, false, vim.split(output, '\n'))
 end, { nargs = '+' })
+
+vim.filetype.add({
+    extension = {
+        mlw = 'ocaml',
+    }
+})
