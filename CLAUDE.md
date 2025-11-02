@@ -44,7 +44,8 @@ The configuration follows a modular architecture with clear separation of concer
 - **LSP**: Full language server integration with Mason for automatic installation
 - **Completion**: nvim-cmp with multiple sources (LSP, buffer, path, snippets)
 - **File Navigation**: Telescope for fuzzy finding, nvim-tree and oil.nvim for file exploration
-- **Git Integration**: Gitsigns and vim-fugitive for version control
+- **Version Control**: Jujutsu (jj) - Git-compatible VCS (see Jujutsu section below)
+- **Git Integration**: Gitsigns and vim-fugitive (jj operates in colocated mode with Git)
 - **Terminal**: toggleterm.nvim for integrated terminal management
 - **Debugging**: nvim-dap with UI (currently disabled)
 - **Themes**: Multiple theme support with TokyoDark as primary
@@ -103,6 +104,168 @@ The configuration supports platform-specific customizations through:
 - `lua/custom/os/mac.lua` - macOS specific settings
 - `lua/custom/os/windows.lua` - Windows specific settings
 - **Note**: Currently loads Windows settings by default in `custom/init.lua` - adjust for your platform
+
+## Jujutsu VCS (jj) - Version Control
+
+This project uses Jujutsu (jj), a Git-compatible VCS. The repository operates in colocated mode, meaning both `jj` and `git` commands work on the same repository.
+
+**Version Note:** This configuration uses jj 0.34.0, which uses `bookmark` terminology instead of `branch`. In jj, bookmarks are equivalent to Git branches.
+
+### Core Mental Model
+
+**Working Copy = Automatic Commit:**
+- The working directory is always a commit (called `@`)
+- Changes are automatically tracked - no staging area
+- No need to worry about "dirty" working directory state
+
+**Changes are Mutable:**
+- All commits are editable until pushed
+- Editing a commit automatically rebases all descendants
+- No explicit rebase needed when modifying history
+
+**Conflicts are Non-Blocking:**
+- Conflicts are just a commit state, not a blocker
+- Can create new changes on top of conflicted changes
+- Switch away from conflicts and come back later
+- Conflicts propagate through descendants automatically
+
+**Operation Log = Universal Undo:**
+- Every operation is recorded: `jj op log`
+- Undo any operation: `jj op restore OPERATION_ID` or `jj undo`
+- Works like a time machine for the entire repository
+
+### Essential Commands for AI Use
+
+**Status & Inspection:**
+```bash
+jj status          # Current working copy status
+jj log             # Graphical commit history
+jj log -r REVISION # Show specific revision
+jj diff            # Changes in working copy
+jj diff -r REVISION # Changes in specific revision
+jj show REVISION   # Full details of a revision
+```
+
+**Creating Changes:**
+```bash
+jj describe -m "message"     # Set commit message for current change (@)
+jj new                       # Create new change, move @ on top
+jj new -m "message"          # Create with message
+jj commit -m "message"       # Finalize current change, create new empty @
+```
+
+**Editing History:**
+```bash
+jj describe REVISION -m "msg"  # Change commit message
+jj squash                      # Squash @ into parent
+jj squash -r REVISION          # Squash REVISION into its parent
+jj rebase -d DEST              # Move current change to DEST
+jj rebase -s SOURCE -d DEST    # Move SOURCE and descendants to DEST
+jj split                       # Interactively split current change
+jj abandon REVISION            # Remove revision (keep changes in parent)
+```
+
+**File Operations:**
+```bash
+jj restore FILE              # Restore file from parent
+jj restore --from REV FILE   # Restore file from specific revision
+jj file list                 # List files in current change
+```
+
+**Bookmarks & Remotes:**
+```bash
+jj bookmark create NAME          # Create bookmark pointing to @
+jj bookmark set NAME -r REVISION # Move bookmark to revision
+jj bookmark list                 # List all bookmarks
+jj bookmark track NAME@origin    # Track remote bookmark
+jj git fetch                     # Fetch from Git remotes
+jj git push                      # Push all bookmarks
+jj git push --bookmark NAME      # Push specific bookmark
+jj git push --change REVISION    # Create bookmark and push for review
+```
+
+**Undo & Recovery:**
+```bash
+jj op log                      # View all operations
+jj undo                        # Undo last operation
+jj op restore OPERATION_ID     # Restore to specific operation state
+```
+
+### Revision Syntax (Revsets)
+
+```
+@                    # Working copy commit
+@-                   # Parent of working copy
+@--                  # Grandparent of working copy
+BOOKMARK_NAME        # Latest commit on bookmark (e.g., main)
+CHANGE_ID            # 12-char change identifier (starts with k, q, r, etc.)
+main..@              # All commits from main to @
+::@                  # All ancestors of @
+@::                  # All descendants of @
+```
+
+### Common Workflows
+
+**Making Changes:**
+```bash
+# Edit files
+jj describe -m "Add feature X"     # Set message for current change
+jj new                              # Start next change
+```
+
+**Amending Previous Commit:**
+```bash
+# Just edit the commit directly - no need to check it out
+jj describe REVISION -m "Updated message"
+# OR move changes from @ into it:
+jj squash --into REVISION
+```
+
+**Creating a PR:**
+```bash
+jj bookmark create feature-name       # Create bookmark at @
+jj bookmark track feature-name@origin # Track remote bookmark
+jj git push --bookmark feature-name   # Push to remote
+```
+
+**Updating After Review:**
+```bash
+# Edit the relevant commits directly
+jj describe REVISION -m "Address review feedback"
+jj git push --bookmark feature-name   # Push updates (force push is safe in jj)
+```
+
+**Rebasing onto Updated Main:**
+```bash
+jj git fetch                        # Fetch latest
+jj rebase -d main                   # Rebase current change onto main
+```
+
+### Important Differences from Git
+
+1. **No `git add`**: All changes are automatically tracked
+2. **No `git stash`**: Just use `jj new` to create a new change and work there
+3. **No `git rebase -i`**: Edit commits directly with `jj describe`, `jj squash`, etc.
+4. **No `git reset --hard`**: Use `jj restore` for files or `jj op restore` for repository state
+5. **No merge commits by default**: jj rebases by default (cleaner history)
+6. **Conflicts don't block**: Can switch away and come back to resolve later
+
+### When Using jj in Commands
+
+**DO:**
+- Use `jj status` instead of `git status` to check working copy
+- Use `jj log` to view commit history (more informative than git log)
+- Use `jj describe` to set/change commit messages
+- Use `jj new` to create new changes instead of committing
+- Use `jj git push` when pushing to remotes
+- Use `jj op log` and `jj undo` when something goes wrong
+
+**DON'T:**
+- Don't use `git add` - changes are auto-tracked
+- Don't use `git commit --amend` - use `jj describe` or `jj squash`
+- Don't use `git rebase -i` - use `jj rebase`, `jj describe`, `jj squash`
+- Don't use `git reset` - use `jj restore` or `jj op restore`
+- Don't mix git and jj commands in the same workflow unless necessary
 
 ### Critical Architecture Decisions
 
