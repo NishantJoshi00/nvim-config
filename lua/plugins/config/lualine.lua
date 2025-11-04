@@ -76,7 +76,7 @@ local custom = function()
     local lsp_info = {
         function()
             local msg = ""
-            local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+            local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
             local clients = vim.lsp.get_clients()
             if next(clients) == nil then
                 return msg
@@ -90,7 +90,7 @@ local custom = function()
             return msg
         end,
         color = { fg = '#2a2a2a', gui = 'bold' },
-        separatorr = "",
+        separator = "",
     }
 
     local symbol_maker = function()
@@ -102,7 +102,7 @@ local custom = function()
     end
 
     local os_icon = function()
-        local os = vim.loop.os_uname().sysname
+        local os = vim.uv.os_uname().sysname
         if os == 'Linux' then
             return unix
         elseif os == 'Darwin' then

@@ -15,18 +15,6 @@ return {
     { "neovim/nvim-lspconfig" },
     { "nvimtools/none-ls.nvim" },
     {
-        "mfussenegger/nvim-dap",
-        enabled = false, -- Wed Aug  7 12:08:48 IST 2024
-    },
-    {
-        "rcarriga/nvim-dap-ui",
-        config = require("plugins.config.nvim-dap-ui"),
-        dependencies = {
-            "jay-babu/mason-nvim-dap.nvim",
-        },
-        enabled = false, -- Wed Aug  7 12:08:48 IST 2024
-    },
-    {
         "williamboman/mason.nvim",
         config = require("plugins.config.mason"),
     },
@@ -59,16 +47,6 @@ return {
         },
         config = require("plugins.config.mason-null-ls"),
     },
-    {
-        "jay-babu/mason-nvim-dap.nvim",
-        event = "VeryLazy",
-        config = require("plugins.config.mason-nvim-dap"),
-        dependencies = {
-            "williamboman/mason.nvim",
-            "mfussenegger/nvim-dap",
-        },
-        enabled = false,
-    },
     { "nvim-lua/plenary.nvim" },
     { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "nvim-telescope/telescope-fzf-native.nvim" } },
     {
@@ -76,12 +54,7 @@ return {
         build = "make",
         config = require("plugins.config.telescope-fzf-native"),
     },
-    {
-        "nvim-tree/nvim-tree.lua",
-        config = require("plugins.config.nvim-tree"),
-        event = "VeryLazy",
-    },
-    { "nvim-tree/nvim-web-devicons", dependencies = { "nvim-tree/nvim-tree.lua" } },
+    { "nvim-tree/nvim-web-devicons" },
     {
         "folke/which-key.nvim",
         config = require("plugins.config.which-key"),
@@ -120,7 +93,6 @@ return {
         dependencies = {
             "neovim/nvim-lspconfig",
             "nvim-treesitter/playground",
-            -- "nvim-treesitter/nvim-treesitter-textobjects"
         },
     },
 
@@ -167,9 +139,6 @@ return {
     { "airblade/vim-gitgutter" },
     {
         "nvim-lualine/lualine.nvim",
-        dependencies = {
-            -- "nvim-tree/nvim-web-devicons",
-        },
         config = require("plugins.config.lualine"),
     },
     {
@@ -223,10 +192,6 @@ return {
             "neovim/nvim-lspconfig",
         },
         config = require("plugins.config.lsp_lines"),
-    },
-    {
-        "gyim/vim-boxdraw",
-        enabled = false -- Sun Aug  4 12:33:59 PM IST 2024
     },
     { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
     { "folke/lazydev.nvim", opts = {}, event = "VeryLazy", ft = "lua" },
@@ -297,29 +262,8 @@ return {
         'kosayoda/nvim-lightbulb',
         config = require("plugins.config.lightbulb")
     },
-    {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {},
-        enabled = false, -- Wed Aug  7 12:17:11 IST 2024
-    },
-    {
-        "lukas-reineke/headlines.nvim",
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-        config = require("plugins.config.headlines"),
-        enabled = false
-    },
-    {
-        "tpope/vim-abolish"
-    },
-    {
-        "tpope/vim-fugitive"
-        -- what's up!
-    },
-    {
-        "mattn/emmet-vim",
-        enabled = false, -- Sun Aug  4 12:30:06 PM IST 2024
-    },
+    { "tpope/vim-abolish" },
+    { "tpope/vim-fugitive" },
     {
         "andweeb/presence.nvim",
         config = require("plugins.config.presence"),

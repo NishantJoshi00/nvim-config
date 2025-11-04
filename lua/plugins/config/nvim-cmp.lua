@@ -1,5 +1,9 @@
 return function()
-  local cmp = require("cmp")
+  local ok, cmp = pcall(require, "cmp")
+  if not ok then
+    vim.notify("Failed to load nvim-cmp", vim.log.levels.ERROR)
+    return
+  end
 
   cmp.setup({
     snippet = {

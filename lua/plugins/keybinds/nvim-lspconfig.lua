@@ -3,9 +3,9 @@ return function()
     { desc = "View implementations" })
   vim.keymap.set("n", "<leader>D", vim.lsp.buf.definition, { desc = "View Definition" })
 
-  vim.api.nvim_set_keymap("n", "<c-s>", [[<cmd>lua vim.lsp.buf.format { async = true }<cr>]], { desc = "format file" })
+  vim.keymap.set("n", "<c-s>", function() vim.lsp.buf.format { async = true } end, { desc = "format file" })
 
-  vim.api.nvim_set_keymap("n", "<leader>re", [[<cmd>RustLsp expandMacro<cr>]], { desc = "Expand Macro" })
+  vim.keymap.set("n", "<leader>re", "<cmd>RustLsp expandMacro<cr>", { desc = "Expand Macro" })
 
   vim.g.lsp_hidden = false
 
