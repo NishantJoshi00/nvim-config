@@ -21,7 +21,7 @@ end
 
 local mark_buffer_modifiable = function(buffer)
   require("disabler").enable()
-  vim.api.nvim_set_keymap("n", "<leader><c-d>", '<cmd>lua require("masking").immutable()<cr>', {})
+  vim.keymap.set("n", "<leader><c-d>", function() require("masking").immutable() end, {})
 
   map_buffer(buffer, function(bufnr)
     vim.api.nvim_set_option_value("modifiable", true, { buf = bufnr })
@@ -35,7 +35,7 @@ end
 
 local unmark_buffer_modifiable = function(buffer)
   require("disabler").disable()
-  vim.api.nvim_set_keymap("n", "<leader><c-a>", '<cmd>lua require("masking").mutable()<cr>', {})
+  vim.keymap.set("n", "<leader><c-a>", function() require("masking").mutable() end, {})
 
   map_buffer(buffer, function(bufnr)
     vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })

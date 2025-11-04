@@ -13,7 +13,7 @@ local enable_all_keybinds = function()
     if data.rhs == nil then
       vim.keymap.set(data.mode, data.lhs, data.callback, data.extra)
     else
-      vim.api.nvim_set_keymap(data.mode, data.lhs, data.rhs, data.extra)
+      vim.keymap.set(data.mode, data.lhs, data.rhs, data.extra)
     end
   end
 end
@@ -44,7 +44,7 @@ local disable_all_keybinds = function()
       table.insert(keybinds, keys)
 
       if not registry_set[mode][lhs] then
-        vim.api.nvim_del_keymap(mode, lhs)
+        vim.keymap.del(mode, lhs)
         registry_set[mode][lhs] = true
       end
     end

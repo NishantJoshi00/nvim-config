@@ -90,7 +90,7 @@ local custom = function()
             return msg
         end,
         color = { fg = '#2a2a2a', gui = 'bold' },
-        separatorr = "",
+        separator = "",
     }
 
     local symbol_maker = function()
