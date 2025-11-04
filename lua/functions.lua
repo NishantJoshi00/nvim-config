@@ -14,11 +14,16 @@ end
 ---Get a random quote - and display it in a vim.notify
 ---
 local quoter = function()
-    vim.fn.jobstart("curl -s https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
+    vim.fn.jobstart("curl -s --max-time 5 https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
         stdout_buffered = true,
         on_stdout = function(a, b, c)
             -- print(vim.inspect(b))
             vim.notify(b[1], "info", { hide_from_history = true })
+        end,
+        on_stderr = function(_, data, _)
+            if data and #data > 0 and data[1] ~= "" then
+                vim.notify("Failed to fetch quote: " .. table.concat(data, "\n"), vim.log.levels.WARN)
+            end
         end,
     })
 end
