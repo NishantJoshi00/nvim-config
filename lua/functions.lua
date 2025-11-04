@@ -1,3 +1,47 @@
+-- Initialize random seed once at module load time with better entropy
+math.randomseed(os.time() + vim.fn.getpid())
+
+---Create a Nui.input with standard configuration
+---@param title string The title to display
+---@param on_submit function Callback when user submits input
+---@param opts table|nil Optional configuration (position, size, width)
+---@return table input The created input object
+local create_nui_input = function(title, on_submit, opts)
+    opts = opts or {}
+    local Input = require("nui.input")
+    local event = require("nui.utils.autocmd").event
+
+    local input = Input({
+        position = opts.position or { row = "50%", col = "50%" },
+        size = opts.size or { width = opts.width or 80 },
+        border = {
+            style = "rounded",
+            text = {
+                top = "[" .. title .. "]",
+                top_align = "center",
+            },
+        },
+        win_options = {
+            winhighlight = "Normal:Normal,FloatBorder:Normal",
+        },
+    }, {
+        prompt = "% ",
+        on_close = function() end,
+        on_submit = on_submit,
+    })
+
+    input:mount()
+
+    -- Setup standard exit behavior
+    local exit_action = function()
+        input:unmount()
+    end
+    input:on(event.BufLeave, exit_action)
+    input:map("n", "<esc>", exit_action)
+
+    return input
+end
+
 ---Check if the system is disabled
 ---
 ---@param systems string[]
@@ -27,7 +71,6 @@ local quoter = function()
         end,
     })
 end
-vim.g.quote_me = quoter
 
 ---Get a random footer for the dashboard
 ---
@@ -68,7 +111,6 @@ local random_footer = function()
         "⚛️ Tip: In another universe, this tip is a bug report about itself.",
         "🕳️ This escaped random() to find you."
     }
-    math.randomseed(os.time())
     return footers[math.random(1, #footers)]
 end
 
@@ -124,82 +166,61 @@ local theme_choicer = function()
     menu:mount()
 end
 
+---Navigate to a file:line:col location with proper error handling
+---@param data string The path string in format "file:line:col"
 local point_search_inner = function(data)
     local regex = "%s*([A-Za-z0-9/._-]+):?(%d*):?(%d*)%s*$"
-
     local file_path, line_no, col_no = string.match(data, regex)
 
-    local file_exists = vim.fn.filereadable(file_path) > 0
-
-    if file_exists == false then
+    -- Validate file path exists
+    if not file_path then
+        vim.notify("Invalid file path format", vim.log.levels.WARN)
         return
     end
 
-    vim.cmd("edit " .. file_path)
-
-    if line_no == "" then
-        line_no = "0"
+    -- Check if file is readable
+    if vim.fn.filereadable(file_path) == 0 then
+        vim.notify("File not found: " .. file_path, vim.log.levels.WARN)
+        return
     end
 
-    if col_no == "" then
-        col_no = "0"
+    -- Safely open file with escaped path
+    local escaped_path = vim.fn.fnameescape(file_path)
+    local success, err = pcall(vim.cmd, "edit " .. escaped_path)
+    if not success then
+        vim.notify("Failed to open file: " .. tostring(err), vim.log.levels.ERROR)
+        return
     end
 
-    vim.cmd("cal cursor(" .. line_no .. ", " .. col_no .. ")")
+    -- Convert line and column numbers with proper defaults
+    line_no = tonumber(line_no) or 0
+    col_no = tonumber(col_no) or 0
+
+    -- Move cursor if valid line number
+    if line_no > 0 then
+        vim.api.nvim_win_set_cursor(0, {line_no, col_no})
+    end
 end
 
+---Open point search input dialog
 local point_search = function()
-    local Input = require("nui.input")
-    local event = require("nui.utils.autocmd").event
-
-    local input = Input({
+    create_nui_input("point search", point_search_inner, {
         position = { row = "20%", col = "50%" },
-        -- position = "50%",
-        size = {
-            width = 80,
-        },
-        border = {
-            style = "rounded",
-            text = {
-                top = "[point search]",
-                top_align = "center",
-            },
-        },
-        win_options = {
-            winhighlight = "Normal:Normal,FloatBorder:Normal",
-        },
-    }, {
-        prompt = "% ",
-        on_close = function() end,
-        on_submit = function(value)
-            point_search_inner(value)
-        end,
+        width = 80
     })
-
-    input:mount()
-
-    input:on(event.BufLeave, function()
-        input:unmount()
-    end)
-
-    input:map("n", "<esc>", function()
-        input:unmount()
-    end)
 end
 
-vim.g.copy_pad_open = {}
-vim.g.scratch_pad_content = {}
-local nui_copy_pad = function(name, callback, init) -- callback gets the content from the copy_pad
-    if init ~= nil and vim.g.scratch_pad_content[name] == nil then
-        vim.g.scratch_pad_content[name] = init()
-    end
+-- Module-scoped state (instead of vim.g globals)
+local copy_pad_state = {
+    open = {},
+    content = {}
+}
 
-    if vim.g.copy_pad_open[name] == 1 then
-        return
-    end
-
+---Create a Nui popup with standard configuration
+---@param name string The name/title of the popup
+---@return table popup The created popup object
+local create_copy_pad_popup = function(name)
     local Popup = require("nui.popup")
-    local event = require("nui.utils.autocmd").event
 
     local popup = Popup({
         enter = true,
@@ -217,45 +238,67 @@ local nui_copy_pad = function(name, callback, init) -- callback gets the content
             col = "100%",
         },
         size = "40%",
-        -- size = {
-        --   width = "40%",
-        --   height = "70%",
-        -- },
     })
 
-    -- mount/open the component
-    popup:mount()
+    return popup
+end
 
-    local global_insert = function(old, key, value)
-        old[key] = value
-        return old
+---Setup popup buffer with initial content and syntax
+---@param popup table The popup object
+---@param name string The name of the pad
+local setup_popup_content = function(popup, name)
+    if copy_pad_state.content[name] then
+        vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, copy_pad_state.content[name])
     end
+    vim.api.nvim_buf_set_option(popup.bufnr, "syntax", "markdown")
+end
 
-    if vim.g.scratch_pad_content[name] then
-        vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, vim.g.scratch_pad_content[name])
-    end
+---Create exit handler that saves content and unmounts popup
+---@param popup table The popup object
+---@param name string The name of the pad
+---@param callback function Callback to execute with content
+---@return function exit_handler The exit handler function
+local create_exit_handler = function(popup, name, callback)
+    return function()
+        local lines = vim.api.nvim_buf_get_lines(popup.bufnr, 0, -1, false)
+        copy_pad_state.content[name] = lines
 
-    vim.cmd([[set syntax=markdown]])
-    vim.g.copy_pad_open = global_insert(vim.g.copy_pad_open, name, 1)
-
-    -- print(vim.inspect(vim.g.copy_pad_open))
-
-    local exit_action = function()
-        local popup_buffer = popup.bufnr
-        local lines = vim.api.nvim_buf_get_lines(popup_buffer, 0, -1, false)
-        vim.g.scratch_pad_content = global_insert(vim.g.scratch_pad_content, name, lines)
         local content = table.concat(lines, get_newline())
-
         callback(content, name, lines)
-        -- vim.fn.setreg("+", content)
 
         popup:unmount()
-        vim.g.copy_pad_open = global_insert(vim.g.copy_pad_open, name, 0)
+        copy_pad_state.open[name] = false
+    end
+end
+
+---Open a copy/scratch pad with Nui popup
+---@param name string The name of the pad
+---@param callback function Callback to execute when pad closes
+---@param init function|nil Optional initialization function
+local nui_copy_pad = function(name, callback, init)
+    -- Initialize content if needed
+    if init ~= nil and copy_pad_state.content[name] == nil then
+        copy_pad_state.content[name] = init()
     end
 
-    -- unmount component when cursor leaves buffer
-    popup:on(event.BufLeave, exit_action)
+    -- Prevent opening multiple times
+    if copy_pad_state.open[name] then
+        return
+    end
 
+    -- Create and mount popup
+    local popup = create_copy_pad_popup(name)
+    popup:mount()
+
+    -- Setup content and mark as open
+    setup_popup_content(popup, name)
+    copy_pad_state.open[name] = true
+
+    -- Create and bind exit handler
+    local event = require("nui.utils.autocmd").event
+    local exit_action = create_exit_handler(popup, name, callback)
+
+    popup:on(event.BufLeave, exit_action)
     popup:map("n", "<esc>", exit_action)
     popup:map("n", ":", exit_action)
 end
@@ -274,43 +317,16 @@ local telescope_theme = function(opts)
 end
 
 
+---Open glob search input dialog for Telescope
 local glob_search = function()
-    local Input = require("nui.input")
-    local event = require("nui.utils.autocmd").event
-
-    local input = Input({
+    create_nui_input("glob_search", function(value)
+        require("telescope.builtin").live_grep(telescope_theme({
+            glob_pattern = value,
+        }))
+    end, {
         position = { row = "90%", col = "50%" },
-        size = {
-            width = 40,
-        },
-        border = {
-            style = "rounded",
-            text = {
-                top = "[glob_search]",
-                top_align = "center",
-            },
-        },
-        win_options = {
-            winhighlight = "Normal:Normal,FloatBorder:Normal",
-        },
-    }, {
-        prompt = "% ",
-        on_close = function() end,
-        on_submit = function(value)
-            require("telescope.builtin").live_grep(telescope_theme({
-                glob_pattern = value,
-            }))
-        end,
+        width = 40
     })
-
-    input:mount()
-
-    local exit_action = function()
-        input:unmount()
-    end
-
-    input:on(event.BufLeave, exit_action)
-    input:map("n", "<esc>", exit_action)
 end
 
 return {

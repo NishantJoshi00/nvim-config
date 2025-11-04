@@ -1,6 +1,6 @@
 return function()
     -- Fun
-    vim.keymap.set("n", "<leader>\\", function() vim.g.quote_me() end, { desc = "Quote Stuff" })
+    vim.keymap.set("n", "<leader>\\", require("functions").quoter, { desc = "Quote Stuff" })
 
     vim.keymap.set("n", "<leader>zz", "<cmd>spellr<cr>", {})
 

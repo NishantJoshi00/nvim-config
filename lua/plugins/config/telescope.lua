@@ -1,9 +1,11 @@
 return function()
-  -- local trouble = require("trouble.sources.telescope")
+  local ok, telescope = pcall(require, "telescope")
+  if not ok then
+    vim.notify("Failed to load telescope", vim.log.levels.ERROR)
+    return
+  end
 
-
-
-  require("telescope").setup({
+  telescope.setup({
 
     defaults = {
       -- file_sorter = require("telescope.sorters").get_substr_matcher,

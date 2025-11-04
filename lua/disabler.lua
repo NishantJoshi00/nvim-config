@@ -1,6 +1,9 @@
 -- Key Binding Disabler
 --
 
+-- Module-scoped state instead of global
+local keybind_store = {}
+
 local function write_to_file(filename, content)
   local file = io.open(filename, "w")
   file:write(content)
@@ -8,7 +11,7 @@ local function write_to_file(filename, content)
 end
 
 local enable_all_keybinds = function()
-  for _, data in ipairs(vim.g.keybind_store) do
+  for _, data in ipairs(keybind_store) do
     -- print(vim.inspect(data))
     if data.rhs == nil then
       vim.keymap.set(data.mode, data.lhs, data.callback, data.extra)
@@ -50,7 +53,7 @@ local disable_all_keybinds = function()
     end
   end
 
-  vim.g.keybind_store = keybinds
+  keybind_store = keybinds
 end
 
 return {
