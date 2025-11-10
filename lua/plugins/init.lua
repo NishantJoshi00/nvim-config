@@ -23,13 +23,9 @@ return {
         dependencies = {
             "neovim/nvim-lspconfig",
             "hrsh7th/cmp-nvim-lsp",
-            'mrcjkb/rustaceanvim',
             "mason-org/mason.nvim",
             "folke/lazydev.nvim",
             "VidocqH/lsp-lens.nvim",
-            "mrcjkb/haskell-tools.nvim",
-            "ziglang/zig.vim",
-            "neovim/nvim-lspconfig"
         },
         config = require("plugins.config.mason-lspconfig"),
     },
@@ -41,9 +37,9 @@ return {
         event = "VeryLazy",
         "jay-babu/mason-null-ls.nvim",
         dependencies = {
-            "williamboman/mason.nvim",
+            "mason-org/mason.nvim",
             "nvimtools/none-ls.nvim",
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason-lspconfig.nvim",
         },
         config = require("plugins.config.mason-null-ls"),
     },

@@ -1,7 +1,9 @@
 return function()
   vim.keymap.set("n", "<leader>K", vim.lsp.buf.implementation,
     { desc = "View implementations" })
-  vim.keymap.set("n", "<leader>D", vim.lsp.buf.definition, { desc = "View Definition" })
+  vim.keymap.set("n", "<leader>D", function()
+    require('telescope.builtin').lsp_definitions({ initial_mode = "normal" })
+  end, { desc = "Go to Definition" })
 
   vim.keymap.set("n", "<c-s>", function() vim.lsp.buf.format { async = true } end, { desc = "format file" })
 
