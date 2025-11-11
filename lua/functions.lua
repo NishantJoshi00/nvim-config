@@ -250,7 +250,7 @@ local setup_popup_content = function(popup, name)
     if copy_pad_state.content[name] then
         vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, copy_pad_state.content[name])
     end
-    vim.api.nvim_buf_set_option(popup.bufnr, "syntax", "markdown")
+    vim.api.nvim_set_option_value("syntax", "markdown", { buf = popup.bufnr })
 end
 
 ---Create exit handler that saves content and unmounts popup

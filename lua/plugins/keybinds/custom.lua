@@ -1,29 +1,32 @@
 return function()
+    local functions = require("functions")
+    local markdown_tree = require("markdown-tree")
+
     -- Fun
-    vim.keymap.set("n", "<leader>\\", require("functions").quoter, { desc = "Quote Stuff" })
+    vim.keymap.set("n", "<leader>\\", functions.quoter, { desc = "Quote Stuff" })
 
     vim.keymap.set("n", "<leader>zz", "<cmd>spellr<cr>", {})
 
 
     vim.keymap.set("n", "<leader><c-p>",
-        function() require("functions").get_current_location(function(content) vim.fn.setreg("+", content) end) end,
+        function() functions.get_current_location(function(content) vim.fn.setreg("+", content) end) end,
         { desc = "Get current location" })
 
-    vim.keymap.set("n", "<c-p>", function() require("functions").point_search() end, { desc = "Point Search" })
+    vim.keymap.set("n", "<c-p>", function() functions.point_search() end, { desc = "Point Search" })
 
     vim.keymap.set("n", "<leader>fl", function()
-        require("functions").glob_search()
+        functions.glob_search()
     end, { desc = "Find in specific files" })
 
 
     vim.keymap.set("n", "<leader><c-n>", function()
-        require("functions").copy_pad("copy_pad", function(content)
+        functions.copy_pad("copy_pad", function(content)
             vim.fn.setreg("+", content)
         end, nil)
     end, { desc = "open copy pad" })
 
     vim.keymap.set("n", "<c-n>", function()
-        require("functions").copy_pad("scratch_pad", function(content)
+        functions.copy_pad("scratch_pad", function(content)
             -- use the content to do anything
         end, nil)
     end, { desc = "open scratch pad" })
@@ -31,7 +34,7 @@ return function()
 
     vim.keymap.set("n", "<leader>hf", "<cmd>noh<cr>", { desc = "Hide Finds" })
 
-    vim.keymap.set("n", "<leader>tc", require("functions").theme_choicer, { desc = "Cycle themes" })
+    vim.keymap.set("n", "<leader>tc", functions.theme_choicer, { desc = "Cycle themes" })
 
 
     vim.keymap.set("i", "<c-r>'", "<c-r>=eval(getline(prevnonblank(\".\")))<cr>", { desc = "Evaluate Copy" })
@@ -42,11 +45,11 @@ return function()
 
 
     -- Markdown specific
-    vim.keymap.set("x", "<leader>MV", require("markdown-tree").checklist_visualize,
+    vim.keymap.set("x", "<leader>MV", markdown_tree.checklist_visualize,
         { desc = "Visualize Checklist Markdown" })
-    vim.keymap.set("n", "<leader>MT", require("markdown-tree").checklist_toggle,
+    vim.keymap.set("n", "<leader>MT", markdown_tree.checklist_toggle,
         { desc = "Tick Current Checklist Markdown" })
-    vim.keymap.set("n", "<leader>MC", require("markdown-tree").checklist_create,
+    vim.keymap.set("n", "<leader>MC", markdown_tree.checklist_create,
         { desc = "Tick Current Checklist Markdown" })
     vim.keymap.set("x", "<leader>mhd", "<cmd>HeaderDecrease<cr>", { desc = "Decrease Header" })
     vim.keymap.set("x", "<leader>mhi", "<cmd>HeaderIncrease<cr>", { desc = "Increase Header" })

@@ -6,8 +6,13 @@ local keybind_store = {}
 
 local function write_to_file(filename, content)
   local file = io.open(filename, "w")
+  if not file then
+    vim.notify("Failed to open file: " .. filename, vim.log.levels.ERROR)
+    return false
+  end
   file:write(content)
   file:close()
+  return true
 end
 
 local enable_all_keybinds = function()

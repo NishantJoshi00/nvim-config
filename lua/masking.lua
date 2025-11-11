@@ -23,13 +23,16 @@ local mark_buffer_modifiable = function(buffer)
   require("disabler").enable()
   vim.keymap.set("n", "<leader><c-d>", function() require("masking").immutable() end, {})
 
+  -- Restore colon keymaps globally (only need to do once)
+  vim.keymap.set("n", ":", ":", { noremap = true })
+  vim.keymap.set("v", ":", ":", { noremap = true })
+  vim.keymap.set("i", ":", ":", { noremap = true })
+  vim.o.cmdheight = 1
+
+  -- Set buffer options for each buffer
   map_buffer(buffer, function(bufnr)
     vim.api.nvim_set_option_value("modifiable", true, { buf = bufnr })
     vim.api.nvim_set_option_value("readonly", false, { buf = bufnr })
-    vim.cmd([[nnoremap : :]])
-    vim.cmd([[vnoremap : :]])
-    vim.cmd([[inoremap : :]])
-    vim.o.cmdheight = 1
   end)
 end
 
@@ -37,13 +40,16 @@ local unmark_buffer_modifiable = function(buffer)
   require("disabler").disable()
   vim.keymap.set("n", "<leader><c-a>", function() require("masking").mutable() end, {})
 
+  -- Disable colon keymaps globally (only need to do once)
+  vim.keymap.set("n", ":", "<Nop>", { noremap = true })
+  vim.keymap.set("v", ":", "<Nop>", { noremap = true })
+  vim.keymap.set("i", ":", "<Nop>", { noremap = true })
+  vim.o.cmdheight = 0
+
+  -- Set buffer options for each buffer
   map_buffer(buffer, function(bufnr)
     vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })
     vim.api.nvim_set_option_value("readonly", true, { buf = bufnr })
-    vim.cmd([[nnoremap : <Nop>]])
-    vim.cmd([[vnoremap : <Nop>]])
-    vim.cmd([[inoremap : <Nop>]])
-    vim.o.cmdheight = 0
   end)
 end
 

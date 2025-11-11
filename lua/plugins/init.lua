@@ -8,11 +8,15 @@ return {
     },
     {
         "lewis6991/gitsigns.nvim",
+        event = "BufReadPre",
         config = require("plugins.config.gitsigns"),
     },
     { "cohama/lexima.vim" },
     { "preservim/vim-markdown" },
-    { "neovim/nvim-lspconfig" },
+    {
+        "neovim/nvim-lspconfig",
+        event = "BufReadPre",
+    },
     { "nvimtools/none-ls.nvim" },
     {
         "williamboman/mason.nvim",
@@ -65,6 +69,7 @@ return {
     { "hrsh7th/vim-vsnip" },
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -72,6 +77,7 @@ return {
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-vsnip",
             "hrsh7th/vim-vsnip",
+            "petertriho/cmp-git",
         },
         config = require("plugins.config.nvim-cmp"),
     },
@@ -108,6 +114,7 @@ return {
     },
     {
         "akinsho/bufferline.nvim",
+        event = "VeryLazy",
         config = require("plugins.config.bufferline"),
     },
     { "akinsho/toggleterm.nvim", config = require("plugins.config.toggleterm") },
@@ -135,6 +142,7 @@ return {
     { "airblade/vim-gitgutter" },
     {
         "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
         config = require("plugins.config.lualine"),
     },
     {
@@ -157,7 +165,7 @@ return {
     },
     {
         "saecki/crates.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = require("plugins.config.crates"),
         event = "VeryLazy",
     },
