@@ -55,10 +55,10 @@ end
 
 ---load_project
 ---@param directory string
----@return table
+---@return nil
 local function load_project(directory)
-  -- change the directory to the project directory
-  vim.cmd("cd " .. directory)
+  -- change the directory to the project directory (safely escaped)
+  vim.fn.chdir(vim.fn.fnameescape(directory))
 end
 
 return {

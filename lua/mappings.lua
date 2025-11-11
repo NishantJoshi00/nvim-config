@@ -1,6 +1,7 @@
 require("plugins.keybinds.copilot")()
 require("plugins.keybinds.custom")()
 require("plugins.keybinds.focus")()
+require("plugins.keybinds.gitsigns")()
 require("plugins.keybinds.goto-preview")()
 require("plugins.keybinds.lsp_lines")()
 require("plugins.keybinds.mason-lspconfig")()

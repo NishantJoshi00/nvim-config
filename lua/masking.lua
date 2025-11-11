@@ -21,9 +21,8 @@ end
 
 local mark_buffer_modifiable = function(buffer)
   require("disabler").enable()
-  vim.keymap.set("n", "<leader><c-d>", function() require("masking").immutable() end, {})
 
-  -- Restore colon keymaps globally (only need to do once)
+  -- Restore colon keymaps globally
   vim.keymap.set("n", ":", ":", { noremap = true })
   vim.keymap.set("v", ":", ":", { noremap = true })
   vim.keymap.set("i", ":", ":", { noremap = true })
@@ -38,9 +37,8 @@ end
 
 local unmark_buffer_modifiable = function(buffer)
   require("disabler").disable()
-  vim.keymap.set("n", "<leader><c-a>", function() require("masking").mutable() end, {})
 
-  -- Disable colon keymaps globally (only need to do once)
+  -- Disable colon keymaps globally
   vim.keymap.set("n", ":", "<Nop>", { noremap = true })
   vim.keymap.set("v", ":", "<Nop>", { noremap = true })
   vim.keymap.set("i", ":", "<Nop>", { noremap = true })

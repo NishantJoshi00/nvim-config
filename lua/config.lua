@@ -35,7 +35,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 })
 
-
+-- LuaToBuffer: Execute Lua code and append output to current buffer
+-- WARNING: This command executes arbitrary Lua code without sandboxing
+-- It is intended for debugging/development purposes only
+-- Do not use this command with untrusted input as it can execute any Lua code
 vim.api.nvim_create_user_command('LuaToBuffer', function(opts)
     local output = vim.fn.execute('lua ' .. opts.args)
     vim.api.nvim_buf_set_lines(0, -1, -1, false, vim.split(output, '\n'))
