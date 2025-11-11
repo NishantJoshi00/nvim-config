@@ -2,336 +2,169 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Development Environment
+## Repository Overview
 
-This is a Neovim configuration repository built with Lua. The configuration uses the lazy.nvim plugin manager and is designed for cross-platform compatibility (Linux, macOS, Windows).
+This is a Neovim configuration repository built with a modular architecture using lazy.nvim as the plugin manager. The configuration manages 80+ plugins with event-driven loading for optimal performance.
 
-**Requirements:**
-- Neovim 0.10+
-- Git, Node.js, Ripgrep, C compiler
-- A Nerd Font for proper icon display
+## Critical Architectural Patterns
 
-## Architecture Overview
+### Loading Order (init.lua)
+The initialization follows a strict sequence that must be preserved:
+1. `vim.loader.enable()` - Bytecode caching (Neovim 0.10+)
+2. `vim.g.mapleader = " "` - Set leader key BEFORE any plugins
+3. `require("theme")` - Load core options BEFORE plugins
+4. `require("bootstrap")` - Bootstrap lazy.nvim plugin manager
+5. `require("lazy").setup(require("plugins"))` - Load all plugins
+6. `require("config")` - Load configuration after plugins
+7. `require("mappings")` - Load keybindings
+8. `require("masking")` - Load masking utilities
+9. `require("custom")` - Load platform-specific configs
+10. Auto-update check via `require("functions.up-to-date").check()`
 
-The configuration follows a modular architecture with clear separation of concerns:
+### Plugin Architecture
+All plugin specifications are in `lua/plugins/init.lua` with a consistent pattern:
+- Plugin config functions live in `lua/plugins/config/<plugin-name>.lua` and return a function
+- Plugin keybinds live in `lua/plugins/keybinds/<plugin-name>.lua` and return a function
+- Keybinds are loaded explicitly in `lua/mappings.lua` via `require("plugins.keybinds.<name>")()`
+- Lazy loading uses `event = "VeryLazy"`, `event = "BufReadPre"`, or filetype triggers (`ft = { ... }`)
 
-### Core Structure
-- **`init.lua`**: Entry point that sets leader key, loads bootstrap, theme, plugins, config, mappings, masking, and custom modules
-- **`lua/bootstrap.lua`**: Handles lazy.nvim plugin manager installation
-- **`lua/theme.lua`**: Sets basic Vim options (clipboard, completion, cursor, mouse, etc.)
-- **`lua/config.lua`**: Core configuration including LSP handlers, diagnostics, autocmds, and custom commands
+### Platform-Specific Code
+OS-specific configurations are in `lua/custom/os/` and loaded via `lua/custom/init.lua`. The system uses `vim.fn.has()` to detect the platform.
 
-### Plugin System
-- **`lua/plugins/init.lua`**: Main plugin specification file returning a table of plugin configurations
-- **`lua/plugins/config/`**: Individual plugin configurations organized by plugin name
-- **`lua/plugins/keybinds/`**: Plugin-specific keybindings separated from configurations
+## Common Development Commands
 
-### Key Components
-- **Plugin Management**: Uses lazy.nvim with lazy loading (`event = "VeryLazy"`) for performance
-- **LSP Integration**: Comprehensive setup with Mason for tool management, nvim-lspconfig, and various language-specific tools
-- **Keybind Organization**: All keybindings loaded via `lua/mappings.lua` which requires individual keybind modules
-- **Custom Functionality**: Platform-specific customizations in `lua/custom/` directory
+### Neovim Plugin Management
+- `:Lazy` - Open lazy.nvim plugin manager UI
+- `:Lazy sync` - Update all plugins
+- `:Lazy reload <plugin-name>` - Reload a specific plugin (useful when testing changes)
+- `:Lazy profile` - Analyze startup performance and plugin load times
+- `:Lazy clean` - Remove unused plugins
 
-## Plugin Architecture Patterns
+### Health Checks & Debugging
+- `:checkhealth` - Verify installation and plugin health
+- `:TSCaptureUnderCursor` - Debug TreeSitter highlighting under cursor
+- `:LuaToBuffer <code>` - Execute Lua code and append output to current buffer (WARNING: executes arbitrary code)
 
-1. **Configuration Pattern**: Each plugin has its config in `plugins/config/<plugin-name>.lua`
-2. **Keybind Pattern**: Plugin keybinds are in `plugins/keybinds/<plugin-name>.lua` and return a function
-3. **Lazy Loading**: Most plugins use `event = "VeryLazy"` or specific file type triggers for performance
-4. **Dependencies**: Plugin dependencies are explicitly declared in the plugin spec
+### LSP & Language Tools
+- Mason (`:Mason`) manages LSP servers, formatters, and linters
+- LSP servers are configured in `lua/plugins/config/mason-lspconfig.lua`
+- Language-specific configs for Rust (rustaceanvim), Haskell (haskell-tools.nvim), and Zig (zig.vim)
 
-## Key Features & Components
+### Custom Functions (lua/functions.lua)
+- `require("functions").point_search()` (Ctrl+P) - Navigate to file:line:col locations
+- `require("functions").glob_search()` - Telescope live_grep with glob pattern filtering
+- `require("functions").copy_pad(name, callback, init)` - Create scratch pad popups
+- `require("functions").theme_choicer()` - Interactive theme selector
+- `require("functions").get_current_location(callback)` - Get current file:line:col
+- `require("functions").quoter()` - Fetch and display random quote
 
-- **LSP**: Full language server integration with Mason for automatic installation
-- **Completion**: nvim-cmp with multiple sources (LSP, buffer, path, snippets)
-- **File Navigation**: Telescope for fuzzy finding, nvim-tree and oil.nvim for file exploration
-- **Version Control**: Jujutsu (jj) - Git-compatible VCS (see Jujutsu section below)
-- **Git Integration**: Gitsigns and vim-fugitive (jj operates in colocated mode with Git)
-- **Terminal**: toggleterm.nvim for integrated terminal management
-- **Debugging**: nvim-dap with UI (currently disabled)
-- **Themes**: Multiple theme support with TokyoDark as primary
+### Key Binding Strategy
+- Leader key: `<space>`
+- Consistent namespacing: `<leader>f*` (file/find), `<leader>g*` (git), `<leader>m*` (misc)
+- Plugin-specific bindings in isolated `lua/plugins/keybinds/<plugin>.lua` files
 
-## Development Commands
+## Adding New Plugins
 
-### Essential Development Commands
-- **`:LuaToBuffer`**: Execute Lua code and output result to current buffer (useful for debugging)
-- **`:checkhealth`**: Verify Neovim installation and plugin health
-- **`:Lazy`**: Open lazy.nvim UI for plugin management
-- **`:Mason`**: Open Mason UI for LSP/DAP/linter/formatter installation
+1. Add plugin spec to `lua/plugins/init.lua` with appropriate lazy loading:
+   ```lua
+   {
+       "author/plugin-name",
+       event = "VeryLazy",  -- or appropriate trigger
+       dependencies = { ... },
+       config = require("plugins.config.plugin-name"),
+   }
+   ```
 
-### Plugin Configuration Workflow
-When adding new plugins:
-1. Add plugin spec to `lua/plugins/init.lua` with proper dependencies
-2. Create configuration file in `lua/plugins/config/<plugin-name>.lua` (returns function)
-3. Create keybinds file in `lua/plugins/keybinds/<plugin-name>.lua` (returns function)
-4. Add keybind require to `lua/mappings.lua`
-5. Use `:Lazy reload <plugin-name>` to test changes
+2. Create config function in `lua/plugins/config/plugin-name.lua`:
+   ```lua
+   return function()
+       require("plugin-name").setup({
+           -- config here
+       })
+   end
+   ```
 
-### Configuration Debugging
-- Use `require("functions").point_search()` (Ctrl+P) for searching specific content
-- Use `require("functions").glob_search()` (<leader>fl) for file-pattern searches
-- TreeSitter query testing via `<leader>eer` for syntax analysis
-- Use `:TSCaptureUnderCursor` to debug TreeSitter highlighting issues
+3. Create keybinds in `lua/plugins/keybinds/plugin-name.lua`:
+   ```lua
+   return function()
+       vim.keymap.set("n", "<leader>xx", function() ... end, { desc = "..." })
+   end
+   ```
 
-### Buffer Management & Protection
-- **Buffer Masking System**: `<leader><c-d>` makes all buffers immutable (read-only protection)
-- **Buffer Unmasking**: `<leader><c-a>` makes all buffers mutable (enables editing)
-- **Disabler Integration**: Works with `disabler` plugin to temporarily disable functionality
-- **Command Line Protection**: When masked, command mode (`:`) is disabled to prevent accidental changes
+4. Add to `lua/mappings.lua`:
+   ```lua
+   require("plugins.keybinds.plugin-name")()
+   ```
 
-## Loading Order & Initialization
+5. Test with `:Lazy reload plugin-name`
 
-The configuration follows a strict loading order (defined in init.lua:1-15):
-1. Leader key setup (must be first)
-2. Bootstrap lazy.nvim plugin manager
-3. Plugin loading via lazy.nvim
-4. Core configuration (LSP, diagnostics, autocmds)
-5. Keybinding setup
-6. Masking configuration (buffer protection system)
-7. Custom platform/terminal configurations
-8. Theme and basic vim options
-9. Auto-update check on startup
+## Important Configuration Details
 
-## Utility Functions
+### Diagnostics (lua/config.lua)
+- Configured with `update_in_insert = true` (Neovim 0.10+)
+- Rounded border floats with severity sorting
+- Virtual text enabled with "●" prefix
 
-The `lua/utils.lua` module provides helper functions:
-- **`gate(fn)`**: Execute platform-specific code based on OS detection
-- **`is_day()`**: Check if current time is daytime (for theme switching)
-- **`join(...)`**: Create vim option strings from multiple values
+### LSP Capabilities (lua/config.lua)
+- Auto-enables inlay hints when LSP supports them (`inlayHintProvider`)
+- Semantic tokens enabled for supporting servers (Neovim 0.10+)
+- LspAttach autocmd handles per-buffer LSP setup
 
-## Platform Customization
+### Custom Autocmds
+- `*.Jenkinsfile` files auto-detected as groovy filetype
+- `.mlw` files treated as OCaml
 
-The configuration supports platform-specific customizations through:
-- `lua/custom/os/mac.lua` - macOS specific settings
-- `lua/custom/os/windows.lua` - Windows specific settings
-- **Note**: Currently loads Windows settings by default in `custom/init.lua` - adjust for your platform
+### Build Commands
+- Telescope FZF Native: Built with `make` (defined in plugin spec `build = "make"`)
+- TreeSitter: Uses `:TSUpdate` for grammar updates
 
-## Jujutsu VCS (jj) - Version Control
-
-This project uses Jujutsu (jj), a Git-compatible VCS. The repository operates in colocated mode, meaning both `jj` and `git` commands work on the same repository.
-
-**Version Note:** This configuration uses jj 0.34.0, which uses `bookmark` terminology instead of `branch`. In jj, bookmarks are equivalent to Git branches.
-
-### Core Mental Model
-
-**Working Copy = Automatic Commit:**
-- The working directory is always a commit (called `@`)
-- Changes are automatically tracked - no staging area
-- No need to worry about "dirty" working directory state
-
-**Changes are Mutable:**
-- All commits are editable until pushed
-- Editing a commit automatically rebases all descendants
-- No explicit rebase needed when modifying history
-
-**Conflicts are Non-Blocking:**
-- Conflicts are just a commit state, not a blocker
-- Can create new changes on top of conflicted changes
-- Switch away from conflicts and come back later
-- Conflicts propagate through descendants automatically
-
-**Operation Log = Universal Undo:**
-- Every operation is recorded: `jj op log`
-- Undo any operation: `jj op restore OPERATION_ID` or `jj undo`
-- Works like a time machine for the entire repository
-
-### Essential Commands for AI Use
-
-**Status & Inspection:**
-```bash
-jj status          # Current working copy status
-jj log             # Graphical commit history
-jj log -r REVISION # Show specific revision
-jj diff            # Changes in working copy
-jj diff -r REVISION # Changes in specific revision
-jj show REVISION   # Full details of a revision
-```
-
-**Creating Changes:**
-```bash
-jj describe -m "message"     # Set commit message for current change (@)
-jj new                       # Create new change, move @ on top
-jj new -m "message"          # Create with message
-jj commit -m "message"       # Finalize current change, create new empty @
-```
-
-**Editing History:**
-```bash
-jj describe REVISION -m "msg"  # Change commit message
-jj squash                      # Squash @ into parent
-jj squash -r REVISION          # Squash REVISION into its parent
-jj rebase -d DEST              # Move current change to DEST
-jj rebase -s SOURCE -d DEST    # Move SOURCE and descendants to DEST
-jj split                       # Interactively split current change
-jj abandon REVISION            # Remove revision (keep changes in parent)
-```
-
-**File Operations:**
-```bash
-jj restore FILE              # Restore file from parent
-jj restore --from REV FILE   # Restore file from specific revision
-jj file list                 # List files in current change
-```
-
-**Bookmarks & Remotes:**
-```bash
-jj bookmark create NAME          # Create bookmark pointing to @
-jj bookmark set NAME -r REVISION # Move bookmark to revision
-jj bookmark list                 # List all bookmarks
-jj bookmark track NAME@origin    # Track remote bookmark
-jj git fetch                     # Fetch from Git remotes
-jj git push                      # Push all bookmarks
-jj git push --bookmark NAME      # Push specific bookmark
-jj git push --change REVISION    # Create bookmark and push for review
-```
-
-**Undo & Recovery:**
-```bash
-jj op log                      # View all operations
-jj undo                        # Undo last operation
-jj op restore OPERATION_ID     # Restore to specific operation state
-```
-
-### Revision Syntax (Revsets)
+## File Structure Reference
 
 ```
-@                    # Working copy commit
-@-                   # Parent of working copy
-@--                  # Grandparent of working copy
-BOOKMARK_NAME        # Latest commit on bookmark (e.g., main)
-CHANGE_ID            # 12-char change identifier (starts with k, q, r, etc.)
-main..@              # All commits from main to @
-::@                  # All ancestors of @
-@::                  # All descendants of @
+lua/
+├── bootstrap.lua         # lazy.nvim setup (auto-installs if missing)
+├── theme.lua            # Core vim options loaded BEFORE plugins
+├── config.lua           # Diagnostics, LSP setup, autocmds, custom commands
+├── mappings.lua         # Loads all keybind modules
+├── functions.lua        # Utility functions (point_search, copy_pad, etc.)
+├── masking.lua          # Masking utilities
+├── utils.lua            # Helper functions (gate, is_day, join)
+├── plugins/
+│   ├── init.lua         # All plugin specifications (80+)
+│   ├── config/          # Plugin configuration functions
+│   └── keybinds/        # Plugin-specific keybind functions
+├── custom/
+│   ├── init.lua         # Platform-specific loader
+│   ├── os/              # OS-specific configurations
+│   ├── term/            # Terminal customizations
+│   └── theme/           # Theme overrides
+└── functions/
+    └── up-to-date.lua   # Auto-update checking system
 ```
 
-### Common Workflows
+## Dependencies & Requirements
 
-**Making Changes:**
-```bash
-# Edit files
-jj describe -m "Add feature X"     # Set message for current change
-jj new                              # Start next change
-```
-
-**Amending Previous Commit:**
-```bash
-# Just edit the commit directly - no need to check it out
-jj describe REVISION -m "Updated message"
-# OR move changes from @ into it:
-jj squash --into REVISION
-```
-
-**Creating a PR:**
-```bash
-jj bookmark create feature-name       # Create bookmark at @
-jj bookmark track feature-name@origin # Track remote bookmark
-jj git push --bookmark feature-name   # Push to remote
-```
-
-**Updating After Review:**
-```bash
-# Edit the relevant commits directly
-jj describe REVISION -m "Address review feedback"
-jj git push --bookmark feature-name   # Push updates (force push is safe in jj)
-```
-
-**Rebasing onto Updated Main:**
-```bash
-jj git fetch                        # Fetch latest
-jj rebase -d main                   # Rebase current change onto main
-```
-
-### Important Differences from Git
-
-1. **No `git add`**: All changes are automatically tracked
-2. **No `git stash`**: Just use `jj new` to create a new change and work there
-3. **No `git rebase -i`**: Edit commits directly with `jj describe`, `jj squash`, etc.
-4. **No `git reset --hard`**: Use `jj restore` for files or `jj op restore` for repository state
-5. **No merge commits by default**: jj rebases by default (cleaner history)
-6. **Conflicts don't block**: Can switch away and come back to resolve later
-
-### When Using jj in Commands
-
-**DO:**
-- Use `jj status` instead of `git status` to check working copy
-- Use `jj log` to view commit history (more informative than git log)
-- Use `jj describe` to set/change commit messages
-- Use `jj new` to create new changes instead of committing
-- Use `jj git push` when pushing to remotes
-- Use `jj op log` and `jj undo` when something goes wrong
-
-**DON'T:**
-- Don't use `git add` - changes are auto-tracked
-- Don't use `git commit --amend` - use `jj describe` or `jj squash`
-- Don't use `git rebase -i` - use `jj rebase`, `jj describe`, `jj squash`
-- Don't use `git reset` - use `jj restore` or `jj op restore`
-- Don't mix git and jj commands in the same workflow unless necessary
-
-### Critical Architecture Decisions
-
-**Event-Driven Loading Strategy**: 
-- Most plugins use `event = "VeryLazy"` to defer loading until after UI initialization
-- LSP-related plugins use `event = "LspAttach"` for conditional loading
-- File-type specific plugins use `ft = {"rust", "lua"}` etc.
-
-**LSP Configuration Pattern**:
-- `mason.nvim` manages LSP server installations
-- `mason-lspconfig.nvim` bridges Mason and nvim-lspconfig  
-- Language-specific configs (Rust via rustaceanvim, Haskell via haskell-tools.nvim) override defaults
-- Capabilities are injected from nvim-cmp for completion integration
-
-**Keybinding Architecture**:
-- Leader key (`<space>`) is set FIRST in init.lua (critical for proper plugin loading)
-- All keybinds use consistent namespacing: `<leader>f*` (files), `<leader>m*` (markdown), `<leader>g*` (git)
-- Plugin-specific keybinds are isolated in separate modules under `keybinds/`
-
-## Auto-Update Mechanism
-
-The configuration includes an automatic update checker (`lua/functions/up-to-date.lua`) that:
-- Runs on startup after all plugins load
-- Checks if local config is behind remote repository
-- Displays notification if updates are available
-- Requires git repository setup
-
-## Testing & Validation
-
-Since this is a Neovim configuration, testing involves:
-- Loading Neovim and ensuring no errors occur
-- Verifying plugin functionality manually
-- Checking LSP server installations via Mason
-- Testing keybindings and custom commands
-- Run `:checkhealth` to verify setup
-
-No automated test suite is present as this is a personal configuration repository.
-
-### Configuration State Management
-
-**Version Control**: Configuration is tracked via `lazy-lock.json` with 73+ pinned plugin versions for reproducibility.
-
-**Auto-Update System**: The `functions/up-to-date.lua` module performs git-based update checking on startup, comparing local HEAD with `origin/main`.
-
-**Performance Monitoring**: Use `:Lazy profile` to analyze startup performance and plugin loading times.
-
-### Custom Function Integration
-
-The configuration includes several custom functions accessible via keybinds:
-- **Copy/Scratch Pad System**: `<leader><c-n>` opens persistent copy pad with clipboard integration
-- **Theme Cycling**: `<leader>tc` cycles through available themes with time-based defaults
-- **Location Copying**: `<leader><c-p>` copies current file:line to clipboard
-- **TreeSitter Extraction**: `<leader>eer` provides interactive TreeSitter query interface for code analysis
-
-### Completion System Architecture
-
-**Multi-Source Strategy**: nvim-cmp aggregates from LSP, buffer, path, and snippet sources with intelligent prioritization (LSP > snippets > buffer > path).
-
-**Context-Aware Behavior**: Different completion sources activate based on context (gitcommit uses git source, command line uses cmdline source).
-
-**Integration Points**: Completion capabilities are injected into LSP configs via `cmp_nvim_lsp.default_capabilities()` for seamless LSP-completion integration.
+- Neovim 0.10+ (tested on 0.11.2)
+- Git (plugin management)
+- C compiler (certain plugins)
+- Node.js (LSP features)
+- Ripgrep (telescope search)
+- Nerd Font (icons)
+- Platform support: Linux, macOS (Darwin), Windows
 
 ## Performance Considerations
 
-- Plugins are extensively lazy-loaded using `event = "VeryLazy"` or file type triggers
-- Some resource-intensive plugins like nvim-dap are disabled by default
-- BigFile plugin handles large files efficiently
-- Treesitter and LSP are optimized for specific file types
-- Diagnostics update in insert mode (intentional for immediate feedback)
+- Bytecode caching enabled via `vim.loader.enable()`
+- Strategic lazy loading: `event = "VeryLazy"` for non-critical plugins
+- File-type specific loading: `ft = { ... }` for language plugins
+- Large file optimization via `bigfile.nvim`
+- DAP plugins currently disabled for performance
+
+## Testing Changes
+
+When modifying this configuration:
+1. Test startup time: `:Lazy profile`
+2. Verify plugin health: `:checkhealth`
+3. Check for errors in: `:messages`
+4. Reload specific plugin: `:Lazy reload <plugin>`
+5. Profile startup: `nvim --startuptime startup.log`
