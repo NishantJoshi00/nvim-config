@@ -16,7 +16,9 @@ local function check()
   vim.fn.jobstart(git .. "-c http.timeout=5 fetch", {
     on_exit = function(_, exit_code, _)
       if exit_code ~= 0 then
-        vim.notify("Failed to fetch git updates (exit code: " .. exit_code .. ")", vim.log.levels.DEBUG)
+        vim.schedule(function()
+          vim.notify("Failed to fetch git updates (exit code: " .. exit_code .. ")", vim.log.levels.DEBUG)
+        end)
         return
       end
 
@@ -30,20 +32,26 @@ local function check()
           if not ahead or not behind then return end
 
           if ahead ~= "0" or behind ~= "0" then
-            vim.notify("Configuration is out of date. [ ↓ " .. ahead .. " | ↑ " .. behind .. " ]", vim.log.levels.WARN,
-              { hide_from_history = true })
+            vim.schedule(function()
+              vim.notify("Configuration is out of date. [ ↓ " .. ahead .. " | ↑ " .. behind .. " ]", vim.log.levels.WARN,
+                { hide_from_history = true })
+            end)
           end
         end,
         on_stderr = function(_, data, _)
           if data and #data > 0 and data[1] ~= "" then
-            vim.notify("Error checking git status: " .. table.concat(data, "\n"), vim.log.levels.DEBUG)
+            vim.schedule(function()
+              vim.notify("Error checking git status: " .. table.concat(data, "\n"), vim.log.levels.DEBUG)
+            end)
           end
         end,
       })
     end,
     on_stderr = function(_, data, _)
       if data and #data > 0 and data[1] ~= "" then
-        vim.notify("Git fetch error: " .. table.concat(data, "\n"), vim.log.levels.DEBUG)
+        vim.schedule(function()
+          vim.notify("Git fetch error: " .. table.concat(data, "\n"), vim.log.levels.DEBUG)
+        end)
       end
     end,
   })

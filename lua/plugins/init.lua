@@ -180,7 +180,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        event = "VeryLazy",
+        cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
     },
     {
         "ray-x/lsp_signature.nvim",
@@ -214,7 +214,10 @@ return {
         -- Optional dependencies
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = require("plugins.config.oil"),
-        event = "VeryLazy",
+        cmd = "Oil",
+        keys = {
+            { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+        },
     },
     {
         "willothy/flatten.nvim",

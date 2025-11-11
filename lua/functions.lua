@@ -62,11 +62,15 @@ local quoter = function()
         stdout_buffered = true,
         on_stdout = function(a, b, c)
             -- print(vim.inspect(b))
-            vim.notify(b[1], "info", { hide_from_history = true })
+            vim.schedule(function()
+                vim.notify(b[1], "info", { hide_from_history = true })
+            end)
         end,
         on_stderr = function(_, data, _)
             if data and #data > 0 and data[1] ~= "" then
-                vim.notify("Failed to fetch quote: " .. table.concat(data, "\n"), vim.log.levels.WARN)
+                vim.schedule(function()
+                    vim.notify("Failed to fetch quote: " .. table.concat(data, "\n"), vim.log.levels.WARN)
+                end)
             end
         end,
     })

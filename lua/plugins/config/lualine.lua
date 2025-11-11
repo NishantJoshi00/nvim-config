@@ -101,8 +101,8 @@ local custom = function()
         return msg
     end
 
-    -- Invalidate cache on LSP attach/detach
-    vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
+    -- Invalidate cache on LSP attach/detach and buffer changes
+    vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach", "BufEnter" }, {
         callback = function()
             lsp_info_cache = {}
         end,
