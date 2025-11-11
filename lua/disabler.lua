@@ -6,8 +6,18 @@ local keybind_store = {}
 
 local function write_to_file(filename, content)
   local file = io.open(filename, "w")
-  file:write(content)
+  if not file then
+    vim.notify("Failed to open file: " .. filename, vim.log.levels.ERROR)
+    return false
+  end
+  local success, err = pcall(file.write, file, content)
+  if not success then
+    file:close()
+    vim.notify("Failed to write to file: " .. tostring(err), vim.log.levels.ERROR)
+    return false
+  end
   file:close()
+  return true
 end
 
 local enable_all_keybinds = function()
@@ -47,7 +57,7 @@ local disable_all_keybinds = function()
       table.insert(keybinds, keys)
 
       if not registry_set[mode][lhs] then
-        vim.keymap.del(mode, lhs)
+        pcall(vim.keymap.del, mode, lhs)
         registry_set[mode][lhs] = true
       end
     end

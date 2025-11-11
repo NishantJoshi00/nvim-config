@@ -73,28 +73,49 @@ local custom = function()
 
 
 
-    local lsp_info = {
-        function()
-            local msg = ""
-            local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-            local clients = vim.lsp.get_clients()
-            if next(clients) == nil then
-                return msg
-            end
-            for _, client in ipairs(clients) do
-                local filetypes = client.config.filetypes
-                if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                    return client.name
-                end
-            end
+    -- Cache LSP info to avoid repeated lookups on every statusline refresh
+    local lsp_info_cache = {}
+    local function get_lsp_info()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+        local cache_key = bufnr .. ":" .. buf_ft
+
+        if lsp_info_cache[cache_key] then
+            return lsp_info_cache[cache_key]
+        end
+
+        local msg = ""
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+        if next(clients) == nil then
+            lsp_info_cache[cache_key] = msg
             return msg
+        end
+        for _, client in ipairs(clients) do
+            local filetypes = client.config.filetypes
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                lsp_info_cache[cache_key] = client.name
+                return client.name
+            end
+        end
+        lsp_info_cache[cache_key] = msg
+        return msg
+    end
+
+    -- Invalidate cache on LSP attach/detach and buffer changes
+    vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach", "BufEnter" }, {
+        callback = function()
+            lsp_info_cache = {}
         end,
+    })
+
+    local lsp_info = {
+        get_lsp_info,
         color = { fg = '#2a2a2a', gui = 'bold' },
         separator = "",
     }
 
     local symbol_maker = function()
-        if lsp_info[1]() == "" then
+        if get_lsp_info() == "" then
             return "  "
         else
             return '  '

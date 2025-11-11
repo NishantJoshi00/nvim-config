@@ -62,11 +62,15 @@ local quoter = function()
         stdout_buffered = true,
         on_stdout = function(a, b, c)
             -- print(vim.inspect(b))
-            vim.notify(b[1], "info", { hide_from_history = true })
+            vim.schedule(function()
+                vim.notify(b[1], "info", { hide_from_history = true })
+            end)
         end,
         on_stderr = function(_, data, _)
             if data and #data > 0 and data[1] ~= "" then
-                vim.notify("Failed to fetch quote: " .. table.concat(data, "\n"), vim.log.levels.WARN)
+                vim.schedule(function()
+                    vim.notify("Failed to fetch quote: " .. table.concat(data, "\n"), vim.log.levels.WARN)
+                end)
             end
         end,
     })
@@ -120,50 +124,6 @@ local get_newline = function()
     else
         return "\n"
     end
-end
-
-local theme_choicer = function()
-    local Menu = require("nui.menu")
-    local event = require("nui.utils.autocmd").event
-
-    local lines = {}
-
-    for i in pairs(vim.g.theme_choices) do
-        table.insert(lines, Menu.item(vim.g.theme_choices[i]))
-    end
-
-    local menu = Menu({
-        position = "50%",
-        size = {
-            width = 40,
-        },
-        border = {
-            style = "rounded",
-            text = {
-                top = "[theme select]",
-                top_align = "center",
-            },
-        },
-        win_options = {
-            winhighlight = "Normal:Normal,FloatBorder:Normal",
-        },
-    }, {
-        lines = lines,
-        on_close = function() end,
-        on_submit = function(item)
-            vim.cmd(item.text)
-        end
-    });
-
-    menu:on(event.BufLeave, function()
-        menu:unmount()
-    end)
-
-    menu:map("n", "<esc>", function()
-        menu:unmount()
-    end)
-
-    menu:mount()
 end
 
 ---Navigate to a file:line:col location with proper error handling
@@ -250,7 +210,7 @@ local setup_popup_content = function(popup, name)
     if copy_pad_state.content[name] then
         vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, copy_pad_state.content[name])
     end
-    vim.api.nvim_buf_set_option(popup.bufnr, "syntax", "markdown")
+    vim.api.nvim_set_option_value("syntax", "markdown", { buf = popup.bufnr })
 end
 
 ---Create exit handler that saves content and unmounts popup
@@ -338,5 +298,4 @@ return {
     get_current_location = get_current_location,
     glob_search = glob_search,
     telescope_theme = telescope_theme,
-    theme_choicer = theme_choicer
 }

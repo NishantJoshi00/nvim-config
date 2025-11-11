@@ -1,18 +1,20 @@
 return {
     {
-        "tiagovla/tokyodark.nvim",
+        "rebelot/kanagawa.nvim",
+        priority = 1000, -- Load theme early
         config = require("plugins.config.themes"),
-        dependencies = {
-            "rebelot/kanagawa.nvim",
-        },
     },
     {
         "lewis6991/gitsigns.nvim",
+        event = "BufReadPre",
         config = require("plugins.config.gitsigns"),
     },
     { "cohama/lexima.vim" },
-    { "preservim/vim-markdown" },
-    { "neovim/nvim-lspconfig" },
+    { "preservim/vim-markdown", ft = "markdown" },
+    {
+        "neovim/nvim-lspconfig",
+        event = "BufReadPre",
+    },
     { "nvimtools/none-ls.nvim" },
     {
         "williamboman/mason.nvim",
@@ -65,6 +67,7 @@ return {
     { "hrsh7th/vim-vsnip" },
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -72,6 +75,7 @@ return {
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-vsnip",
             "hrsh7th/vim-vsnip",
+            "petertriho/cmp-git",
         },
         config = require("plugins.config.nvim-cmp"),
     },
@@ -88,8 +92,11 @@ return {
         build = ":TSUpdate",
         dependencies = {
             "neovim/nvim-lspconfig",
-            "nvim-treesitter/playground",
         },
+    },
+    {
+        "nvim-treesitter/playground",
+        cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     },
 
     {
@@ -108,6 +115,7 @@ return {
     },
     {
         "akinsho/bufferline.nvim",
+        event = "VeryLazy",
         config = require("plugins.config.bufferline"),
     },
     { "akinsho/toggleterm.nvim", config = require("plugins.config.toggleterm") },
@@ -132,9 +140,9 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
     },
-    { "airblade/vim-gitgutter" },
     {
         "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
         config = require("plugins.config.lualine"),
     },
     {
@@ -157,14 +165,13 @@ return {
     },
     {
         "saecki/crates.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = require("plugins.config.crates"),
         event = "VeryLazy",
     },
     {
         "folke/persistence.nvim",
         event = "BufReadPre", -- this will only start session saving when an actual file was opened
-        module = "persistence",
         config = require("plugins.config.persistence"),
     },
     {
@@ -173,7 +180,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        event = "VeryLazy",
+        cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
     },
     {
         "ray-x/lsp_signature.nvim",
@@ -198,6 +205,7 @@ return {
     },
     {
         "stevearc/overseer.nvim",
+        enabled = false,
         opts = {},
         config = require("plugins.config.overseer"),
     },
@@ -207,7 +215,10 @@ return {
         -- Optional dependencies
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = require("plugins.config.oil"),
-        event = "VeryLazy",
+        cmd = "Oil",
+        keys = {
+            { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+        },
     },
     {
         "willothy/flatten.nvim",
@@ -262,6 +273,7 @@ return {
     { "tpope/vim-fugitive" },
     {
         "andweeb/presence.nvim",
+        event = "VeryLazy",
         config = require("plugins.config.presence"),
     },
     {
@@ -271,7 +283,8 @@ return {
     {
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-        opts = {},
+        ft = "markdown",
+        config = require("plugins.config.render-markdown"),
     },
     {
         "chrisgrieser/nvim-lsp-endhints",

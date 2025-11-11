@@ -19,4 +19,7 @@ return function()
       }
     }
   })
+
+  -- Load FZF extension
+  pcall(telescope.load_extension, "fzf")
 end
