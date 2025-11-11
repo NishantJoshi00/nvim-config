@@ -34,9 +34,6 @@ return function()
 
     vim.keymap.set("n", "<leader>hf", "<cmd>noh<cr>", { desc = "Hide Finds" })
 
-    vim.keymap.set("n", "<leader>tc", functions.theme_choicer, { desc = "Cycle themes" })
-
-
     vim.keymap.set("i", "<c-r>'", "<c-r>=eval(getline(prevnonblank(\".\")))<cr>", { desc = "Evaluate Copy" })
 
 

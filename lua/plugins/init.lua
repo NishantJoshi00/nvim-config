@@ -1,10 +1,8 @@
 return {
     {
-        "tiagovla/tokyodark.nvim",
+        "rebelot/kanagawa.nvim",
+        priority = 1000, -- Load theme early
         config = require("plugins.config.themes"),
-        dependencies = {
-            "rebelot/kanagawa.nvim",
-        },
     },
     {
         "lewis6991/gitsigns.nvim",
@@ -12,7 +10,7 @@ return {
         config = require("plugins.config.gitsigns"),
     },
     { "cohama/lexima.vim" },
-    { "preservim/vim-markdown" },
+    { "preservim/vim-markdown", ft = "markdown" },
     {
         "neovim/nvim-lspconfig",
         event = "BufReadPre",
@@ -94,8 +92,11 @@ return {
         build = ":TSUpdate",
         dependencies = {
             "neovim/nvim-lspconfig",
-            "nvim-treesitter/playground",
         },
+    },
+    {
+        "nvim-treesitter/playground",
+        cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     },
 
     {
@@ -139,7 +140,6 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
     },
-    { "airblade/vim-gitgutter" },
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
@@ -205,6 +205,7 @@ return {
     },
     {
         "stevearc/overseer.nvim",
+        enabled = false,
         opts = {},
         config = require("plugins.config.overseer"),
     },
@@ -272,6 +273,7 @@ return {
     { "tpope/vim-fugitive" },
     {
         "andweeb/presence.nvim",
+        event = "VeryLazy",
         config = require("plugins.config.presence"),
     },
     {
@@ -281,7 +283,8 @@ return {
     {
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-        opts = {},
+        ft = "markdown",
+        config = require("plugins.config.render-markdown"),
     },
     {
         "chrisgrieser/nvim-lsp-endhints",

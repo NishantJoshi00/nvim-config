@@ -126,50 +126,6 @@ local get_newline = function()
     end
 end
 
-local theme_choicer = function()
-    local Menu = require("nui.menu")
-    local event = require("nui.utils.autocmd").event
-
-    local lines = {}
-
-    for i in pairs(vim.g.theme_choices) do
-        table.insert(lines, Menu.item(vim.g.theme_choices[i]))
-    end
-
-    local menu = Menu({
-        position = "50%",
-        size = {
-            width = 40,
-        },
-        border = {
-            style = "rounded",
-            text = {
-                top = "[theme select]",
-                top_align = "center",
-            },
-        },
-        win_options = {
-            winhighlight = "Normal:Normal,FloatBorder:Normal",
-        },
-    }, {
-        lines = lines,
-        on_close = function() end,
-        on_submit = function(item)
-            vim.cmd(item.text)
-        end
-    });
-
-    menu:on(event.BufLeave, function()
-        menu:unmount()
-    end)
-
-    menu:map("n", "<esc>", function()
-        menu:unmount()
-    end)
-
-    menu:mount()
-end
-
 ---Navigate to a file:line:col location with proper error handling
 ---@param data string The path string in format "file:line:col"
 local point_search_inner = function(data)
@@ -342,5 +298,4 @@ return {
     get_current_location = get_current_location,
     glob_search = glob_search,
     telescope_theme = telescope_theme,
-    theme_choicer = theme_choicer
 }
