@@ -21,6 +21,39 @@ vim.cmd([[highlight IndentBlanklineChar guifg=#202020 gui=nocombine]])
 vim.cmd([[highlight IndentBlanklineContextChar guifg=#505050 gui=nocombine]])
 -- vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray guibg=NONE]])
 
+-- Configure all floating windows to use theme background
+local function setup_float_highlights()
+    -- Core floating window highlights
+    vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "FloatTitle", { link = "Normal" })
+
+    -- Plugin-specific floats
+    vim.api.nvim_set_hl(0, "OilFloat", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "TelescopeNormal", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "TelescopePromptNormal", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "WhichKeyFloat", { link = "Normal" })
+
+    -- Completion menu
+    vim.api.nvim_set_hl(0, "Pmenu", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "PmenuBorder", { link = "Normal" })
+
+    -- Input fields and prompts
+    vim.api.nvim_set_hl(0, "NormalNC", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "FloatermNC", { link = "Normal" })
+end
+
+-- Apply on colorscheme change
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = setup_float_highlights,
+})
+
+-- Apply immediately
+setup_float_highlights()
+
 vim.cmd([[autocmd BufRead,BufNewFile *.Jenkinsfile setfiletype groovy]])
 
 
