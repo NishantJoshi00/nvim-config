@@ -118,7 +118,7 @@ return {
         event = "VeryLazy",
         config = require("plugins.config.bufferline"),
     },
-    { "akinsho/toggleterm.nvim", config = require("plugins.config.toggleterm") },
+    { "akinsho/toggleterm.nvim",         config = require("plugins.config.toggleterm") },
     {
         "gelguy/wilder.nvim",
         config = require("plugins.config.wilder"),
@@ -197,7 +197,7 @@ return {
         config = require("plugins.config.lsp_lines"),
     },
     { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
-    { "folke/lazydev.nvim", opts = {}, event = "VeryLazy", ft = "lua" },
+    { "folke/lazydev.nvim",              opts = {},                                    event = "VeryLazy", ft = "lua" },
     {
         "stevearc/dressing.nvim",
         opts = {},
@@ -219,6 +219,14 @@ return {
         keys = {
             { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
         },
+    },
+    {
+        'stevearc/quicker.nvim',
+        ft = "qf",
+        ---@module "quicker"
+        ---@type quicker.SetupOptions
+        opts = {},
+        config = require("plugins.config.quicker"),
     },
     {
         "willothy/flatten.nvim",
