@@ -168,7 +168,7 @@ local custom = function()
                 },
                 { 'searchcount', maxcount = 999 },
             },
-            lualine_b = { { os_icon }, 'branch', 'diff' },
+            lualine_b = { { os_icon }, 'branch' },  -- Removed 'diff' - causes fd leak
             lualine_c = {
                 'filetype',
                 'filesize',

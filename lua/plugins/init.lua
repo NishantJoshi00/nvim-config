@@ -120,10 +120,6 @@ return {
     },
     { "akinsho/toggleterm.nvim",         config = require("plugins.config.toggleterm") },
     {
-        "gelguy/wilder.nvim",
-        config = require("plugins.config.wilder"),
-    },
-    {
         "rcarriga/nvim-notify",
         config = require("plugins.config.nvim-notify"),
     },
@@ -249,7 +245,7 @@ return {
         "nvim-treesitter/nvim-treesitter-context",
         config = require("plugins.config.nvim-treesitter-context"),
     },
-    { "github/copilot.vim",    config = require("plugins.config.copilot") },
+    { "github/copilot.vim", enabled = false,    config = require("plugins.config.copilot") },
     { "tpope/vim-speeddating" },
     { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
     {

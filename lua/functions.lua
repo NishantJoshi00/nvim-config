@@ -55,15 +55,27 @@ local disabled_on = function(systems)
     return false
 end
 
+-- Module-scoped job tracking
+local quote_job_id = nil
+
 ---Get a random quote - and display it in a vim.notify
 ---
 local quoter = function()
-    vim.fn.jobstart("curl -s --max-time 5 https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
+    -- Stop existing quote job if running
+    if quote_job_id and vim.fn.jobwait({quote_job_id}, 0)[1] == -1 then
+        vim.fn.jobstop(quote_job_id)
+    end
+
+    quote_job_id = vim.fn.jobstart("curl -s --max-time 5 https://zenquotes.io/api/random | jq '.[0][\"q\"]'", {
         stdout_buffered = true,
-        on_stdout = function(a, b, c)
-            -- print(vim.inspect(b))
+        on_exit = function()
+            quote_job_id = nil
+        end,
+        on_stdout = function(_, data, _)
             vim.schedule(function()
-                vim.notify(b[1], "info", { hide_from_history = true })
+                if data and data[1] and data[1] ~= "" then
+                    vim.notify(data[1], "info", { hide_from_history = true })
+                end
             end)
         end,
         on_stderr = function(_, data, _)
