@@ -13,7 +13,11 @@ require("theme")
 require("bootstrap")
 
 -- Load all plugins
-require("lazy").setup(require("plugins"))
+require("lazy").setup(require("plugins"), {
+  ui = {
+    border = "rounded",
+  },
+})
 
 -- Load configuration after plugins
 require("config")
