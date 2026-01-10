@@ -8,6 +8,14 @@ return function()
       enable = true,
       additional_vim_regex_highlighting = true,
     },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = "<C-space>",
+        node_incremental = "<C-space>",
+        node_decremental = "<C-backspace>",
+      },
+    },
     playground = {
       persist_queries = true
     }
