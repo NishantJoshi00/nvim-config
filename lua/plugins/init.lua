@@ -15,7 +15,6 @@ return {
         "neovim/nvim-lspconfig",
         event = "BufReadPre",
     },
-    { "nvimtools/none-ls.nvim" },
     {
         "williamboman/mason.nvim",
         config = require("plugins.config.mason"),
@@ -34,16 +33,6 @@ return {
     {
         "VidocqH/lsp-lens.nvim",
         config = require("plugins.config.lsp-lens"),
-    },
-    {
-        event = "VeryLazy",
-        "jay-babu/mason-null-ls.nvim",
-        dependencies = {
-            "mason-org/mason.nvim",
-            "nvimtools/none-ls.nvim",
-            "mason-org/mason-lspconfig.nvim",
-        },
-        config = require("plugins.config.mason-null-ls"),
     },
     { "nvim-lua/plenary.nvim" },
     { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "nvim-telescope/telescope-fzf-native.nvim" } },
@@ -84,7 +73,6 @@ return {
         version = '^4',
         ft = { 'rust' },
     },
-    { "tpope/vim-commentary" },
     { "tpope/vim-surround" },
     {
         "nvim-treesitter/nvim-treesitter",
