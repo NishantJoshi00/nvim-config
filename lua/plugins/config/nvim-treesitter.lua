@@ -1,5 +1,4 @@
 return function()
-  -- Treesitter Plugin Setup
   require("nvim-treesitter.configs").setup({
     ensure_installed = { "rust", "toml", "lua" },
     auto_install = true,
@@ -16,8 +15,6 @@ return function()
         node_decremental = "<C-backspace>",
       },
     },
-    playground = {
-      persist_queries = true
-    }
+    playground = { persist_queries = true },
   })
 end

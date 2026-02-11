@@ -1,7 +1,7 @@
 return {
     {
         "rebelot/kanagawa.nvim",
-        priority = 1000, -- Load theme early
+        priority = 1000,
         config = require("plugins.config.themes"),
     },
     {
@@ -34,26 +34,29 @@ return {
         "VidocqH/lsp-lens.nvim",
         config = require("plugins.config.lsp-lens"),
     },
-    { "nvim-lua/plenary.nvim" },
-    { "nvim-telescope/telescope.nvim", config = require("plugins.config.telescope"), dependencies = { "nvim-telescope/telescope-fzf-native.nvim" } },
+    { "nvim-lua/plenary.nvim", lazy = true },
     {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = "make",
-        config = require("plugins.config.telescope-fzf-native"),
+        "nvim-telescope/telescope.nvim",
+        config = require("plugins.config.telescope"),
+        dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
     },
-    { "nvim-tree/nvim-web-devicons" },
+    {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+        lazy = true,
+    },
+    { "nvim-tree/nvim-web-devicons", lazy = true },
     {
         "folke/which-key.nvim",
         config = require("plugins.config.which-key"),
     },
     { "ryanoasis/vim-devicons" },
-
-    { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-buffer" },
-    { "hrsh7th/cmp-path" },
-    { "hrsh7th/cmp-cmdline" },
-    { "hrsh7th/cmp-vsnip" },
-    { "hrsh7th/vim-vsnip" },
+    { "hrsh7th/cmp-nvim-lsp", lazy = true },
+    { "hrsh7th/cmp-buffer", lazy = true },
+    { "hrsh7th/cmp-path", lazy = true },
+    { "hrsh7th/cmp-cmdline", lazy = true },
+    { "hrsh7th/cmp-vsnip", lazy = true },
+    { "hrsh7th/vim-vsnip", lazy = true },
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
@@ -70,29 +73,24 @@ return {
     },
     {
         "mrcjkb/rustaceanvim",
-        version = '^4',
-        ft = { 'rust' },
+        version = "^4",
+        ft = { "rust" },
     },
     { "tpope/vim-surround" },
     {
         "nvim-treesitter/nvim-treesitter",
         config = require("plugins.config.nvim-treesitter"),
         build = ":TSUpdate",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
+        dependencies = { "neovim/nvim-lspconfig" },
     },
     {
         "nvim-treesitter/playground",
         cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     },
-
     {
         "glepnir/dashboard-nvim",
         event = "VimEnter",
-        dependencies = {
-            "MaximilianLloyd/ascii.nvim",
-        },
+        dependencies = { "MaximilianLloyd/ascii.nvim" },
         config = require("plugins.config.dashboard-nvim"),
     },
     {
@@ -106,7 +104,10 @@ return {
         event = "VeryLazy",
         config = require("plugins.config.bufferline"),
     },
-    { "akinsho/toggleterm.nvim",         config = require("plugins.config.toggleterm") },
+    {
+        "akinsho/toggleterm.nvim",
+        config = require("plugins.config.toggleterm"),
+    },
     {
         "rcarriga/nvim-notify",
         config = require("plugins.config.nvim-notify"),
@@ -115,14 +116,11 @@ return {
         "rmagatti/goto-preview",
         config = require("plugins.config.goto-preview"),
     },
-
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         config = require("plugins.config.indent-blankline"),
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-        },
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
     },
     {
         "nvim-lualine/lualine.nvim",
@@ -130,22 +128,16 @@ return {
         config = require("plugins.config.lualine"),
     },
     {
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
         "j-hui/fidget.nvim",
         tag = "legacy",
         event = "LspAttach",
+        dependencies = { "neovim/nvim-lspconfig" },
         config = require("plugins.config.fidget"),
     },
-    {
-        "MunifTanjim/nui.nvim",
-    },
+    { "MunifTanjim/nui.nvim", lazy = true },
     {
         "MaximilianLloyd/ascii.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-        },
+        dependencies = { "MunifTanjim/nui.nvim" },
     },
     {
         "saecki/crates.nvim",
@@ -155,36 +147,36 @@ return {
     },
     {
         "folke/persistence.nvim",
-        event = "BufReadPre", -- this will only start session saving when an actual file was opened
+        event = "BufReadPre",
         config = require("plugins.config.persistence"),
     },
     {
         "sindrets/diffview.nvim",
         config = require("plugins.config.diffview"),
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
+        dependencies = { "nvim-lua/plenary.nvim" },
         cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
     },
     {
         "ray-x/lsp_signature.nvim",
         config = require("plugins.config.lsp_signature"),
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
+        dependencies = { "neovim/nvim-lspconfig" },
     },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
+        dependencies = { "neovim/nvim-lspconfig" },
         config = require("plugins.config.lsp_lines"),
     },
-    { "ckipp01/nvim-jenkinsfile-linter", dependencies = { "nvim-lua/plenary.nvim" } },
-    { "folke/lazydev.nvim",              opts = {},                                    event = "VeryLazy", ft = "lua" },
+    {
+        "ckipp01/nvim-jenkinsfile-linter",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
+    {
+        "folke/lazydev.nvim",
+        opts = {},
+        ft = "lua",
+    },
     {
         "stevearc/dressing.nvim",
-        opts = {},
         config = require("plugins.config.dressing"),
     },
     {
@@ -195,8 +187,6 @@ return {
     },
     {
         "stevearc/oil.nvim",
-        opts = {},
-        -- Optional dependencies
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = require("plugins.config.oil"),
         cmd = "Oil",
@@ -205,7 +195,7 @@ return {
         },
     },
     {
-        'stevearc/quicker.nvim',
+        "stevearc/quicker.nvim",
         ft = "qf",
         ---@module "quicker"
         ---@type quicker.SetupOptions
@@ -215,41 +205,41 @@ return {
     {
         "willothy/flatten.nvim",
         config = true,
-        -- or pass configuration with
-        -- opts = {  }
-        -- Ensure that it runs first to minimize delay when opening file from terminal
         lazy = false,
         priority = 1001,
     },
     {
         "mrcjkb/haskell-tools.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        branch = "2.x.x", -- Recommended
+        dependencies = { "nvim-lua/plenary.nvim" },
+        branch = "2.x.x",
         ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
         config = require("plugins.config.nvim-treesitter-context"),
     },
-    { "github/copilot.vim", enabled = false,    config = require("plugins.config.copilot") },
-    { "tpope/vim-speeddating" },
-    { "LunarVim/bigfile.nvim", config = require("plugins.config.bigfile") },
     {
-        "florentc/vim-tla",
-        enabled = true -- Sun Aug  4 12:34:49 PM IST 2024
+        "github/copilot.vim",
+        enabled = false,
+        config = require("plugins.config.copilot"),
+    },
+    { "tpope/vim-speeddating" },
+    {
+        "LunarVim/bigfile.nvim",
+        config = require("plugins.config.bigfile"),
     },
     {
-        'nvim-focus/focus.nvim',
-        version = '*',
-        config = require("plugins.config.focus")
+        "florentc/vim-tla",
+        enabled = true,
+    },
+    {
+        "nvim-focus/focus.nvim",
+        version = "*",
+        config = require("plugins.config.focus"),
     },
     {
         "LunarVim/breadcrumbs.nvim",
-        dependencies = {
-            "SmiteshP/nvim-navic",
-        },
+        dependencies = { "SmiteshP/nvim-navic" },
         config = require("plugins.config.breadcrumbs"),
     },
     {
@@ -258,8 +248,8 @@ return {
         config = require("plugins.config.nerdicons"),
     },
     {
-        'kosayoda/nvim-lightbulb',
-        config = require("plugins.config.lightbulb")
+        "kosayoda/nvim-lightbulb",
+        config = require("plugins.config.lightbulb"),
     },
     { "tpope/vim-abolish" },
     { "tpope/vim-fugitive" },
@@ -270,11 +260,11 @@ return {
     },
     {
         "mbbill/undotree",
-        config = require("plugins.config.undotree")
+        config = require("plugins.config.undotree"),
     },
     {
-        'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
         ft = "markdown",
         config = require("plugins.config.render-markdown"),
     },
@@ -284,7 +274,7 @@ return {
         config = require("plugins.config.nvim-lsp-endhints"),
     },
     {
-        'MagicDuck/grug-far.nvim',
+        "MagicDuck/grug-far.nvim",
         config = require("plugins.config.grug-far"),
-    }
+    },
 }

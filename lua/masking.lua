@@ -1,69 +1,45 @@
-local get_listed_buffers = function()
-  local buffers = vim.api.nvim_list_bufs()
-  local output = {}
-  for _, bufnr in ipairs(buffers) do
-    if
-        vim.api.nvim_buf_is_loaded(bufnr)
+local function get_listed_buffers()
+  local buffers = {}
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(bufnr)
         and vim.api.nvim_buf_is_valid(bufnr)
         and vim.api.nvim_get_option_value("buflisted", { buf = bufnr })
     then
-      table.insert(output, bufnr)
+      buffers[#buffers + 1] = bufnr
     end
   end
-  return output
+  return buffers
 end
 
-local map_buffer = function(buffers, ops)
+local function set_buffer_opts(buffers, modifiable, readonly)
   for _, bufnr in ipairs(buffers) do
-    ops(bufnr)
+    vim.api.nvim_set_option_value("modifiable", modifiable, { buf = bufnr })
+    vim.api.nvim_set_option_value("readonly", readonly, { buf = bufnr })
   end
 end
 
-local mark_buffer_modifiable = function(buffer)
+local function mark_mutable()
   require("disabler").enable()
-
-  -- Restore colon keymaps globally
-  vim.keymap.set("n", ":", ":", { noremap = true })
-  vim.keymap.set("v", ":", ":", { noremap = true })
-  vim.keymap.set("i", ":", ":", { noremap = true })
+  for _, mode in ipairs({ "n", "v", "i" }) do
+    vim.keymap.set(mode, ":", ":", { noremap = true })
+  end
   vim.o.cmdheight = 1
-
-  -- Set buffer options for each buffer
-  map_buffer(buffer, function(bufnr)
-    vim.api.nvim_set_option_value("modifiable", true, { buf = bufnr })
-    vim.api.nvim_set_option_value("readonly", false, { buf = bufnr })
-  end)
+  set_buffer_opts(get_listed_buffers(), true, false)
 end
 
-local unmark_buffer_modifiable = function(buffer)
+local function mark_immutable()
   require("disabler").disable()
-
-  -- Disable colon keymaps globally
-  vim.keymap.set("n", ":", "<Nop>", { noremap = true })
-  vim.keymap.set("v", ":", "<Nop>", { noremap = true })
-  vim.keymap.set("i", ":", "<Nop>", { noremap = true })
+  for _, mode in ipairs({ "n", "v", "i" }) do
+    vim.keymap.set(mode, ":", "<Nop>", { noremap = true })
+  end
   vim.o.cmdheight = 0
-
-  -- Set buffer options for each buffer
-  map_buffer(buffer, function(bufnr)
-    vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })
-    vim.api.nvim_set_option_value("readonly", true, { buf = bufnr })
-  end)
+  set_buffer_opts(get_listed_buffers(), false, true)
 end
 
-local mark_listed_bufs_m = function()
-  mark_buffer_modifiable(get_listed_buffers())
-end
-
-local unmark_listed_bufs_m = function()
-  unmark_buffer_modifiable(get_listed_buffers())
-end
-
-vim.keymap.set("n", "<leader><c-d>", unmark_listed_bufs_m, {})
-vim.keymap.set("n", "<leader><c-a>", mark_listed_bufs_m, {})
+vim.keymap.set("n", "<leader><c-d>", mark_immutable, { desc = "Disable all editing" })
+vim.keymap.set("n", "<leader><c-a>", mark_mutable, { desc = "Enable all editing" })
 
 return {
-  get_buffers = get_listed_buffers,
-  mutable = mark_listed_bufs_m,
-  immutable = unmark_listed_bufs_m,
+  mutable = mark_mutable,
+  immutable = mark_immutable,
 }

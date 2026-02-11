@@ -1,46 +1,19 @@
--- Key Binding Disabler
---
-
--- Module-scoped state instead of global
 local keybind_store = {}
 
-local function write_to_file(filename, content)
-  local file = io.open(filename, "w")
-  if not file then
-    vim.notify("Failed to open file: " .. filename, vim.log.levels.ERROR)
-    return false
-  end
-  local success, err = pcall(file.write, file, content)
-  if not success then
-    file:close()
-    vim.notify("Failed to write to file: " .. tostring(err), vim.log.levels.ERROR)
-    return false
-  end
-  file:close()
-  return true
-end
-
-local enable_all_keybinds = function()
+local function enable_all_keybinds()
   for _, data in ipairs(keybind_store) do
-    -- print(vim.inspect(data))
-    if data.rhs == nil then
-      vim.keymap.set(data.mode, data.lhs, data.callback, data.extra)
-    else
-      vim.keymap.set(data.mode, data.lhs, data.rhs, data.extra)
-    end
+    vim.keymap.set(data.mode, data.lhs, data.rhs or data.callback, data.extra)
   end
 end
 
-local disable_all_keybinds = function()
+local function disable_all_keybinds()
   local keybinds = {}
   local modes = { "n", "v" }
   local registry_set = {}
   for _, mode in ipairs(modes) do
     registry_set[mode] = {}
     for _, data in ipairs(vim.api.nvim_get_keymap(mode)) do
-      local lhs = data.lhs
-
-      local keys = {
+      table.insert(keybinds, {
         mode = mode,
         lhs = data.lhs,
         rhs = data.rhs,
@@ -49,16 +22,13 @@ local disable_all_keybinds = function()
           nowait = data.nowait,
           silent = data.silent,
           script = data.script,
-          -- expr = data.expr,
         },
         callback = data.callback,
-      }
+      })
 
-      table.insert(keybinds, keys)
-
-      if not registry_set[mode][lhs] then
-        pcall(vim.keymap.del, mode, lhs)
-        registry_set[mode][lhs] = true
+      if not registry_set[mode][data.lhs] then
+        pcall(vim.keymap.del, mode, data.lhs)
+        registry_set[mode][data.lhs] = true
       end
     end
   end
@@ -69,5 +39,4 @@ end
 return {
   disable = disable_all_keybinds,
   enable = enable_all_keybinds,
-  write_to_file = write_to_file,
 }

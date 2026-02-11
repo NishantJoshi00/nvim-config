@@ -1,9 +1,8 @@
--- Configure diagnostics to update in insert mode (Neovim 0.10+ API)
 vim.diagnostic.config({
     update_in_insert = true,
     float = {
         border = "rounded",
-        source = "if_many",
+        source = true,
         header = "",
         prefix = "",
     },
@@ -16,77 +15,55 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
--- Highlight customization
-vim.cmd([[highlight IndentBlanklineChar guifg=#202020 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineContextChar guifg=#505050 gui=nocombine]])
--- vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray guibg=NONE]])
+vim.api.nvim_set_hl(0, "IndentBlanklineChar", { fg = "#202020", nocombine = true })
+vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = "#505050", nocombine = true })
 
--- Configure all floating windows to use theme background
 local function setup_float_highlights()
-    -- Core floating window highlights
-    vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#c5c9c5", bg = "NONE" })
-    vim.api.nvim_set_hl(0, "FloatTitle", { link = "Normal" })
-
-    -- Plugin-specific floats
-    vim.api.nvim_set_hl(0, "OilFloat", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "TelescopeNormal", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "TelescopePromptNormal", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "TelescopePromptBorder", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "WhichKeyFloat", { link = "Normal" })
-
-    -- Completion menu
-    vim.api.nvim_set_hl(0, "Pmenu", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "PmenuBorder", { fg = "#c5c9c5", bg = "NONE" })
-
-    -- Input fields and prompts
-    vim.api.nvim_set_hl(0, "NormalNC", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "FloatermNC", { link = "Normal" })
+    local set_hl = vim.api.nvim_set_hl
+    local links = {
+        "NormalFloat", "FloatTitle", "OilFloat",
+        "TelescopeNormal", "TelescopeBorder",
+        "TelescopePromptNormal", "TelescopePromptBorder",
+        "WhichKeyFloat", "Pmenu", "NormalNC", "FloatermNC",
+    }
+    for _, group in ipairs(links) do
+        set_hl(0, group, { link = "Normal" })
+    end
+    set_hl(0, "FloatBorder", { fg = "#c5c9c5", bg = "NONE" })
+    set_hl(0, "PmenuBorder", { fg = "#c5c9c5", bg = "NONE" })
 end
 
--- Apply on colorscheme change
-vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = setup_float_highlights,
-})
-
--- Apply immediately
+vim.api.nvim_create_autocmd("ColorScheme", { callback = setup_float_highlights })
 setup_float_highlights()
 
-vim.cmd([[autocmd BufRead,BufNewFile *.Jenkinsfile setfiletype groovy]])
-
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "*.Jenkinsfile",
+    callback = function() vim.bo.filetype = "groovy" end,
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then return end
 
-        -- Enable inlay hints if supported
         if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(true, {
-                bufnr = args.buf
-            })
+            vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
         end
 
-        -- Enable semantic tokens if supported (Neovim 0.10+)
         if client.server_capabilities.semanticTokensProvider then
-            vim.api.nvim_set_hl(0, "@lsp.type.comment", {})  -- Don't override treesitter for comments
+            vim.api.nvim_set_hl(0, "@lsp.type.comment", {})
         end
-    end
+    end,
 })
 
--- LuaToBuffer: Execute Lua code and append output to current buffer
--- WARNING: This command executes arbitrary Lua code without sandboxing
--- It is intended for debugging/development purposes only
--- Do not use this command with untrusted input as it can execute any Lua code
-vim.api.nvim_create_user_command('LuaToBuffer', function(opts)
-    local output = vim.fn.execute('lua ' .. opts.args)
-    vim.api.nvim_buf_set_lines(0, -1, -1, false, vim.split(output, '\n'))
-end, { nargs = '+' })
+vim.api.nvim_create_user_command("LuaToBuffer", function(opts)
+    local output = vim.fn.execute("lua " .. opts.args)
+    vim.api.nvim_buf_set_lines(0, -1, -1, false, vim.split(output, "\n"))
+end, { nargs = "+" })
 
 vim.filetype.add({
     extension = {
-        mlw = 'ocaml',
-    }
+        mlw = "ocaml",
+    },
 })

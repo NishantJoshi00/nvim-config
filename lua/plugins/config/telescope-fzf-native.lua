@@ -1,3 +1,2 @@
-return function()
-  require('telescope').load_extension('fzf')
-end
+-- fzf extension is loaded in telescope.lua config
+return function() end

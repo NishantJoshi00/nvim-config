@@ -1,8 +1,5 @@
 return function()
-  local focus = require("focus")
-  focus.setup({
-    autoresize = {
-      enable = false
-    },
+  require("focus").setup({
+    autoresize = { enable = false },
   })
 end

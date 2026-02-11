@@ -1,9 +1,12 @@
 return function()
-  vim.keymap.set("n", "<c-h>", ":FocusSplitLeft<CR>", { silent = true, desc = "Focus Left" })
-  vim.keymap.set("n", "<c-j>", ":FocusSplitDown<CR>", { silent = true, desc = "Focus Down" })
-  vim.keymap.set("n", "<c-k>", ":FocusSplitUp<CR>", { silent = true, desc = "Focus Up" })
-  vim.keymap.set("n", "<c-l>", ":FocusSplitRight<CR>", { silent = true, desc = "Focus Right" })
+  local keymap = vim.keymap.set
+  local opts = { silent = true }
 
-  vim.keymap.set("n", "<leader>wp", ":FocusSplitNicely<CR>", { silent = true, desc = "Split Nicely" })
-  vim.keymap.set("n", "<leader>wo", ":FocusMaxOrEqual<CR>", { silent = true, desc = "Focus Max/Equal" })
+  keymap("n", "<c-h>", "<cmd>FocusSplitLeft<CR>", vim.tbl_extend("force", opts, { desc = "Focus Left" }))
+  keymap("n", "<c-j>", "<cmd>FocusSplitDown<CR>", vim.tbl_extend("force", opts, { desc = "Focus Down" }))
+  keymap("n", "<c-k>", "<cmd>FocusSplitUp<CR>", vim.tbl_extend("force", opts, { desc = "Focus Up" }))
+  keymap("n", "<c-l>", "<cmd>FocusSplitRight<CR>", vim.tbl_extend("force", opts, { desc = "Focus Right" }))
+
+  keymap("n", "<leader>wp", "<cmd>FocusSplitNicely<CR>", vim.tbl_extend("force", opts, { desc = "Split Nicely" }))
+  keymap("n", "<leader>wo", "<cmd>FocusMaxOrEqual<CR>", vim.tbl_extend("force", opts, { desc = "Focus Max/Equal" }))
 end

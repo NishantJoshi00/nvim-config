@@ -4,8 +4,5 @@ return function()
     stages = "slide",
     fps = 60,
   })
-
   vim.notify = require("notify")
-
-  -- require("functions").quoter()
 end

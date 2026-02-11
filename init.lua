@@ -1,7 +1,4 @@
--- Enable bytecode caching for faster startup (Neovim 0.10+)
-if vim.loader then
-  vim.loader.enable()
-end
+vim.loader.enable()
 
 -- Set leader key FIRST (before any plugins load)
 vim.g.mapleader = " "

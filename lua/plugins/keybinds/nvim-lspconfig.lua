@@ -1,26 +1,19 @@
--- Module-scoped state instead of global
 local lsp_hidden = false
 
 return function()
-  local builtin = require('telescope.builtin')
+  local builtin = require("telescope.builtin")
+  local keymap = vim.keymap.set
 
-  vim.keymap.set("n", "<leader>K", vim.lsp.buf.implementation,
-    { desc = "View implementations" })
-  vim.keymap.set("n", "<leader>D", function()
+  keymap("n", "<leader>K", vim.lsp.buf.implementation, { desc = "View implementations" })
+  keymap("n", "<leader>D", function()
     builtin.lsp_definitions({ initial_mode = "normal" })
   end, { desc = "Go to Definition" })
 
-  vim.keymap.set("n", "<c-s>", function() vim.lsp.buf.format { async = true } end, { desc = "format file" })
+  keymap("n", "<c-s>", function() vim.lsp.buf.format({ async = true }) end, { desc = "format file" })
+  keymap("n", "<leader>re", "<cmd>RustLsp expandMacro<cr>", { desc = "Expand Macro" })
 
-  vim.keymap.set("n", "<leader>re", "<cmd>RustLsp expandMacro<cr>", { desc = "Expand Macro" })
-
-  vim.keymap.set("n", "<leader>hl", function()
-    if lsp_hidden then
-      vim.diagnostic.config({ virtual_text = true })
-      lsp_hidden = false
-    else
-      vim.diagnostic.config({ virtual_text = false })
-      lsp_hidden = true
-    end
+  keymap("n", "<leader>hl", function()
+    lsp_hidden = not lsp_hidden
+    vim.diagnostic.config({ virtual_text = not lsp_hidden })
   end, { desc = "Toggle Hiding Lsp Hints" })
 end

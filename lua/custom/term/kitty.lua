@@ -1,1 +1,1 @@
-vim.o.clipboard = "unnamedplus"
+-- Clipboard already set in theme.lua
