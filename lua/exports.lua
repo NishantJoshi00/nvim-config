@@ -30,7 +30,7 @@ local colors = {
         "#161616", -- innerbg
         "#1e1e1e", -- outerbg
         "#1f1d1d", -- darkgray
-    }
+    },
 }
 
 return {

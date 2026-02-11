@@ -4,6 +4,7 @@
 -- === UI & Display ===
 vim.o.background = "dark"
 vim.o.termguicolors = true
+vim.o.winborder = "rounded"
 vim.o.cursorline = true
 vim.o.number = true
 -- vim.o.relativenumber = true  -- Uncomment if you want relative line numbers

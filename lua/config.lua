@@ -25,7 +25,7 @@ vim.cmd([[highlight IndentBlanklineContextChar guifg=#505050 gui=nocombine]])
 local function setup_float_highlights()
     -- Core floating window highlights
     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#c5c9c5", bg = "NONE" })
     vim.api.nvim_set_hl(0, "FloatTitle", { link = "Normal" })
 
     -- Plugin-specific floats
@@ -38,7 +38,7 @@ local function setup_float_highlights()
 
     -- Completion menu
     vim.api.nvim_set_hl(0, "Pmenu", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "PmenuBorder", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "PmenuBorder", { fg = "#c5c9c5", bg = "NONE" })
 
     -- Input fields and prompts
     vim.api.nvim_set_hl(0, "NormalNC", { link = "Normal" })
