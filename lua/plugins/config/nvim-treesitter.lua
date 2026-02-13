@@ -1,6 +1,6 @@
 return function()
   -- Treesitter Plugin Setup
-  require("nvim-treesitter.configs").setup({
+  require("nvim-treesitter.config").setup({
     ensure_installed = { "rust", "toml", "lua" },
     auto_install = true,
     indent = { enable = true },
