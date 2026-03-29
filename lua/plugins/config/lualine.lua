@@ -179,7 +179,13 @@ local custom = function()
                 },
             },
 
-            lualine_x = { 'encoding' },
+            lualine_x = {
+                {
+                    function() return vim.ui.progress_status() or "" end,
+                    cond = function() return (vim.ui.progress_status() or "") ~= "" end,
+                },
+                'encoding',
+            },
             lualine_y = { 'progress',
                 'selectioncount',
                 {

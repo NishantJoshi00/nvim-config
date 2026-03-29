@@ -16,9 +16,6 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
--- Highlight customization
-vim.cmd([[highlight IndentBlanklineChar guifg=#202020 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineContextChar guifg=#505050 gui=nocombine]])
 -- vim.cmd([[highlight Cursorline gui=underline cterm=underline guisp=gray guibg=NONE]])
 
 -- Configure all floating windows to use theme background
@@ -60,7 +57,8 @@ vim.cmd([[autocmd BufRead,BufNewFile *.Jenkinsfile setfiletype groovy]])
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
     callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        local client = vim.lsp.get_clients({ id = args.data.client_id })[1]
+        if not client then return end
 
         -- Enable inlay hints if supported
         if client.server_capabilities.inlayHintProvider then
