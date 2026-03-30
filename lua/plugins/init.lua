@@ -23,7 +23,7 @@ return {
         "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
-            "hrsh7th/cmp-nvim-lsp",
+            "saghen/blink.cmp",
             "mason-org/mason.nvim",
             "folke/lazydev.nvim",
             "VidocqH/lsp-lens.nvim",
@@ -48,25 +48,11 @@ return {
     },
     { "ryanoasis/vim-devicons" },
 
-    { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-buffer" },
-    { "hrsh7th/cmp-path" },
-    { "hrsh7th/cmp-cmdline" },
-    { "hrsh7th/cmp-vsnip" },
-    { "hrsh7th/vim-vsnip" },
     {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-vsnip",
-            "hrsh7th/vim-vsnip",
-            "petertriho/cmp-git",
-        },
-        config = require("plugins.config.nvim-cmp"),
+        "saghen/blink.cmp",
+        version = "1.*",
+        event = { "InsertEnter", "CmdlineEnter" },
+        config = require("plugins.config.blink-cmp"),
     },
     {
         "mrcjkb/rustaceanvim",
@@ -165,13 +151,6 @@ return {
             "nvim-lua/plenary.nvim",
         },
         cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
-    },
-    {
-        "ray-x/lsp_signature.nvim",
-        config = require("plugins.config.lsp_signature"),
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
     },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
