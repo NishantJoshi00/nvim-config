@@ -15,6 +15,8 @@ return function()
             ['<CR>'] = { 'accept', 'fallback' },
             ['<C-p>'] = { 'select_prev', 'fallback' },
             ['<C-n>'] = { 'select_next', 'fallback' },
+            ['<Up>'] = { 'select_prev', 'fallback' },
+            ['<Down>'] = { 'select_next', 'fallback' },
         },
 
         appearance = {
@@ -76,7 +78,11 @@ return function()
         },
 
         cmdline = {
-            keymap = { preset = 'inherit' },
+            keymap = {
+                preset = 'inherit',
+                ['<Tab>'] = { 'select_next', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'fallback' },
+            },
             completion = {
                 list = {
                     selection = {
