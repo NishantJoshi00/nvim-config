@@ -9,8 +9,10 @@ vim.o.cursorline = true
 vim.o.number = true
 -- vim.o.relativenumber = true  -- Uncomment if you want relative line numbers
 vim.o.showmode = false  -- Mode shown in lualine instead
+vim.o.laststatus = 3  -- Global statusline (single, not per-window)
 vim.o.title = true
 vim.o.scrolloff = 4  -- Keep 4 lines visible above/below cursor
+vim.opt.shortmess:append("I")  -- Suppress intro screen (prevents flash before dashboard)
 
 -- === Editing Behavior ===
 vim.o.clipboard = "unnamedplus"
