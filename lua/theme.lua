@@ -4,7 +4,6 @@
 -- === UI & Display ===
 vim.o.background = "dark"
 vim.o.termguicolors = true
-vim.o.winborder = "rounded"
 vim.o.cursorline = true
 vim.o.number = true
 -- vim.o.relativenumber = true  -- Uncomment if you want relative line numbers
@@ -69,7 +68,3 @@ vim.o.foldenable = false
 
 -- === Enable filetype detection ===
 vim.cmd([[filetype plugin indent on]])
-
--- === Highlight Customization ===
-vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#181616", fg = "#c5c9c5" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#181616" })

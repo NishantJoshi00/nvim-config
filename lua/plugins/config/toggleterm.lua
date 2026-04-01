@@ -19,7 +19,7 @@ return function()
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
       -- border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
-      border = "single",
+      border = "rounded",
       width = 150,
       height = 50,
       winblend = 3,
