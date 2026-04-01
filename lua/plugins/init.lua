@@ -23,7 +23,7 @@ return {
         "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
-            "hrsh7th/cmp-nvim-lsp",
+            "saghen/blink.cmp",
             "mason-org/mason.nvim",
             "folke/lazydev.nvim",
         },
@@ -43,25 +43,11 @@ return {
         config = require("plugins.config.which-key"),
     },
 
-    { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-buffer", lazy = true },
-    { "hrsh7th/cmp-path", lazy = true },
-    { "hrsh7th/cmp-cmdline" },
-    { "hrsh7th/cmp-vsnip", lazy = true },
-    { "hrsh7th/vim-vsnip", lazy = true },
     {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-vsnip",
-            "hrsh7th/vim-vsnip",
-            "petertriho/cmp-git",
-        },
-        config = require("plugins.config.nvim-cmp"),
+        "saghen/blink.cmp",
+        version = "1.*",
+        event = { "InsertEnter", "CmdlineEnter" },
+        config = require("plugins.config.blink-cmp"),
     },
     {
         "mrcjkb/rustaceanvim",
