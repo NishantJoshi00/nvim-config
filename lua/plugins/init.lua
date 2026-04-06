@@ -57,8 +57,18 @@ return {
     { "tpope/vim-surround" },
     {
         "nvim-treesitter/nvim-treesitter",
-        config = require("plugins.config.nvim-treesitter"),
+        branch = "main",
         build = ":TSUpdate",
+        main = "nvim-treesitter",
+        config = require("plugins.config.nvim-treesitter"),
+        init = function()
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function()
+                    pcall(vim.treesitter.start)
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
+            })
+        end,
         dependencies = {
             "neovim/nvim-lspconfig",
         },

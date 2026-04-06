@@ -1,23 +1,13 @@
 return function()
-  -- Treesitter Plugin Setup
-  require("nvim-treesitter.configs").setup({
-    ensure_installed = { "rust", "toml", "lua" },
-    auto_install = true,
-    indent = { enable = true },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = true,
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
-        node_decremental = "<C-backspace>",
-      },
-    },
-    playground = {
-      persist_queries = true
-    }
-  })
+  local ensure_installed = { "rust", "toml", "lua" }
+  local already_installed = require("nvim-treesitter.config").get_installed()
+  local to_install = vim.iter(ensure_installed)
+    :filter(function(parser)
+      return not vim.tbl_contains(already_installed, parser)
+    end)
+    :totable()
+
+  if #to_install > 0 then
+    require("nvim-treesitter").install(to_install)
+  end
 end
