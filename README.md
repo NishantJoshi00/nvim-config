@@ -8,25 +8,24 @@
 
 ## Overview
 
-A modular Neovim configuration with 80+ plugins, built for performance using lazy.nvim and event-driven loading. Features comprehensive LSP integration, cross-platform support, and a clear separation between core configuration, plugins, and keybindings.
+A modular Neovim configuration built around `lazy.nvim` for performance, with a strict three-layer separation between plugin specifications, configurations, and keybindings. The repository is treated as a small codebase rather than a dotfile dump: configs and keybinds are wrapped in functions for deferred execution, errors are isolated with `pcall`, and platform-specific behavior is gated rather than branched.
 
 **Architecture:**
-- Modular design with dedicated directories for plugins, configs, and keybinds
-- Event-driven lazy loading using `event = "VeryLazy"` and file-type triggers
-- Platform-specific customizations for Linux, macOS, and Windows
-- Strict initialization order: bootstrap → theme → plugins → config → mappings
-- Mason-managed LSP servers, formatters, and linters
+- Three-layer plugin pattern: spec (`plugins/init.lua`), config (`plugins/config/`), keybinds (`plugins/keybinds/`)
+- Event-driven lazy loading (`VeryLazy`, `BufReadPre`, `InsertEnter`, `LspAttach`, filetype, command)
+- Strict initialization order: bytecode cache → leader key → theme options → bootstrap → plugins → config → mappings → masking → custom
+- Platform-specific overrides for macOS, Linux, and Windows via `utils.gate()`
+- Mason-managed LSP servers, with language-specific tooling for Rust (`rustaceanvim`) and Haskell (`haskell-tools.nvim`)
 
 **Tested on:**
-- Neovim v0.11.2+ (requires Neovim 0.10+)
-- macOS (Darwin 24.2.0)
-- 80+ plugins tested and configured for stability
+- Neovim 0.11.2+ (requires Neovim 0.10+ for `vim.loader`, `vim.lsp.inlay_hint`, and the new diagnostic API)
+- macOS (Darwin 24.2.0) and Linux
 
 ## Installation
 
-1. Ensure Neovim 0.10+ is installed
+1. Ensure Neovim 0.10+ is installed.
 
-2. Back up existing configuration:
+2. Back up any existing configuration:
    ```bash
    mv ~/.config/nvim ~/.config/nvim.bak
    ```
@@ -40,72 +39,107 @@ A modular Neovim configuration with 80+ plugins, built for performance using laz
    git clone https://github.com/NishantJoshi00/nvim-config.git $env:LOCALAPPDATA\nvim
    ```
 
-4. Install dependencies:
-   - Git (plugin management)
-   - C compiler (certain plugins require compilation)
-   - Node.js (LSP features)
-   - Ripgrep (telescope search)
-   - Nerd Font (icon rendering)
+4. Install runtime dependencies:
+   - **Git** — plugin management
+   - **C compiler** — needed for plugins like `telescope-fzf-native` and `blink.cmp` (Rust fuzzy matcher)
+   - **Node.js** — most LSP servers
+   - **Ripgrep** — Telescope live grep, `:grep` integration
+   - **curl** — required by the AI note integration (`lua/ai/`)
+   - **Nerd Font** — icon rendering (mono variant configured for `blink.cmp`)
 
-5. Launch Neovim. The configuration will automatically:
-   - Install lazy.nvim plugin manager
-   - Download and configure all plugins
-   - Set up LSP servers via Mason
+5. Launch Neovim. On first start the configuration will:
+   - Bootstrap `lazy.nvim` (auto-clone if missing)
+   - Install all plugins
+   - Install LSP servers, formatters, and linters via Mason
 
 ## Features
 
-**Core Capabilities:**
-- LSP integration with nvim-lspconfig and Mason
-- Multi-source completion via nvim-cmp (LSP, buffer, path, snippets)
-- Git integration with gitsigns, vim-fugitive, and diffview
-- File navigation using Telescope, nvim-tree, and oil.nvim
-- TreeSitter syntax highlighting and code analysis
-- Terminal integration via toggleterm.nvim
-- Session management with persistence.nvim
-- Enhanced diagnostics with lsp_lines and virtual text
+**Core:**
+- LSP via `nvim-lspconfig` + Mason ecosystem (`mason.nvim`, `mason-lspconfig.nvim`)
+- Completion through `blink.cmp` (LSP, snippets, buffer, path; Rust fuzzy matcher)
+- Treesitter syntax/indent (main branch, with the new `nvim-treesitter` API)
+- Git integration: `gitsigns`, `vim-fugitive`, `diffview.nvim`
+- File navigation: `telescope.nvim` (with `fzf-native`) and `oil.nvim` (buffer-as-directory)
+- Project-wide search/replace via `grug-far.nvim`
+- Terminal: `toggleterm.nvim` (Ctrl-t toggle in normal/insert/terminal modes)
+- Session persistence: `persistence.nvim`
+- LSP diagnostics: virtual text + `nvim-lsp-endhints` for inline end-of-line hints
+- Quickfix UX: `quicker.nvim`
+- Statusline: `lualine`; tabline: `bufferline`; breadcrumbs: `nvim-navic`
+- Notifications: `nvim-notify`; UI prompts: `dressing.nvim`; keymap discovery: `which-key.nvim`
+- Dashboard: `dashboard-nvim` with ASCII art
 
 **Language Support:**
-- Rust (rustaceanvim with enhanced tooling)
-- Haskell (haskell-tools.nvim)
-- Zig (zig.vim)
-- Lua (lazydev.nvim for Neovim API development)
-- TLA+ (vim-tla for specifications)
-- General purpose via Mason LSP management
+- **Rust** — `rustaceanvim` with rust-analyzer settings in `lua/opts/init.lua`, plus `crates.nvim` for `Cargo.toml`
+- **Haskell** — `haskell-tools.nvim` (filetype trigger)
+- **Lua** — `lazydev.nvim` for Neovim API completion
+- **Markdown** — `vim-markdown` + `render-markdown.nvim` for in-buffer rendering
+- **TLA+** — `vim-tla`
+- **Generic** — anything Mason can install via the default LSP handler in `config.lua`
+
+**Custom modules** (beyond plugin glue):
+- **Buffer masking** (`masking.lua` + `disabler.lua`) — toggles every listed buffer between modifiable and readonly, serializing/deserializing all keybindings. Designed for code-review sessions. Bound to `<leader><c-d>` / `<leader><c-a>`.
+- **Markdown tree** (`markdown-tree.lua`) — parses markdown checklists into an interactive NUI tree with toggle and persist-back-to-file. Bound under `<leader>M*`.
+- **AI note operations** (`lua/ai/interface.lua`) — OpenAI-compatible client (curl-based) for smart-append, summarize, and reorganize over markdown notes.
+- **Scratch and copy pads** (`functions.lua`) — NUI popups for ephemeral notes, with `<c-n>` / `<leader><c-n>`.
+- **Point search** (`functions.lua`) — `file:line:col` jump bound to `<c-p>`.
+- **Auto-update check** (`functions/up-to-date.lua`) — async `git fetch` on startup, non-blocking, notifies if behind.
 
 **Key Bindings:**
-- Leader key: `<space>`
-- Consistent namespacing: `<leader>f*` (find/file), `<leader>g*` (git), `<leader>m*` (misc)
-- Plugin-specific bindings isolated in `lua/plugins/keybinds/`
+- Leader: `<space>`
+- `<leader>f*` — find/file (Telescope)
+- `<leader>g*` — git
+- `<leader>m*` / `<leader>M*` — markdown / markdown tree
+- `<leader>e*` — editor
+- `<leader>b*` — buffers
+- `<leader>c*` — quickfix list
+- `<c-p>` — point search, `<c-n>` — scratch pad, `<c-t>` — terminal toggle, `<c-u>` — undotree
 
 ## Project Structure
 
 ```
 .
-├── init.lua                # Entry point with strict loading order
+├── init.lua                        # Entry point; enforces strict load order
 ├── lua/
-│   ├── bootstrap.lua       # lazy.nvim setup (auto-installs if missing)
-│   ├── theme.lua          # Core vim options (loaded before plugins)
-│   ├── config.lua         # LSP setup, diagnostics, autocmds
-│   ├── mappings.lua       # Keybinding loader
-│   ├── functions.lua      # Utility functions
+│   ├── bootstrap.lua               # Auto-installs lazy.nvim if missing
+│   ├── theme.lua                   # Core vim options (loaded BEFORE plugins)
+│   ├── config.lua                  # Diagnostics, float highlights, LspAttach autocmd
+│   ├── mappings.lua                # Loader for all keybind modules
+│   ├── masking.lua                 # Buffer mutability (code-review mode)
+│   ├── disabler.lua                # Keymap serialize/deserialize backing masking
+│   ├── markdown-tree.lua           # Interactive markdown checklist tree
+│   ├── functions.lua               # Quoter, point search, copy/scratch pads, glob search
+│   ├── utils.lua                   # Platform gating (gate, is_day, join)
+│   ├── exports.lua                 # Shared color palette
+│   ├── quickfix.lua                # errorformat templates (rust, python)
+│   ├── ai/
+│   │   ├── interface.lua           # OpenAI-compatible chat client (curl)
+│   │   └── prompts.lua             # System prompts: append/summary/reorganize
+│   ├── functions/
+│   │   └── up-to-date.lua          # Async git-fetch update check
+│   ├── opts/
+│   │   └── init.lua                # rust-analyzer settings for rustaceanvim
 │   ├── plugins/
-│   │   ├── init.lua       # Plugin specifications (80+)
-│   │   ├── config/        # Plugin configurations (return functions)
-│   │   └── keybinds/      # Plugin keybindings (return functions)
-│   ├── custom/
-│   │   ├── init.lua       # Platform-specific loader
-│   │   └── os/            # OS-specific configurations
-│   └── functions/
-│       └── up-to-date.lua # Auto-update checking
-└── docs/
-    └── plugins.md         # Complete plugin catalog
+│   │   ├── init.lua                # Plugin specifications only (no config code)
+│   │   ├── config/                 # Per-plugin config functions (deferred)
+│   │   └── keybinds/               # Per-plugin keymap functions
+│   └── custom/
+│       ├── init.lua                # Loads platform/terminal/theme overrides
+│       ├── os/{mac,windows}.lua    # Platform-gated settings
+│       ├── term/kitty.lua          # Terminal-specific tweaks
+│       └── theme/catppuccin.lua    # Alternate theme palette
+├── data/                           # Persistent runtime data (gitkept)
+├── spell/                          # Custom spellfile (en.utf-8.add)
+└── .github/workflows/              # Claude Code Review + PR Assistant workflows
 ```
 
 ## Development Workflow
 
-**Adding New Plugins:**
+### Adding a new plugin
 
-1. Add plugin specification to `lua/plugins/init.lua`:
+The codebase enforces a strict three-step pattern. Skip the wrapping function and lazy loading breaks.
+
+1. **Specification** in `lua/plugins/init.lua` — only the spec, never config code:
    ```lua
    {
        "author/plugin-name",
@@ -115,47 +149,43 @@ A modular Neovim configuration with 80+ plugins, built for performance using laz
    }
    ```
 
-2. Create configuration in `lua/plugins/config/plugin-name.lua`:
+2. **Configuration** in `lua/plugins/config/plugin-name.lua` — must return a function:
    ```lua
    return function()
-       require("plugin-name").setup({ ... })
+       local ok, plugin = pcall(require, "plugin-name")
+       if not ok then
+           vim.notify("Failed to load plugin-name", vim.log.levels.ERROR)
+           return
+       end
+       plugin.setup({ ... })
    end
    ```
 
-3. Create keybindings in `lua/plugins/keybinds/plugin-name.lua`:
+3. **Keybindings** in `lua/plugins/keybinds/plugin-name.lua` — also returns a function, and must be registered in `mappings.lua`:
    ```lua
    return function()
        vim.keymap.set("n", "<leader>xx", function() ... end, { desc = "..." })
    end
    ```
 
-4. Load keybindings in `lua/mappings.lua`:
-   ```lua
-   require("plugins.keybinds.plugin-name")()
-   ```
+4. Reload without restarting: `:Lazy reload plugin-name`.
 
-5. Test with `:Lazy reload plugin-name`
+### Debugging
 
-**Debugging Tools:**
-- `:checkhealth` - Verify installation and plugin health
-- `:Lazy profile` - Analyze startup performance
-- `:TSCaptureUnderCursor` - Debug TreeSitter highlighting
-- `:LuaToBuffer <code>` - Execute Lua and append output to buffer
-- `require("functions").point_search()` - Navigate to file:line:col
-
-## Documentation
-
-[Complete Plugin Catalog](docs/plugins.md) - All 80+ plugins organized by category with GitHub links and descriptions.
+- `:checkhealth` — verify install + plugin health
+- `:Lazy profile` — analyze startup timing
+- `:Lazy load <plugin>` — force-load to test in isolation
+- `:messages` — see startup errors
+- `:LspInfo` / `:LspLog` — LSP wiring
+- `:TSCaptureUnderCursor` / `:InspectTree` — Treesitter debugging
+- `:LuaToBuffer <code>` — execute Lua and append output to current buffer (debug only; executes arbitrary code)
+- `:verbose map <leader>xx` — show what registered a keybind
 
 ## Contributing
 
-1. Fork the repository and create a feature branch
-2. Follow the modular architecture:
-   - Plugin configs return functions for lazy loading
-   - Use consistent leader key namespacing
-   - Maintain separation between config and keybinds
-3. Test changes:
-   - Run `:checkhealth` to verify plugin health
-   - Run `:Lazy profile` to check performance impact
-   - Ensure no startup errors with `:messages`
-4. Submit a pull request with clear description
+1. Fork and create a feature branch.
+2. Follow the existing modular conventions (no config code in `plugins/init.lua`, no mixing keybinds with config, no globals — see `CLAUDE.md` for the full rules).
+3. Verify changes with `:checkhealth`, `:Lazy profile`, and `:messages`.
+4. Open a PR with a clear description of what changed and why.
+
+See [`CLAUDE.md`](CLAUDE.md) for the full architecture guide, critical patterns, and common pitfalls.
